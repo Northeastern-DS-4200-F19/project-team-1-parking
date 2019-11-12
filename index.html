@@ -57,7 +57,283 @@
   
     
     <!-- Your visualization here -->
+	<svg width="500" height="600"></svg>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
+	<script>
+		var pointRadius = 3;
+		var trapNodeShift = 0.09375;
 
+		var xMinScale = pointRadius + 20;
+		var xMaxScale = 250;
+
+		var yMinScale = xMinScale + 20;
+		var yMaxScale = xMaxScale + 20;
+
+		d3.select('body')
+		.append('svg')
+		.attr('width', xMaxScale + 20)
+		.attr('height', yMaxScale + 20);
+
+		var jointNodes = [{
+		  jointID: 0,
+		  x: 0,
+		  y: 0
+		},{
+		  jointID: 0.1,
+		  x: trapNodeShift,
+		  y: trapNodeShift
+		},{
+		  jointID: -0.1,
+		  x: trapNodeShift,
+		  y: -trapNodeShift
+		},{
+		  jointID: 0.9,
+		  x: 0.5 - trapNodeShift,
+		  y: trapNodeShift
+		},{
+		  jointID: -0.9,
+		  x: 0.5 - trapNodeShift,
+		  y: -trapNodeShift
+		},{
+		  jointID: 1,
+		  x: 0.5, 
+		  y: 0
+		},{
+		  jointID: 1.1,
+		  x: 0.5 + trapNodeShift,
+		  y: trapNodeShift
+		},{
+		  jointID: -1.1,
+		  x: 0.5 + trapNodeShift,
+		  y: -trapNodeShift
+		},{
+		  jointID: 1.9,
+		  x: 1 - trapNodeShift,
+		  y: trapNodeShift
+		},{
+		  jointID: -1.9,
+		  x: 1 - trapNodeShift,
+		  y: -trapNodeShift
+		},{
+		  jointID: 2,
+		  x: 1, 
+		  y: 0
+		},{
+		  jointID: 2.1,
+		  x: 1 + trapNodeShift,
+		  y: trapNodeShift
+		},{
+		  jointID: 2.9,
+		  x: 1 - trapNodeShift,
+		  y: 2 - trapNodeShift
+		},{
+		  jointID: -2.9,
+		  x: 1 + trapNodeShift,
+		  y: 2 - trapNodeShift
+		},{
+		  jointID: 3,
+		  x: 1, 
+		  y: 2
+		},{
+		  jointID: 3.1,
+		  x: 1 - trapNodeShift,
+		  y: 2 + trapNodeShift
+		},{
+		  jointID: 4,
+		  x: 0.5, 
+		  y: 2
+		},{
+		  jointID: 5,
+		  x: 0, 
+		  y: 2
+		},{
+		  jointID: 6,
+		  x: 0.5, 
+		  y: 0.5
+		},{
+		  jointID: 7,
+		  x: 0.5, 
+		  y: 1.5
+		},{
+		  jointID: 8,
+		  x: 0.3125, 
+		  y: 0.75 
+		},{
+		  jointID: 9,
+		  x: 0.3125, 
+		  y: 1.25
+		},{
+		  jointID: 10,
+		  x: 0.6875, 
+		  y: 0.75
+		},{
+		  jointID: 11,
+		  x: 0.6875, 
+		  y: 1.25
+		}];
+
+		var scaleX = d3.scaleLinear()
+		  .domain([0, 1])
+		  .range([xMinScale, xMaxScale]);
+
+		var scaleY = d3.scaleLinear()
+		  .domain([0, 1])
+		  .range([yMinScale, yMaxScale]);
+
+		d3.select('svg')
+			.selectAll('circle')
+			.data(jointNodes)
+			.enter()
+			.append('circle')
+			.attr('r', pointRadius)
+			.attr('cx', function(d) {
+				return scaleX(d.x) 
+			})
+			.attr('cy', function(d) {
+				return scaleY(d.y)
+			});
+
+		var jointEdges = [
+		  {
+		    routeID: 1,
+		    fromJointID: 4,
+		    toJointID: 7
+		  },{
+		    routeID: 2.1,
+		    fromJointID: 7,
+		    toJointID: 11
+		  },{
+		    routeID: 2.2,
+		    fromJointID: 11,
+		    toJointID: 10
+		  },{
+		    routeID: 2.3,
+		    fromJointID: 10,
+		    toJointID: 6
+		  },{
+		    routeID: 3.1,
+		    fromJointID: 7,
+		    toJointID: 6
+		  },{
+		    routeID: 3.2,
+		    fromJointID: 6,
+		    toJointID: 1
+		  },{
+		    routeID: 4,
+		    fromJointID: 1,
+		    toJointID: 2
+		  },{
+		    routeID: 5,
+		    fromJointID: 2,
+		    toJointID: 1
+		  },{
+		    routeID: 6,
+		    fromJointID: 1,
+		    toJointID: 0
+		  },{
+		    routeID: 7,
+		    fromJointID: 0,
+		    toJointID: 1
+		  },{
+		    routeID: 8,
+		    fromJointID: 1,
+		    toJointID: 6
+		  },{
+		    routeID: 9.1,
+		    fromJointID: 6,
+		    toJointID: 8
+		  },{
+		    routeID: 9.2,
+		    fromJointID: 8,
+		    toJointID: 9
+		  },{
+		    routeID: 9.3,
+		    fromJointID: 9,
+		    toJointID: 7
+		  },{
+		    routeID: 10.1,
+		    fromJointID: 6,
+		    toJointID: 7
+		  },{
+		    routeID: 10.2,
+		    fromJointID: 7,
+		    toJointID: 4
+		  },{
+		    routeID: 11,
+		    fromJointID: 4,
+		    toJointID: 5
+		  },{
+		    routeID: 12,
+		    fromJointID: 5,
+		    toJointID: 0
+		  },{
+		    routeID: 13,
+		    fromJointID: 2,
+		    toJointID: 3
+		  },{
+		    routeID: 14,
+		    fromJointID: 3,
+		    toJointID: 4
+		  }];
+
+
+		var lineFunction = d3.line()
+		  .x(function(d) { return scaleX(d.x); })
+		  .y(function(d) { return scaleY(d.y); })
+		  .curve(d3.curveLinear);
+
+		// function drawParkingZone(fromNode, toNode){
+		//   offsetVal = (1/32);
+
+		//   var startNode = fromNode;
+		//   var stopNode = toNode;
+		//   var dX = stopNode.x - startNode.x;
+		//   var dY = stopNode.y - startNode.y;
+
+		//   var trapzPoints = [{
+		//     x: startNode.x,
+		//     y: startNode.y
+		//   },{
+		//     x: startNode.x + (offsetVal * dX + offsetVal * 2),
+		//     y: startNode.y + (offsetVal * dY + offsetVal)
+		//   },{
+		//     x: stopNode.x + (offsetVal * dX + offsetVal * 2),
+		//     y: stopNode.y + (offsetVal * dY + offsetVal)
+		//   },{
+		//     x: stopNode.x,
+		//     y: stopNode.y
+		//   }];
+
+		//   d3.select('svg')
+		//     .append('path')
+		//     .attr('d', lineFunction(trapzPoints) + 'Z')
+		//     .style('fill', 'orange')
+		//     .style('stroke', 'black');
+		// }
+
+		function drawMidLine(fromNode, toNode){
+		  d3.select('svg')
+		    .append("line")
+		    .style("stroke", "black")
+		    .attr("x1", scaleX(fromNode.x))
+		    .attr("y1", scaleY(fromNode.y))
+		    .attr("x2", scaleX(toNode.x))
+		    .attr("y2", scaleY(toNode.y));
+		}
+
+		function connectEdges(edge, edgeIndex) {
+		  var fromNode = jointNodes.find(function(node) {
+		    return node.jointID == edge.fromJointID;
+		  })
+		  var toNode = jointNodes.find(function(node) {
+		    return node.jointID == edge.toJointID;
+		  })
+		  drawMidLine(fromNode, toNode);
+		  // drawParkingZone(fromNode, toNode);
+		}
+
+		jointEdges.forEach(connectEdges);
+	</script>
 
     <style>
       

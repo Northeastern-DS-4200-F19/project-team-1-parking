@@ -5,7 +5,7 @@
     <meta charset="utf-8">
 
     <!-- Title -->
-		<title>Project Team #: Topic, DS 4200 F19</title>
+		<title>Project Team #1: Parking, DS 4200 F19</title>
 
     <!-- CSS Styling -->
 		<link rel="stylesheet" href="style.css">
@@ -31,7 +31,7 @@
 
     <div class = "content-column">
 
-      <h1>Project Team #1: Topic Parking, DS 4200 F19</h1>
+      <h1>Project Team #1: Parking in and around Chester Square, DS 4200 F19</h1>
 
       <p><strong>Brian Fogarty</strong>, <strong> Ysabelle Kempe</strong>, <strong>Lal  Birali</strong>, <strong>Victoria Yang</strong></p>
 
@@ -40,9 +40,18 @@
 
       <h1>Motivation</h1>
 
-	  <p> We analyzed data about parking in Chester Square. Our final goal was to understand possible solutions for making parking more efficient, easier to find, and safe. To do that, we needed to understand the current parking situation. We wanted to make sure that parking is fair on both sides of Mass. Ave. We worked with the Chester Square Neighborhood Association.</p>
-	  <p> Our visualizations and analysis will be used to present information. Although it is important these visualizations be able to facilitate discovery, the main goal of the Chester Square Neighborhood Association is to bring the problem of parking to the attention of local government. They already know that there is a problem and are able to explain the issue and potential causes in words (e.g., not enough parking, residents don’t know where to park, etc.), but they want to be able to show numbers that prove their point.  </p>
-	  <p> Our visualization’s primary consumers include, but are not limited to, the Chester Square Neighborhood Association, the Boston Department of Transportation, various other local government entities and representatives, and similar city neighborhood associations. With the goal of presenting key information to these primary consumers, we see that they will be able to leverage the data presented to confirm the hypothesis and propose new solutions. </p>
+	  <p> This project was developed in conjunction with the Chester Square Neighborhood
+			Association. The goal of the association is to show that there is a problem with the
+			parking availability and distribution in the area.</p>
+	  <p> The Neighborhood Association wants to bring the problem of parking to the
+			attention of local government. They already know that there is a problem
+			and are able to explain the issue and potential causes in words (e.g., not
+			enough parking, residents don’t know where to park, etc.), but they want to
+			be able to show numbers that prove their point.  </p>
+	  <p> We hope this project serves as a valuable tool for the Neighborhood Association
+			to communicate the need for change to authorities. Through our own research and data collection,
+			we have concluded that a reasonable response would be to more clearly mark parking spots,
+			as well as conduct another survey.</p>
 
       <p><em>Summary of user needs and motivating questions.</em></p>
 
@@ -460,6 +469,21 @@
 
       <h1>Visualization explanation</h1>
 
+			<p>Our visualization combines an interactive map showing parking occupancy rate for street analyzed.
+			We communicated occupancy rate using color. The visualization also includes a bar chart that
+			breaks down the number of empty spots versus occupied spots for each street. Each of these visualizations
+			can be viewed for a specific hour of the day, which can be filtered through using an [WE ARE NOT SURE YET]. </p>
+			<p>We believe color is the best way to convey occupancy rate for the map because it is very intuitive and quickly
+			sends the message of which streets are fuller and which are emptier. We designed the map to simply show the streets,
+			rather than familiar landmarks or buildings in Chester Square because we don't want the visualization
+			to become cluttered. We included the bar chart as well because it is very
+			important for a user not only to know the proportion of spots filled, but to know exactly how many
+			spots are left. </p>
+			<p>Below, you can see screenshots of our final visualization sketches.</p>
+			<p>INSERT PNG HERE</p>
+			<p>Below, you will find links to our presentation slides.</p>
+			<p>INSERT LINK HERE</p>
+
       <p><em>final visualization screenshots (PNG images), design justifications, UI walk-through, and linked presentation slides.</em></p>
 
       <h1>Data Analysis</h1>
@@ -472,10 +496,12 @@
 				We filled this data into a Google Sheet by hand and exported it as a csv file.
 				We created both a horizontal bar chart and a map of Chester Square. We cleaned and processed the data with Python.
 				For the bar chart data, we iterated through the data and aggregated the number of occupied and empty spots for
-				each street for each hour. For our bar chart, our data includes street name as a string, empty spots as an integer, and occupied spots as an integer.
+				each street for each hour, exporting the result as a csv. For our bar chart,
+				our data includes street name as a string, empty spots as an integer, and occupied spots as an integer.
 				It also includes the time of day as data type of time.
-				In order to preprocess the data for the map, INSERT EXPLANATION FOR PREPROCESSING OF MAP.
-				This data includes street name as a string, occupancy rate as a percentage, and time as a time data type.</p>
+				In order to preprocess the data for the map, we cleaned, aggregated, and reformatted the data using Python
+				with the NumPy and Pandas libraries. The output was a csv file with
+			polygon coordinates (floats), occupancy counts (integers), occupancy rates (floats), and percentages (floats).</p>
 
       <h1>Task Analysis</h1>
 
@@ -489,46 +515,39 @@
 	  </tr>
 	  <tr>
 	    <td> 1 </td>
-		<td> What is the distribution of the various parking regulations within the survey area (SA)? </td>
-		<td> Compare </td>
-		<td> Browse </td>
-		<td> Present </td>
-	  </tr>
-	  <tr>
-	    <td> 2 </td>
 		<td> What are the occupancy rates at different times of the day? </td>
 		<td> Identify </td>
 		<td> Browse </td>
 		<td> Discover </td>
 	  </tr><tr>
-	    <td> 3 </td>
+	    <td> 2 </td>
 		<td> What is the average duration a single vehicle is parked? </td>
 		<td> Identify </td>
 		<td> Lookup </td>
 		<td> Present </td>
 	  </tr>
 	  <tr>
-	    <td> 4 </td>
+	    <td> 3 </td>
 		<td> Where are the problem areas for after-work parking? </td>
 		<td> Identify </td>
 		<td> Browse </td>
 		<td> Present </td>
 	  </tr>
 	  <tr>
-	    <td> 5 </td>
+	    <td> 4 </td>
 		<td> Who are the owners of vehicles parked in the SA? </td>
 		<td> Identify </td>
 		<td> Browse </td>
 		<td> Discover </td>
 	  </tr>
-		<td>6 </td>
+		<td>5 </td>
 		<td> How do the various parking regulations affect occupancy and turnover rates? </td>
 		<td> Summarize </td>
 		<td> Explore </td>
 		<td> Present </td>
 	  </tr>
 	  <tr>
-	    <td> 7 </td>
+	    <td> 6 </td>
 		<td> What are the turnover rates for different times of day? </td>
 		<td> Compare </td>
 		<td> Browse </td>
@@ -537,11 +556,33 @@
 
 	  </table>
 
-      <p><em>Summary of task table.</em></p>
+      <p>This task table shows that our main goal is to understand how the occupancy
+			rates fluctuate throughout the day. It is also to understand problem areas for parking.
+			What are the areas that most frequently have no available spaces? By understanding
+			where the problem areas are and what time of the day issues arise, we can help the Neighborhood
+			Association prioritize certain areas for improvement.</p>
 
       <p><em>Expectation: Clearly describes domain tasks, processes, goals and abstract tasks for domain problems.</em></p>
 
       <h1>Design Process</h1>
+			<p>Below, you can see our initial visualization draft. Originally, we had imagined
+			the color scale as red, yellow, and green, but changed it to red, white, and green
+			in later iterations.
+			because that is more intuitive. We looked at this vis sketch and decided to
+			alter the supplementary bar chart to instead focus on street,
+			rather than time of day. We wanted both visualizations to represent the same time of day,
+			so that the user could look at a single moment in time from two perspectives. </p>
+			<img src="Brian_Viz1.jpeg" alt="First visualization sketch" style="width:700px;height:600px;">
+			<p>Our next visualization sketch, shown below, was done digitally using Tableau and
+				Adobe Illustrator. We changed the color scale to be more intuitive,
+				as well as altered the meaning of the bar chart to encompass number of empty/occupied spots, for reasons
+				discussed above.
+				We also added a filter option for users to filter by regulation in this iteration. We did this
+				because we wanted users to have the option to make the vis more granular. We kept the
+				slider feature to change the time of day. </p>
+			<img src="digitalvissketch.png" alt="Second visualization sketch" style="width:700px;height:600px;">
+
+			<p>INSERT WHAT FINAL DESIGN DECISIONS WERE MADE</p>
 
       <p><em>Sketches and design choices to justify final visualization.</em></p>
 
@@ -551,9 +592,19 @@
 
 
       <h1>Conclusion</h1>
-	  <p>Parking is an extraordinarily important part of urban life. It allows people to own cars and have greater freedom of transportation. But, especially in a city like Boston, real estate is incredibly valuable and, well, cars take up a lot of space. </p>
-		<p> <br>This parking survey was designed to analyze how well parking is being used in the Chester Square area in an effort to propose solutions that will better serve the residents. We believe a major and simple solution would be to add lines for parking spots. Parking was almost never used efficiently in Chester Square, as people would park too far apart from each other and there was no consistency with car placement. </p>
-		<p><br>For further analysis, we would also recommend a follow-up parking survey be performed on a day with more ideal conditions. We were forced to work on a rainy day when there was construction, which skewed our results. </p>
+	  <p>Parking is an extraordinarily important part of urban life. It allows people
+			to own cars and have greater freedom of transportation. But, especially in a
+			city like Boston, real estate is incredibly valuable and, well, cars take up
+			a lot of space. </p>
+		<p> <br>This parking survey was designed to analyze how well parking is being
+			used in the Chester Square area in an effort to propose solutions that will
+			 better serve the residents. We believe a major and simple solution would be
+			 to add lines for parking spots. Parking was almost never used efficiently in
+			 Chester Square, as people would park too far apart from each other and there
+			 was no consistency with car placement. </p>
+		<p><br>For further analysis, we would also recommend a follow-up parking survey
+			be performed on a day with more ideal conditions. We were forced to work on a
+			 rainy day when there was construction, which skewed our results. </p>
 
 
       <h1>Acknowledgements</h1>

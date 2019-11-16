@@ -1,0 +1,31 @@
+Segment ID,Segment Number,Street Side,Route Number,Street Name,Street Direction,Start Bound Street,End Bound Street
+1R,1.0,R,1,Massachusetts Avenue,North,Shawmut Avenue,Chester Square - 2.1
+2.1R,2.1,R,2,Chester Square,North,Massachusetts Avenue,Chester Square - 2.2R
+2.1L,2.1,L,2,Chester Square,North,Massachusetts Avenue,Chester Square - 2.2L
+2.2L,2.2,L,2,Chester Square,North,Chester Square - 2.1L,Chester Square - 2.3L
+2.2R,2.2,R,2,Chester Square,North,Chester Square - 2.1R,Chester Square - 2.3R
+2.3R,2.3,R,2,Chester Square,North,Chester Square - 2.2R,Massachusetts Avenue
+2.3L,2.3,L,2,Chester Square,North,Chester Square - 2.2L,Massachusetts Avenue
+3.1R,3.1,R,3a,Massachusetts Avenue,North,Chester Square - 2.1,Chester Square - 2.3
+3.2R,3.2,R,3b,Massachusetts Avenue,North,Chester Square - 2.3,Tremont Street
+4R,4.0,R,4,Tremont Street,West,Massachusetts Avenue,W. Springfield Street
+5R,5.0,R,5,Tremont Street,East,W. Springfield Street,Massachusetts Avenue
+6R,6.0,R,6,Tremont Street,East,Massachusetts Avenue,Northampton Street
+7R,7.0,R,7,Tremont Street,West,Northampton Street,Massachusetts Avenue
+8R,8.0,R,8,Massachusetts Avenue,South,Tremont Street,Chester Square - North
+9.1R,9.1,R,9,Chester Square,South,Chester Square - Entrance,Chester Square - 9.2R
+9.1L,9.1,L,9,Chester Square,South,Chester Square - Entrance,Chester Square - 9.2L
+9.2R,9.2,R,9,Chester Square,South,Chester Square - 9.1R,Chester Square - 9.3R
+9.2L,9.2,L,9,Chester Square,South,Chester Square - 9.1L,Chester Square - 9.3L
+9.3R,9.3,R,9,Chester Square,South,Chester Square - 9.2R,Massachusetts Avenue
+9.3L,9.3,L,9,Chester Square,South,Chester Square - 9.2L,Massachusetts Avenue
+10.1R,10.1,R,10a,Massachusetts Avenue,South,Chester Square - 9.1,Chester Square - 9.3
+10.2R,10.2,R,10b,Massachusetts Avenue,South,Chester Square - 9.3,Shawmut Avenue
+11L,11.0,L,11,Shawmut Avenue,West,Massachusetts Avenue,Northampton Street
+11R,11.0,R,11,Shawmut Avenue,West,Massachusetts Avenue,Northampton Street
+12L,12.0,L,12,Northampton Street,North,Shawmut Avenue,Tremont Street
+12R,12.0,R,12,Northampton Street,North,Shawmut Avenue,Tremont Street
+13R,13.0,R,13,W. Springfield Street,South,Tremont Street,Shawmut Avenue
+13L,13.0,L,13,W. Springfield Street,South,Tremont Street,Shawmut Avenue
+14R,14.0,R,14,Shawmut Avenue,West,W. Springfield Street,Massachusetts Avenue
+14L,14.0,L,14,Shawmut Avenue,West,W. Springfield Street,Massachusetts Avenue

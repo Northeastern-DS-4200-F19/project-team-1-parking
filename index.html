@@ -492,8 +492,6 @@
 			<p>Below, you will find links to our presentation slides.</p>
 			<p>INSERT LINK HERE</p>
 
-      <p><em>final visualization screenshots (PNG images), design justifications, UI walk-through, and linked presentation slides.</em></p>
-
       <h1>Data Analysis</h1>
       <p><em>Summary of data, data types, and data preprocessing.</em></p>
 
@@ -501,15 +499,21 @@
 
 			<p>Our data was collected during a parking survey conducted in Chester Square from 6 a.m. to 8 p.m. on Oct. 29, 2019.</P>
 			<p>Filled spots, empty spots, and blocked spots were recorded by hand on the hour.
-				We filled this data into a Google Sheet by hand and exported it as a csv file.
-				We created both a horizontal bar chart and a map of Chester Square. We cleaned and processed the data with Python.
-				For the bar chart data, we iterated through the data and aggregated the number of occupied and empty spots for
-				each street for each hour, exporting the result as a csv. For our bar chart,
-				our data includes street name as a string, empty spots as an integer, and occupied spots as an integer.
-				It also includes the time of day as data type of time.
-				In order to preprocess the data for the map, we cleaned, aggregated, and reformatted the data using Python
-				with the NumPy and Pandas libraries. The output was a csv file with
-			polygon coordinates (floats), occupancy counts (integers), occupancy rates (floats), and percentages (floats).</p>
+				We filled this data into a Google Sheet by hand. This original Google Sheet
+				included each spot with a unique id number (integer), the street (string),
+				and the parking status for each spot throughout each hour of the data collection.
+				If a car was parked in a spot, we used the first three characters of the license plate (string).
+				If the spot was blocked, we used "blocked". If there was construction blocking the spot, we
+				used the value "construction". If there was simply no car parked in the spot, we did not include a value in that cell.</p>
+			<p> For the bar chart data, we used Python to clean and preprocess. We iterated through
+				the data and aggregated the number of occupied spots and full capacity for each street.
+				The final data has street name as a string, occupied spots as an integer, and capacity as an integer for each time of day.</p>
+			<p>For the map data, we also used Python with the NumPy and Pandas libraries to clean and preprocess.
+				The output was a csv file with polygon coordinates (floats), occupancy
+				counts (integers), occupancy rates (floats), and percentages (floats).</p>
+
+
+
 
       <h1>Task Analysis</h1>
 

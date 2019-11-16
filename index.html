@@ -493,9 +493,6 @@
 			<p>INSERT LINK HERE</p>
 
       <h1>Data Analysis</h1>
-      <p><em>Summary of data, data types, and data preprocessing.</em></p>
-
-      <p><em>Expectation: Data sources match the problem statement and are appropriate. These descriptions should be very explicit so someone could read your page and properly reproduce your results.</em></p>
 
 			<p>Our data was collected during a parking survey conducted in Chester Square from 6 a.m. to 8 p.m. on Oct. 29, 2019.</P>
 			<p>Filled spots, empty spots, and blocked spots were recorded by hand on the hour.
@@ -511,9 +508,6 @@
 			<p>For the map data, we also used Python with the NumPy and Pandas libraries to clean and preprocess.
 				The output was a csv file with polygon coordinates (floats), occupancy
 				counts (integers), occupancy rates (floats), and percentages (floats).</p>
-
-
-
 
       <h1>Task Analysis</h1>
 
@@ -531,18 +525,19 @@
 		<td> Identify </td>
 		<td> Browse </td>
 		<td> Discover </td>
-	  </tr><tr>
-	    <td> 2 </td>
-		<td> What is the average duration a single vehicle is parked? </td>
-		<td> Identify </td>
-		<td> Lookup </td>
-		<td> Present </td>
 	  </tr>
-	  <tr>
-	    <td> 3 </td>
+		<tr>
+	    <td> 2 </td>
 		<td> Where are the problem areas for after-work parking? </td>
 		<td> Identify </td>
 		<td> Browse </td>
+		<td> Present </td>
+	  </tr>
+		<tr>
+	    <td> 3 </td>
+		<td> What is the average duration a single vehicle is parked? </td>
+		<td> Identify </td>
+		<td> Lookup </td>
 		<td> Present </td>
 	  </tr>
 	  <tr>
@@ -552,7 +547,7 @@
 		<td> Browse </td>
 		<td> Discover </td>
 	  </tr>
-		<td>5 </td>
+		<td> 5 </td>
 		<td> How do the various parking regulations affect occupancy and turnover rates? </td>
 		<td> Summarize </td>
 		<td> Explore </td>
@@ -573,8 +568,15 @@
 			What are the areas that most frequently have no available spaces? By understanding
 			where the problem areas are and what time of the day issues arise, we can help the Neighborhood
 			Association prioritize certain areas for improvement.</p>
-
-      <p><em>Expectation: Clearly describes domain tasks, processes, goals and abstract tasks for domain problems.</em></p>
+			<p>The final results of our project are geared toward presentation and discovery. We want
+			the Association to be able to take this visualization and present its findings to
+			community members or local government figures. In order to achieve our task goals, we
+			knew this visualization had to be simple, uncluttered, and easily understood by individuals without a data science background.
+			We wanted it to tell the story of a day of parking in Chester Square, which is partially why we used the recognizable shape
+			of Chester Square in our map.</p>
+			<p>Our top two tasks both had to do with identifying and browsing, so we decided to create a visualization
+			that would answer both of those questions. We abstracted these tasks together to create the new
+			task goal of understanding the number/roportion of free spots throughout the day.</p>
 
       <h1>Design Process</h1>
 			<p>Below, you can see our initial visualization draft. Originally, we had imagined

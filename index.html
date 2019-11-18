@@ -580,43 +580,54 @@
 
       <h1>Design Process</h1>
 			<p>Below, you can see our initial visualization draft. Originally, we had imagined
-			the color scale as red, yellow, and green, but changed it to red, white, and green
-			in later iterations.
-			because that is more intuitive. We looked at this vis sketch and decided to
-			alter the supplementary bar chart to instead focus on street,
-			rather than time of day. We wanted both visualizations to represent the same time of day,
-			so that the user could look at a single moment in time from two perspectives. </p>
+			the color scale as red, yellow, and green. Spatial position is one of the most valuable
+			encodings in data visualization, and we wanted to use a map to show where exactly the
+	 		problem areas are for parking. We simplified the map down to just streets (rather than
+			including landmarks and buildings) because we wanted to avoid chart clutter. In this
+			original sketch, we imagined that the bar chart on the bottom would show the number of available
+			spots in the area at each hour. We did this because we wanted our vis to be very practical and usable
+			in the goal of showing people how easy it is to find parking at a specific time. Color coding on this
+			bar chart would have corresponded to the color scale for the map, with green meaning more spots are available
+			and red meaning less spots are available. A slider in this sketch controls the time of day currently shown on the map.
+			For each selected time of day, that bar on the bar chart would have been highlighted. </p>
 			<img src="Brian_Viz1.jpeg" alt="First visualization sketch" style="width:700px;height:600px;">
 			<p>Our next visualization sketch, shown below, was done digitally using Tableau and
-				Adobe Illustrator. We changed the color scale to be more intuitive,
-				as well as altered the meaning of the bar chart to encompass number of empty/occupied spots, for reasons
-				discussed above.
-				We also added a filter option for users to filter by regulation in this iteration. We did this
-				because we wanted users to have the option to make the vis more granular. We kept the
-				slider feature to change the time of day. </p>
+				Adobe Illustrator. We made a few very substantial changes in this iteration. One of these
+				changes was to alter our color scale from red, yellow, and green to red, white, and green.
+				We belive that this color scale is more intuitive because some people may not associate
+				yellow with a midpoint between green and red. White is more neutral. We toyed with
+				the idea of showing individual cars on our map rather than occupancy rates, but
+				we decided against it because we wanted to keep the vis simple enough for users
+				to gain a broader main takeaway.
+				We altered our bar chart to a stacked bar chart that shows the number
+				of occupied and empty spots for each street, rather than for each time of day.
+				As the slider updates the time shown on the map, the stacked bar chart also updates.
+				This makes our visualization more information-dense without too much added complexity.
+				We nixed color on the bar chart because we did not feel it was intuitive to have the same
+				color scale for both visualization portions since they are showing different aspects of our
+				data. We added a filter option for users to choose which types of regulation spots they
+				wanted to see. This would help make the visualization customizable, more granular, and show varying
+				levels of complexity.</p>
 			<img src="digitalvissketch.png" alt="Second visualization sketch" style="width:700px;height:600px;">
 
-			<p>INSERT WHAT FINAL DESIGN DECISIONS WERE MADE</p>
+			<p>Unfortunately, our group was unable to take part in the in-class usability testing.
+				In fact, we hit quite a few roadblocks to creating our final product. Due to time constraints,
+				we were forced to kill our darlings. In other words, we had to cut some features of the
+				visualization that, given more time, we would have included.
+				INSERT WHAT FINAL DESIGN DECISIONS WERE MADE</p>
 
-      <p><em>Sketches and design choices to justify final visualization.</em></p>
-
-      <p><em>Expectation: Evidence of iterative improvement.
-      Logical discussion of design choices grounded in theory from course.
-      Discusses feedback from usability testing.</em></p>
-
-
-      <h1>Conclusion</h1>
+    <h1>Conclusion</h1>
 	  <p>Parking is an extraordinarily important part of urban life. It allows people
 			to own cars and have greater freedom of transportation. But, especially in a
-			city like Boston, real estate is incredibly valuable and, well, cars take up
+			city like Boston, real estate is incredibly valuable and cars take up
 			a lot of space. </p>
-		<p> <br>This parking survey was designed to analyze how well parking is being
+		<p> This parking survey was designed to analyze how well parking is being
 			used in the Chester Square area in an effort to propose solutions that will
 			 better serve the residents. We believe a major and simple solution would be
 			 to add lines for parking spots. Parking was almost never used efficiently in
 			 Chester Square, as people would park too far apart from each other and there
 			 was no consistency with car placement. </p>
-		<p><br>For further analysis, we would also recommend a follow-up parking survey
+		<p>For further analysis, we would also recommend a follow-up parking survey
 			be performed on a day with more ideal conditions. We were forced to work on a
 			 rainy day when there was construction, which skewed our results. </p>
 

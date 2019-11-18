@@ -1,8 +1,8 @@
 Route Number,Side of Street,Street Name,6:00 AM Occupied,7:00 AM Occupied,8:00 AM Occupied,9:00 AM Occupied,10:00 AM Occupied,11:00 AM Occupied,12:00 PM Occupied,1:00 PM Occupied,2:00 PM Occupied,3:00 PM Occupied,4:00 PM Occupied,5:00 PM Occupied,6:00 PM Occupied,7:00 PM Occupied,8:00 PM Occupied,Total Spots
 1,Right,Massachusetts Avenue,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,3,4,5,7.0
-10a,Right,Massachusetts Avenue,18,16.0,16.0,13.0,18.0,17.0,16.0,15.0,17.0,16.0,15.0,16.0,18,17,18,19.0
-10b,Right,Massachusetts Avenue,6,6.0,6.0,6.0,7.0,7.0,7.0,5.0,7.0,7.0,7.0,6.0,7,7,7,7.0
-11,Left,Shawmut Avenue,6,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6,6,6,0.0
+10.1,Right,Massachusetts Avenue,18,16.0,16.0,13.0,18.0,17.0,16.0,15.0,17.0,16.0,15.0,16.0,18,17,18,19.0
+10.2,Right,Massachusetts Avenue,6,6.0,6.0,6.0,7.0,7.0,7.0,5.0,7.0,7.0,7.0,6.0,7,7,7,7.0
+11,Left,Shawmut Avenue,6,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6.0,6,6,6,6.0
 11,Right,Shawmut Avenue,8,8.0,7.0,6.0,7.0,7.0,7.0,8.0,7.0,7.0,6.0,4.0,7,7,6,9.0
 12,Left,Northampton Street,33,31.0,28.0,25.0,27.0,27.0,23.0,23.0,28.0,27.0,29.0,32.0,37,37,40,48.0
 12,Right,Northampton Street,31,27.0,21.0,19.0,19.0,22.0,19.0,19.0,16.0,19.0,19.0,23.0,25,30,33,43.0
@@ -14,8 +14,8 @@ Route Number,Side of Street,Street Name,6:00 AM Occupied,7:00 AM Occupied,8:00 A
 2,Right,Chester Square,5,2.0,2.0,3.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2,2,4,22.0
 3a,Right,Massachusetts Avenue,16,17.0,17.0,15.0,18.0,19.0,19.0,19.0,17.0,15.0,14.0,11.0,11,15,10,24.0
 3b,Right,Massachusetts Avenue,7,8.0,5.0,4.0,5.0,7.0,7.0,7.0,8.0,7.0,8.0,5.0,3,5,6,8.0
-4,Right,Tremont Street,4,3.0,4.0,2.0,4.0,3.0,4.0,2.0,2.0,2.0,2.0,0.0,3,4,4,0.0
-5,Right,Tremont Street,4,4.0,1.0,1.0,3.0,4.0,3.0,3.0,3.0,2.0,1.0,2.0,4,4,4,0.0
+4,Right,Tremont Street,4,3.0,4.0,2.0,4.0,3.0,4.0,2.0,2.0,2.0,2.0,0.0,3,4,4,4.0
+5,Right,Tremont Street,4,4.0,1.0,1.0,3.0,4.0,3.0,3.0,3.0,2.0,1.0,2.0,4,4,4,4.0
 6,Right,Tremont Street,4,4.0,3.0,3.0,3.0,4.0,4.0,3.0,2.0,4.0,4.0,5.0,4,5,5,7.0
 7,Right,Tremont Street,8,8.0,7.0,6.0,8.0,7.0,7.0,7.0,6.0,7.0,7.0,5.0,7,7,7,9.0
 8,Right,Massachusetts Avenue,5,4.0,5.0,5.0,4.0,5.0,5.0,5.0,5.0,5.0,5.0,4.0,5,5,5,6.0

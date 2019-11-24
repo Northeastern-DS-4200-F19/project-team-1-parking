@@ -19,7 +19,17 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-config" content="/favicons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
-	</head>
+  </head>
+  
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://unpkg.com/d3-simple-slider"></script>
+  
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous"
+  />
 
   <!-- Main page content -->
 	<body>
@@ -346,6 +356,11 @@
 		jointEdges.forEach(connectEdges);
 	</script>
 
+<h2>Time</h2>
+<div class="row align-items-center">
+  <div class="col-sm-2"><p id="value-time"></p></div>
+  <div class="col-sm"><div id="slider-time"></div></div>
+</div>
     <style>
 
       .axis .domain {
@@ -356,15 +371,12 @@
       <svg width="960" height="960"></svg>
       <script src="https://d3js.org/d3.v4.min.js"></script>
       <script>
-<<<<<<< Updated upstream
-
-=======
       
       
->>>>>>> Stashed changes
       var svg = d3.select("svg"),
           margin = {top: 20, right: 20, bottom: 30, left: 120},
           width = +svg.attr("width") - margin.left - margin.right,
+          // width = 500;
           // height = +svg.attr("height") - margin.top - margin.bottom,
           height =200;
           g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -379,65 +391,110 @@
 
       var z = d3.scaleOrdinal()
           .range(["#98abc5", "#8a80a6"]);
-<<<<<<< Updated upstream
-
-=======
+      
       
 
-   
->>>>>>> Stashed changes
-      d3.csv("data2.csv", function(d, i, columns) {
-        console.log("hello");
-        
-        for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
-        d.total = t;
-        return d;
+          // var z = d3.scaleOrdinal()
+          // .range(["#98abc5"]);
+      
+      
+          // var tot = d3.scaleOrdinal()
+          // .range(["#8a80a6"]);
+
+
+
+      d3.csv("data.csv", function(d, i, columns) {    
+        // for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
+        // d.total = t;
+        // return d;
+        console.log("data" + d);
+        console.log(d.Total)
+       return d
+       
       }, function(error, data) {
         if (error) throw error;
 
-        var keys = data.columns.slice(1);
-<<<<<<< Updated upstream
-
-        data.sort(function(a, b) { return b.total - a.total; });
-        y.domain(data.map(function(d) { return d.State; }));
-        x.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
-        z.domain(keys);
-
-=======
       
+        var keys = data.columns.slice(1);
+        // var keys = data.columns.slice(1);
 
-        data.sort(function(a, b) { return b.total - a.total; });
+
+     console.log("key")
+		 console.log(keys)
+     var rest = keys[2];
+     console.log("rest" + rest)
+     var array =[keys[0], keys[1]]
+     console.log("array:");
+     console.log(array)
+
+
+
+        console.log("data:");
         console.log(data)
+        console.log("keys:");
         console.log(keys)
-        y.domain(data.map(function(d) { return d.State; }));	
-        x.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
-        z.domain(keys);
+        // console.log("total:" + totalCapacity)
+        // y.domain(data.map(function(d) { return d.State; }));	
+        // x.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
+        // z.domain(keys);
+        // the y axis with the street names 
+        y.domain(data.map(function(d) { return d.Street; }));	
+        // x.domain(data.map(function(d) { return d.Total; }));	
+        // the x axis with the data collected 
+        
+        x.domain([0, d3.max(data, function(d) { 
+					console.log("datatttt")
+					console.log(d)
+          console.log("so far" + parseInt(d.Total))
+          return parseInt(d.Total)})])
+    
+                
+        // x.domain([0, d3.max(data,d => d.Total)])
+      
+        // x.domain(d3.extent(data, function(d) { return d.Total; }));
+        // the z axis is the legends 
+        z.domain(array);
+
 
         // z.domain(function(data, time) {
         //   var keys = data.columns.slice(1);
-        //   // return data.columns.slice(data.State);
-        //   console.log("the keys" + d.State); 
+        //   return data.columns.slice(data.Street);
+        //   console.log("the keys" + d.Street); 
         // })
+
+
+        console.log("okay");
       
->>>>>>> Stashed changes
+      var okay = d3.stack().keys(array)(data)
+      console.log(okay);
+      
         g.append("g")
           .selectAll("g")
-          .data(d3.stack().keys(keys)(data))
+          .data(d3.stack().keys(array)(data))
           .enter().append("g")
-            .attr("fill", function(d) { return z(d.key); })
+            
+            .attr("fill", function(d) {
+             
+
+               return z(d.key); })
           .selectAll("rect")
           .data(function(d) { return d; })
           .enter().append("rect")
-            .attr("y", function(d) { return y(d.data.State); })
-            .attr("x", function(d) { return x(d[0]); })
+            .attr("y", function(d) { return y(d.data.Street); })
+            .attr("x", function(d) { 
+							// should be the first number
+							return x(d[0]); })
+							//should be the rest difference between total and first num
             .attr("width", function(d) { return x(d[1]) - x(d[0]); })
             .attr("height", y.bandwidth());
 
+        // the y axis 
         g.append("g")
             .attr("class", "axis")
             .attr("transform", "translate(0,0)")
             .call(d3.axisLeft(y));
 
+        // the x axis
         g.append("g")
             .attr("class", "axis")
           .attr("transform", "translate(0,"+height+")")
@@ -457,7 +514,7 @@
             .attr("font-size", 12)
             .attr("text-anchor", "end")
           .selectAll("g")
-          .data(keys.slice().reverse())
+          .data(array.slice().reverse())
           .enter().append("g")
          .attr("transform", function(d, i) { return "translate(-50," + (300 + i * 20) + ")"; });
 
@@ -472,8 +529,94 @@
             .attr("y", 9.5)
             .attr("dy", "0.32em")
             .text(function(d) { return d; });
-      });
+     
 
+
+     // Time
+  var dataTime = d3.range(0, 15).map(function(d) {
+    return new Date(2019,9,29, 6+d );
+    
+  });
+  function textChange(val) {
+		console.log(val);
+		console.log("hour")
+		var hour = val.getHours()
+		console.log(hour)
+    console.log(data)
+    d3.select('p#value-time').text(d3.timeFormat('%Y')(val));
+
+
+		var rest = keys[0];
+     console.log("rest" + rest)
+     var array =[keys[0], keys[hour - 6]]
+     console.log("array:");
+     console.log(array)
+
+
+		var okay = d3.stack().keys(array)(data)
+      console.log(okay);
+      
+        g.append("g")
+          .selectAll("g")
+          .data(d3.stack().keys(array)(data))
+          .enter().append("g")
+            // .attr("fill", function(d) {
+              // console.log("The da" + d.key)
+              // if (d.key!=="Total") {
+              //   console.log("colored")
+              //   console.log(z(d.key))
+              //   return z(d.key)
+              // }else {
+              //   console.log("nope")
+              //   console.log(tot(d.key))
+              //   return tot(d.key)
+              // } })
+            .attr("fill", function(d) {
+              console.log(d.key)
+              console.log(z(d.key))
+              // if (!d.key.equal(Total) ){
+              //   z(d.key)
+              // }
+
+               return z(d.key); })
+          .selectAll("rect")
+          .data(function(d) { return d; })
+          .enter().append("rect")
+            .attr("y", function(d) { return y(d.data.Street); })
+            .attr("x", function(d) { 
+				
+              return x(d[0]); })
+            .attr("width", function(d) { return x(d[1]) - x(d[0]); })
+            .attr("height", y.bandwidth());
+
+  }
+
+  var sliderTime = d3
+    .sliderBottom()
+    .min(d3.min(dataTime))
+    .max(d3.max(dataTime))
+    .step(1000 * 60 * 60)
+    .width(300)
+    .tickFormat(d3.timeFormat('%H'))
+    .tickValues(dataTime)
+    .default(new Date(2019, 9, 29))
+    .on('onchange', val => {
+      // d3.select('p#value-time').text(d3.timeFormat('%Y')(val));
+     textChange(val); 
+    });
+
+  var gTime = d3
+    .select('div#slider-time')
+    .append('svg')
+    .attr('width', 500)
+    .attr('height', 100)
+    .append('g')
+    .attr('transform', 'translate(30,30)');
+
+  gTime.call(sliderTime);
+
+  d3.select('p#value-time').text(d3.timeFormat('%Y')(sliderTime.value()));
+});
       </script>
 
 

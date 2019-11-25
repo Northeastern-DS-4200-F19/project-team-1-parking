@@ -356,7 +356,8 @@
 		jointEdges.forEach(connectEdges);
 	</script>
 
-<h2>Time</h2>
+
+
 <div class="row align-items-center">
   <div class="col-sm-2"><p id="value-time"></p></div>
   <div class="col-sm"><div id="slider-time"></div></div>
@@ -389,13 +390,13 @@
       var x = d3.scaleLinear()
           .rangeRound([0, width]);	// .rangeRound([height, 0]);
 
-      var z = d3.scaleOrdinal()
+      var m = d3.scaleOrdinal()
           .range(["#98abc5", "#8a80a6"]);
       
       
 
-          // var z = d3.scaleOrdinal()
-          // .range(["#98abc5"]);
+          var z = d3.scaleOrdinal()
+          .range(["#98abc5"]);
       
       
           // var tot = d3.scaleOrdinal()
@@ -464,22 +465,25 @@
 
 
         console.log("okay");
-      
-      var okay = d3.stack().keys(array)(data)
-      console.log(okay);
-      
-        g.append("g")
+		g.append("g")
+		// .attr("class", "chartRow")
+
           .selectAll("g")
           .data(d3.stack().keys(array)(data))
           .enter().append("g")
-            
-            .attr("fill", function(d) {
-             
-
-               return z(d.key); })
+		  .attr("fill", function(d) {
+				console.log("the key")
+				console.log(d.key)
+				console.log("the color")
+				console.log(z(d.key))
+               return "#8a80a6"; })
           .selectAll("rect")
           .data(function(d) { return d; })
+
           .enter().append("rect")
+		  .attr("class", "chartRow")
+
+		//   .attr("class","bar")
             .attr("y", function(d) { return y(d.data.Street); })
             .attr("x", function(d) { 
 							// should be the first number
@@ -487,6 +491,9 @@
 							//should be the rest difference between total and first num
             .attr("width", function(d) { return x(d[1]) - x(d[0]); })
             .attr("height", y.bandwidth());
+      
+     // draw textchange
+	//  textChange(6)
 
         // the y axis 
         g.append("g")
@@ -522,14 +529,16 @@
             .attr("x", width - 19)
             .attr("width", 19)
             .attr("height", 10)
-            .attr("fill", z);
+            .attr("fill", m)
 
         legend.append("text")
+			.attr("class", "legendtext")
             .attr("x", width - 24)
             .attr("y", 9.5)
             .attr("dy", "0.32em")
             .text(function(d) { return d; });
      
+				
 
 
      // Time
@@ -537,57 +546,152 @@
     return new Date(2019,9,29, 6+d );
     
   });
+
+
+//   //Create chart row and move to below the bottom of the chart
+// 	var chartRow = svg.selectAll("g.chartRow")
+// 	  .data(newdata, function(d){ return d.key});
+// 	var newRow = chartRow
+// 	  .enter()
+// 	  .append("g")
+// 	  .attr("class", "chartRow")
+// 	  .attr("transform", "translate(0," + height + margin.top + margin.bottom + ")");
+
+// 	//Add rectangles
+// 	newRow.insert("rect")
+// 	  .attr("class","bar")
+// 	  .attr("x", 0)
+// 	  .attr("opacity",0)
+// 	  .attr("height", y.rangeBand())
+// 	  .attr("width", function(d) { return x(d.value);}) 
+
+// 	//Add value labels
+// 	newRow.append("text")
+// 	  .attr("class","label")
+// 	  .attr("y", y.rangeBand()/2)
+// 	  .attr("x",0)
+// 	  .attr("opacity",0)
+// 	  .attr("dy",".35em")
+// 	  .attr("dx","0.5em")
+// 	  .text(function(d){return d.value;}); 
+	
+// 	//Add Headlines
+// 	newRow.append("text")
+// 	  .attr("class","category")
+// 	  .attr("text-overflow","ellipsis")
+// 	  .attr("y", y.rangeBand()/2)
+// 	  .attr("x",categoryIndent)
+// 	  .attr("opacity",0)
+// 	  .attr("dy",".35em")
+// 	  .attr("dx","0.5em")
+// 	  .text(function(d){return d.key});
+
+
+
   function textChange(val) {
+
+
+	// console.log(g)
+
+	// chartRow= g.select("chartRow")
+	  //////////
+	//UPDATE//
+	//////////
+	
+	//Update bar widths
+	// chartRow.select(".bar").transition()
+	// 	console.log("yepp")
+	// 	  .attr("width", function(d) { 
+			
+	// 		return x(d.value +1);})
+	// 	  .attr("opacity",1);
+
+
+	// //Update data labels
+	// chartRow.select(".label").transition()
+	//   .duration(300)
+	//   .attr("opacity",1)
+	//   .tween("text", function(d) { 
+	// 	var i = d3.interpolate(+this.textContent.replace(/\,/g,''), +d.value);
+	// 	return function(t) {
+	// 	  this.textContent = Math.round(i(t));
+	// 	};
+	//   });
+
+
+	d3.selectAll("g.chartRow").remove();
+
+	d3.selectAll("text.legendtext").remove();
 		console.log(val);
 		console.log("hour")
+		if (val instanceof Date) {
 		var hour = val.getHours()
-		console.log(hour)
+		} else {
+			var hour = val;
+		}
+	console.log(hour)
     console.log(data)
-    d3.select('p#value-time').text(d3.timeFormat('%Y')(val));
+    d3.select('p#value-time').text(d3.timeFormat('%H')(val));
 
 
-		var rest = keys[0];
+	var rest = keys[0];
      console.log("rest" + rest)
-     var array =[keys[0], keys[hour - 6]]
+     var array =[keys[hour - 5]]
      console.log("array:");
      console.log(array)
+	 var arrayy = [keys[0],keys[hour - 5]]
 
 
-		var okay = d3.stack().keys(array)(data)
+	 
+	 var okay = d3.stack().keys(array)(data)
       console.log(okay);
+	
       
         g.append("g")
+		.attr("class", "chartRow")
+
           .selectAll("g")
           .data(d3.stack().keys(array)(data))
           .enter().append("g")
-            // .attr("fill", function(d) {
-              // console.log("The da" + d.key)
-              // if (d.key!=="Total") {
-              //   console.log("colored")
-              //   console.log(z(d.key))
-              //   return z(d.key)
-              // }else {
-              //   console.log("nope")
-              //   console.log(tot(d.key))
-              //   return tot(d.key)
-              // } })
-            .attr("fill", function(d) {
-              console.log(d.key)
-              console.log(z(d.key))
-              // if (!d.key.equal(Total) ){
-              //   z(d.key)
-              // }
-
+		  .attr("fill", function(d) {
+				console.log("the key")
+				console.log(d.key)
+				console.log("the color")
+				console.log(z(d.key))
                return z(d.key); })
           .selectAll("rect")
           .data(function(d) { return d; })
+
           .enter().append("rect")
+
+		//   .attr("class","bar")
             .attr("y", function(d) { return y(d.data.Street); })
             .attr("x", function(d) { 
-				
-              return x(d[0]); })
+							// should be the first number
+							return x(d[0]); })
+							//should be the rest difference between total and first num
             .attr("width", function(d) { return x(d[1]) - x(d[0]); })
             .attr("height", y.bandwidth());
+
+			
+			var legend = g.append("g")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", 12)
+            .attr("text-anchor", "end")
+          .selectAll("g")
+          .data(arrayy.slice().reverse())
+          .enter().append("g")
+         .attr("transform", function(d, i) { return "translate(-50," + (300 + i * 20) + ")"; });
+
+        legend.append("text")
+			.attr("class", "legendtext")
+            .attr("x", width - 24)
+            .attr("y", 9.5)
+            .attr("dy", "0.32em")
+            .text(function(d) { 
+				console.log("jiim")
+				console.log(d)
+				return d; });
 
   }
 
@@ -599,10 +703,11 @@
     .width(300)
     .tickFormat(d3.timeFormat('%H'))
     .tickValues(dataTime)
-    .default(new Date(2019, 9, 29))
+
+    .default(new Date(2019, 9, 29).getHours())
     .on('onchange', val => {
       // d3.select('p#value-time').text(d3.timeFormat('%Y')(val));
-     textChange(val); 
+     textChange(val, g); 
     });
 
   var gTime = d3
@@ -615,7 +720,13 @@
 
   gTime.call(sliderTime);
 
-  d3.select('p#value-time').text(d3.timeFormat('%Y')(sliderTime.value()));
+  d3.select('p#value-time').text(d3.timeFormat('%H')(sliderTime.value()));
+
+
+
+
+
+
 });
       </script>
 

@@ -1,7 +1,7 @@
 Street,Total,6:00 AM Occupied,7:00 AM Occupied,8:00 AM Occupied,9:00 AM Occupied,10:00 AM Occupied,11:00 AM Occupied,12:00 PM Occupied,1:00 PM Occupied,2:00 PM Occupied,3:00 PM Occupied,4:00 PM Occupied,5:00 PM Occupied,6:00 PM Occupied,7:00 PM Occupied,8:00 PM Occupied
 Massachusetts Avenue,7.0,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,3,4,5
 Shawmut Avenue,14,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,3,4,5
-Northampton Street,20,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,3,4,5
-W. Springfield Street,28,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0s,0.0,3.0,3,4,5
+Northampton Street,20,3,7.0,8.0,0.1,0.9,0.0,4.0,3.0,6.0,9.0,0.0,3.0,3,4,5
+W. Springfield Street,28,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,3,4,5
 Chester Square,24,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,3,4,5
 Tremont Street,17,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,3,4,5

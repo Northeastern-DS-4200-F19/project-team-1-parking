@@ -157,7 +157,7 @@ mapSvg.append('text')
 mapSvg.append('text')
       .attr("x", scaleX(1.75))
       .attr("y", scaleY(-0.23))
-      .text('Breakout Bar Chart')
+      .text('Parking Inventory Bar Chart')
       .attr("font-family", "sans-serif")
       .attr("font-size", "20px")
       .attr("fill", "black");
@@ -267,7 +267,7 @@ d3.csv('./data/intersections_data.csv')
                   var occupancy_total = agg_value['Total Spots'];
                   var occupancy_rate = agg_value[time];
 
-                  if ((timeVal.getHours() >= 7 && timeVal.getHours() <= 17) && ('1' === idVal || '2' === idVal)) {
+                  if ((timeVal.getHours() >= 9 && timeVal.getHours() <= 17) && ('1' === idVal || '2' === idVal)) {
                     return 'gray'
                   } else {
                     return redWhiteGreenColorScale(occupancy_rate);

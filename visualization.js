@@ -240,7 +240,7 @@ d3.csv('./data/intersections_data.csv')
               .default(d3.min(dataTime))
               .on('onchange', val => {
                 sliderTime = d3.timeFormat('%-I:%M %p')(val) + ' Occupied';
-                updateDisplayedTime(sliderTime);
+                updateDisplayedTime(sliderTime, val);
               });
 
             var gTime = svg.append('svg')
@@ -253,9 +253,9 @@ d3.csv('./data/intersections_data.csv')
 
             d3.select('p#value-time').text(d3.timeFormat('%I')(sliderTime.value()));
 
-            updateDisplayedTime('6:00 AM Occupied')
+            updateDisplayedTime('6:00 AM Occupied', new Date(1970, 0, 1, 6, 0, 0, 0));
 
-            function updateDisplayedTime(time) {
+            function updateDisplayedTime(time, timeVal) {
               mapSvg.selectAll('line')
                 .attr('stroke', function(d) {
                   var id = d.id;
@@ -266,7 +266,12 @@ d3.csv('./data/intersections_data.csv')
                   });
                   var occupancy_total = agg_value['Total Spots'];
                   var occupancy_rate = agg_value[time];
-                  return redWhiteGreenColorScale(occupancy_rate);
+
+                  if ((timeVal.getHours() >= 7 && timeVal.getHours() <= 17) && ('1' === idVal || '2' === idVal)) {
+                    return 'gray'
+                  } else {
+                    return redWhiteGreenColorScale(occupancy_rate);
+                  }
                 });
             }
           });

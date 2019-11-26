@@ -334,6 +334,165 @@
 						.attr('transform', 'translate(30,30)');
 
 					gTime.call(sliderTime);
+			  z.domain(array);
+
+			  // Append the rectangles onto the bar chart with the width
+			  g.append("g")
+				.selectAll("g")
+				.data(d3.stack().keys(array)(data))
+				.enter().append("g")
+				.attr("fill", function(d) {
+					 return "#8a80a6"; })
+				.selectAll("rect")
+				.data(function(d) { return d; })
+
+				.enter().append("rect")
+				.attr("class", "chartRow")
+				.attr("y", function(d) { return y(d.data.Street); })
+				.attr("x", function(d) {
+								  return x(d[0]); })
+				  .attr("width", function(d) { return x(d[1]) - x(d[0]); })
+				  .attr("height", y.bandwidth());
+
+			  // the y axis
+			  g.append("g")
+				  .attr("class", "axis")
+				  .attr("transform", "translate(0,0)")
+				  .call(d3.axisLeft(y));
+
+			  // the x axis
+			  g.append("g")
+				  .attr("class", "axis")
+				.attr("transform", "translate(0,"+height+")")
+				  .call(d3.axisBottom(x).ticks(null, "s"))
+				.append("text")
+				  .attr("y", 2)
+				  .attr("x", x(x.ticks().pop()) + 0.5)
+				  .attr("dy", "0.32em")
+				  .attr("fill", "#000")
+				  .attr("font-weight", "bold")
+				  .attr("text-anchor", "start")
+				  .text("Parking Spots")
+				.attr("transform", "translate("+ (-width) +",-10)");
+
+			  // create the legend for the bar chart
+			  var legend = g.append("g")
+				  .attr("font-family", "sans-serif")
+				  .attr("font-size", 12)
+				  .attr("text-anchor", "end")
+				.selectAll("g")
+				.data(array.slice().reverse())
+				.enter().append("g")
+			   .attr("transform", function(d, i) { return "translate(-50," + (300 + i * 20) + ")"; });
+
+			  // colors for the legend of bar chart
+			  legend.append("rect")
+				  .attr("x", width - 19)
+				  .attr("width", 19)
+				  .attr("height", 10)
+				  .attr("fill", m)
+
+			  // text of legend for bar chart
+			  legend.append("text")
+				  .attr("class", "legendtext")
+				  .attr("x", width - 24)
+				  .attr("y", 9.5)
+				  .attr("dy", "0.32em")
+				  .text(function(d) { return d; });
+
+
+			  // get the time of the data collection
+				var dataTime = d3.range(0, 15).map(function(d) {
+				  return new Date(2019,9,29, 6+d );
+
+			});
+
+
+		  // function to update the bar chart link to the hour scroller given a new val of hour
+			function textChange(val) {
+				d3.selectAll("g.chartRow").remove();
+				d3.selectAll("text.legendtext").remove();
+				  if (val instanceof Date) {
+						  var hour = val.getHours()
+						  } else {
+							  var hour = val;
+						  }
+
+				  d3.select('p#value-time').text(d3.timeFormat('%H')(val));
+				  var rest = keys[0];
+				  var array =[keys[hour - 5]]
+				   var arrayy = [keys[0],keys[hour - 5]]
+				   var okay = d3.stack().keys(array)(data)
+
+				  g.append("g")
+				  .attr("class", "chartRow")
+
+				  .selectAll("g")
+				  .data(d3.stack().keys(array)(data))
+				  .enter().append("g")
+				  .attr("fill", function(d) {
+					 return z(d.key); })
+				  .selectAll("rect")
+				  .data(function(d) { return d; })
+				  .enter().append("rect")
+				  .attr("y", function(d) { return y(d.data.Street); })
+				  .attr("x", function(d) {
+								  return x(d[0]); })
+				  .attr("width", function(d) { return x(d[1]) - x(d[0]); })
+				  .attr("height", y.bandwidth());
+
+				  // update the legend with the new time
+				  var legend = g.append("g")
+					  .attr("font-family", "sans-serif")
+					  .attr("font-size", 12)
+					  .attr("text-anchor", "end")
+						  .selectAll("g")
+						  .data(arrayy.slice().reverse())
+						  .enter().append("g")
+							   .attr("transform", function(d, i) { return "translate(-50," + (300 + i * 20) + ")"; });
+
+				  legend.append("text")
+					  .attr("class", "legendtext")
+					  .attr("x", width - 24)
+					  .attr("y", 9.5)
+					  .attr("dy", "0.32em")
+					  .text(function(d) {
+						  console.log("jiim")
+						  console.log(d)
+						  return d; });
+
+		}
+
+					// slider for the hour updates
+				  var sliderTime = d3
+					  .sliderBottom()
+					  .min(d3.min(dataTime))
+					  .max(d3.max(dataTime))
+					  .step(1000 * 60 * 60)
+					  .width(300)
+					  .tickFormat(d3.timeFormat('%H'))
+					  .tickValues(convertTime(dataTime))
+
+					  .default(new Date(2019, 9, 29).getHours())
+					  .on('onchange', val => {
+					  	textChange(val, g);
+					  });
+
+				  var gTime = d3
+					  .select('div#slider-time')
+					  .append('svg')
+					  .attr('width', 500)
+					  .attr('height', 100)
+					  .append('g')
+					  .attr('transform', 'translate(30,30)');
+
+					gTime.call(sliderTime);
+
+					d3.select('p#value-time').text(d3.timeFormat('%H')(sliderTime.value()));
+
+	  });
+			</script>
+>>>>>>> c930ea811fdb17c199c21e640df70604fa63429f
 
 					d3.select('p#value-time').text(d3.timeFormat('%H')(sliderTime.value()));
 
@@ -377,9 +536,9 @@
 				checkboxes to filter by interactivity, and brushing and linking that would highlight the street
 				in the bar chart when it is clicked on in the map view (and vice versa).</p>
 			<p>Below, you can see screenshots of our final visualization.</p>
-			<p>INSERT PNG HERE</p>
+			<p></p>
 			<p>Below, you will find links to our presentation slides.</p>
-			<p>INSERT LINK HERE</p>
+			<p><a href="https://docs.google.com/presentation/d/1URYgCU0x31HCd6G91Mb_p8MAu7sQfnMg_Ls6fnZZxog/edit?usp=sharing">LINK</a></p>
 
 			<h1>Data Analysis</h1>
 
@@ -503,7 +662,7 @@
 				In fact, we hit quite a few roadblocks to creating our final product. Due to time constraints,
 				we were forced to kill our darlings. In other words, we had to cut some features of the
 				visualization that, given more time, we would have included.
-				INSERT WHAT FINAL DESIGN DECISIONS WERE MADE</p>
+			</p>
 
 			<h1>Conclusion</h1>
 			<p>Parking is an extraordinarily important part of urban life. It allows people

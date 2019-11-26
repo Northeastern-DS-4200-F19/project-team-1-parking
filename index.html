@@ -1,603 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- Metadata -->
-	<head>
-    <meta charset="utf-8">
+	<!-- Metadata -->
 
-    <!-- Title -->
+	<head>
+		<!-- TODO: DELETE MODIFICATIONS -->
+		<script src="https://d3js.org/d3.v5.min.js"></script>
+
+
+		<meta charset="utf-8">
+
+		<!-- Title -->
 		<title>Project Team #1: Parking, DS 4200 F19</title>
 
-    <!-- CSS Styling -->
+		<!-- CSS Styling -->
 		<link rel="stylesheet" href="style.css">
 
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/favicons/site.webmanifest">
-    <link rel="shortcut icon" href="/favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
-  </head>
-  
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-  <script src="https://unpkg.com/d3-simple-slider"></script>
-  
-  <link
-    rel="stylesheet"
-    href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-    crossorigin="anonymous"
-  />
+		<!-- Favicons -->
+		<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+		<link rel="manifest" href="/favicons/site.webmanifest">
+		<link rel="shortcut icon" href="/favicons/favicon.ico">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="msapplication-config" content="/favicons/browserconfig.xml">
+		<meta name="theme-color" content="#ffffff">
+	</head>
 
-  <!-- Main page content -->
+	<!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
+	<script src="https://unpkg.com/d3-simple-slider"></script>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+
+	<!-- Main page content -->
+
 	<body>
 
-    <!-- Update this with your GitHub repo URL -->
-    <span id="forkongithub"><a href="https://github.com/Northeastern-DS-4200-F19/project-team-1-parking">Fork me on GitHub</a></span>
+		<!-- Update this with your GitHub repo URL -->
+		<span id="forkongithub"><a href="https://github.com/Northeastern-DS-4200-F19/project-team-1-parking">Fork me on GitHub</a></span>
 
-    <!-- Your writeup goes here -->
+		<!-- Your writeup goes here -->
 
-    <div class = "content-column">
+		<div class="content-column">
 
-      <h1>Project Team #1: Parking, DS 4200 F19</h1>
-			<p><strong> Title: A day's worth of parking in Chester Square</strong><p>
+			<h1>Project Team #1: Parking, DS 4200 F19</h1>
+			<p><strong> Title: A day's worth of parking in Chester Square</strong>
+				<p>
 
-      <p><strong>Brian Fogarty</strong>, <strong> Ysabelle Kempe</strong>, <strong>Lal  Birali</strong>, <strong>Victoria Yang</strong></p>
+					<p><strong>Brian Fogarty</strong>, <strong> Ysabelle Kempe</strong>, <strong>Lal Birali</strong>, <strong>Victoria Yang</strong></p>
 
-      <p>Service-Learning Course Project as part of <a href="http://www.ccs.neu.edu/home/cody/courses/ds4200-f19/">DS 4200: Information Presentation and Visualization</a>, taught by <a href="https://cody.khoury.northeastern.edu/">Prof. Cody Dunne</a>, <a href="https://visualization.khoury.northeastern.edu/">Data Visualization @ Khoury</a>, <a href="https://www.khoury.northeastern.edu/">Northeastern University</a>.</p>
-
-
-      <h1>Motivation</h1>
-
-	  <p> This project was developed in conjunction with the Chester Square Neighborhood
-			Association. The goal of the Neighborhood Association is to show that there is a problem with
-			parking availability and distribution in the area. Residents are often unable to find
-			parking close to their homes, and there are complaints of inefficient parking practices.</p>
-	  <p> The Neighborhood Association wants to bring the problem of parking to the
-			attention of local government. The Association already knows there is a problem
-			and is able to explain the issue and potential causes in words (e.g., not
-			enough parking, residents don’t know where to park, etc.), but they want to
-			be able to show numbers that prove their point.  </p>
-	  <p> We hope this project serves as a valuable tool for the Neighborhood Association
-			to communicate the need for change to authorities. Cars are a key player in daily
-			urban life, and parking needs to be taken seriously in order to create
-			a better standard of living for those on both sides of Chester Square.</p>
-		<p> When designing our project, we asked ourselves how occupied Chester Square parking
-			is throughout the day. We wanted our final piece to show change over time, as well as give users
-			an idea of how difficult it is to find parking at any given time. Through our own research
-			and data collection, we have concluded that a reasonable response would be
-			to more clearly mark parking spots, as well as conduct another survey.</p>
-
-      <h1>Visualization</h1>
-
-      <p><em>Include the interactive visualization as part of this page. Static example follows.</em></p>
-
-    </div>
+					<p>Service-Learning Course Project as part of <a href="http://www.ccs.neu.edu/home/cody/courses/ds4200-f19/">DS 4200: Information Presentation and Visualization</a>, taught by <a href="https://cody.khoury.northeastern.edu/">Prof. Cody
+							Dunne</a>, <a href="https://visualization.khoury.northeastern.edu/">Data Visualization @ Khoury</a>, <a href="https://www.khoury.northeastern.edu/">Northeastern University</a>.</p>
 
 
-    <!-- Your visualization here -->
-	<svg width="500" height="600"></svg>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
-	<script>
-		var pointRadius = 3;
-		var trapNodeShift = 0.09375;
+					<h1>Motivation</h1>
 
-		var xMinScale = pointRadius + 20;
-		var xMaxScale = 250;
+					<p> This project was developed in conjunction with the Chester Square Neighborhood
+						Association. The goal of the Neighborhood Association is to show that there is a problem with
+						parking availability and distribution in the area. Residents are often unable to find
+						parking close to their homes, and there are complaints of inefficient parking practices.</p>
+					<p> The Neighborhood Association wants to bring the problem of parking to the
+						attention of local government. The Association already knows there is a problem
+						and is able to explain the issue and potential causes in words (e.g., not
+						enough parking, residents don’t know where to park, etc.), but they want to
+						be able to show numbers that prove their point. </p>
+					<p> We hope this project serves as a valuable tool for the Neighborhood Association
+						to communicate the need for change to authorities. Cars are a key player in daily
+						urban life, and parking needs to be taken seriously in order to create
+						a better standard of living for those on both sides of Chester Square.</p>
+					<p> When designing our project, we asked ourselves how occupied Chester Square parking
+						is throughout the day. We wanted our final piece to show change over time, as well as give users
+						an idea of how difficult it is to find parking at any given time. Through our own research
+						and data collection, we have concluded that a reasonable response would be
+						to more clearly mark parking spots, as well as conduct another survey.</p>
 
-		var yMinScale = xMinScale + 20;
-		var yMaxScale = xMaxScale + 20;
+					<h1>Visualization</h1>
 
-		d3.select('body')
-		.append('svg')
-		.attr('width', xMaxScale + 20)
-		.attr('height', yMaxScale + 20);
+					<p><em>Include the interactive visualization as part of this page. Static example follows.</em></p>
 
-		var jointNodes = [{
-		  jointID: 0,
-		  x: 0,
-		  y: 0
-		},{
-		  jointID: 0.1,
-		  x: trapNodeShift,
-		  y: trapNodeShift
-		},{
-		  jointID: -0.1,
-		  x: trapNodeShift,
-		  y: -trapNodeShift
-		},{
-		  jointID: 0.9,
-		  x: 0.5 - trapNodeShift,
-		  y: trapNodeShift
-		},{
-		  jointID: -0.9,
-		  x: 0.5 - trapNodeShift,
-		  y: -trapNodeShift
-		},{
-		  jointID: 1,
-		  x: 0.5,
-		  y: 0
-		},{
-		  jointID: 1.1,
-		  x: 0.5 + trapNodeShift,
-		  y: trapNodeShift
-		},{
-		  jointID: -1.1,
-		  x: 0.5 + trapNodeShift,
-		  y: -trapNodeShift
-		},{
-		  jointID: 1.9,
-		  x: 1 - trapNodeShift,
-		  y: trapNodeShift
-		},{
-		  jointID: -1.9,
-		  x: 1 - trapNodeShift,
-		  y: -trapNodeShift
-		},{
-		  jointID: 2,
-		  x: 1,
-		  y: 0
-		},{
-		  jointID: 2.1,
-		  x: 1 + trapNodeShift,
-		  y: trapNodeShift
-		},{
-		  jointID: 2.9,
-		  x: 1 - trapNodeShift,
-		  y: 2 - trapNodeShift
-		},{
-		  jointID: -2.9,
-		  x: 1 + trapNodeShift,
-		  y: 2 - trapNodeShift
-		},{
-		  jointID: 3,
-		  x: 1,
-		  y: 2
-		},{
-		  jointID: 3.1,
-		  x: 1 - trapNodeShift,
-		  y: 2 + trapNodeShift
-		},{
-		  jointID: 4,
-		  x: 0.5,
-		  y: 2
-		},{
-		  jointID: 5,
-		  x: 0,
-		  y: 2
-		},{
-		  jointID: 6,
-		  x: 0.5,
-		  y: 0.5
-		},{
-		  jointID: 7,
-		  x: 0.5,
-		  y: 1.5
-		},{
-		  jointID: 8,
-		  x: 0.3125,
-		  y: 0.75
-		},{
-		  jointID: 9,
-		  x: 0.3125,
-		  y: 1.25
-		},{
-		  jointID: 10,
-		  x: 0.6875,
-		  y: 0.75
-		},{
-		  jointID: 11,
-		  x: 0.6875,
-		  y: 1.25
-		}];
-
-		var scaleX = d3.scaleLinear()
-		  .domain([0, 1])
-		  .range([xMinScale, xMaxScale]);
-
-		var scaleY = d3.scaleLinear()
-		  .domain([0, 1])
-		  .range([yMinScale, yMaxScale]);
-
-		d3.select('svg')
-			.selectAll('circle')
-			.data(jointNodes)
-			.enter()
-			.append('circle')
-			.attr('r', pointRadius)
-			.attr('cx', function(d) {
-				return scaleX(d.x)
-			})
-			.attr('cy', function(d) {
-				return scaleY(d.y)
-			});
-
-		var jointEdges = [
-		  {
-		    routeID: 1,
-		    fromJointID: 4,
-		    toJointID: 7
-		  },{
-		    routeID: 2.1,
-		    fromJointID: 7,
-		    toJointID: 11
-		  },{
-		    routeID: 2.2,
-		    fromJointID: 11,
-		    toJointID: 10
-		  },{
-		    routeID: 2.3,
-		    fromJointID: 10,
-		    toJointID: 6
-		  },{
-		    routeID: 3.1,
-		    fromJointID: 7,
-		    toJointID: 6
-		  },{
-		    routeID: 3.2,
-		    fromJointID: 6,
-		    toJointID: 1
-		  },{
-		    routeID: 4,
-		    fromJointID: 1,
-		    toJointID: 2
-		  },{
-		    routeID: 5,
-		    fromJointID: 2,
-		    toJointID: 1
-		  },{
-		    routeID: 6,
-		    fromJointID: 1,
-		    toJointID: 0
-		  },{
-		    routeID: 7,
-		    fromJointID: 0,
-		    toJointID: 1
-		  },{
-		    routeID: 8,
-		    fromJointID: 1,
-		    toJointID: 6
-		  },{
-		    routeID: 9.1,
-		    fromJointID: 6,
-		    toJointID: 8
-		  },{
-		    routeID: 9.2,
-		    fromJointID: 8,
-		    toJointID: 9
-		  },{
-		    routeID: 9.3,
-		    fromJointID: 9,
-		    toJointID: 7
-		  },{
-		    routeID: 10.1,
-		    fromJointID: 6,
-		    toJointID: 7
-		  },{
-		    routeID: 10.2,
-		    fromJointID: 7,
-		    toJointID: 4
-		  },{
-		    routeID: 11,
-		    fromJointID: 4,
-		    toJointID: 5
-		  },{
-		    routeID: 12,
-		    fromJointID: 5,
-		    toJointID: 0
-		  },{
-		    routeID: 13,
-		    fromJointID: 2,
-		    toJointID: 3
-		  },{
-		    routeID: 14,
-		    fromJointID: 3,
-		    toJointID: 4
-		  }];
+		</div>
 
 
-		var lineFunction = d3.line()
-		  .x(function(d) { return scaleX(d.x); })
-		  .y(function(d) { return scaleY(d.y); })
-		  .curve(d3.curveLinear);
-
-		// function drawParkingZone(fromNode, toNode){
-		//   offsetVal = (1/32);
-
-		//   var startNode = fromNode;
-		//   var stopNode = toNode;
-		//   var dX = stopNode.x - startNode.x;
-		//   var dY = stopNode.y - startNode.y;
-
-		//   var trapzPoints = [{
-		//     x: startNode.x,
-		//     y: startNode.y
-		//   },{
-		//     x: startNode.x + (offsetVal * dX + offsetVal * 2),
-		//     y: startNode.y + (offsetVal * dY + offsetVal)
-		//   },{
-		//     x: stopNode.x + (offsetVal * dX + offsetVal * 2),
-		//     y: stopNode.y + (offsetVal * dY + offsetVal)
-		//   },{
-		//     x: stopNode.x,
-		//     y: stopNode.y
-		//   }];
-
-		//   d3.select('svg')
-		//     .append('path')
-		//     .attr('d', lineFunction(trapzPoints) + 'Z')
-		//     .style('fill', 'orange')
-		//     .style('stroke', 'black');
-		// }
-
-		function drawMidLine(fromNode, toNode){
-		  d3.select('svg')
-		    .append("line")
-		    .style("stroke", "black")
-		    .attr("x1", scaleX(fromNode.x))
-		    .attr("y1", scaleY(fromNode.y))
-		    .attr("x2", scaleX(toNode.x))
-		    .attr("y2", scaleY(toNode.y));
-		}
-
-		function connectEdges(edge, edgeIndex) {
-		  var fromNode = jointNodes.find(function(node) {
-		    return node.jointID == edge.fromJointID;
-		  })
-		  var toNode = jointNodes.find(function(node) {
-		    return node.jointID == edge.toJointID;
-		  })
-		  drawMidLine(fromNode, toNode);
-		  // drawParkingZone(fromNode, toNode);
-		}
-
-		jointEdges.forEach(connectEdges);
-	</script>
+		<!-- Your visualization here -->
 
 
 
-	
-	<div class="row align-items-center">
-		<div class="col-sm-2"><p id="value-time"></p></div>
-		<div class="col-sm"><div id="slider-time"></div></div>
-	  </div>
-		  <style>
-	.axis .domain {
-        display: none;
-      }
 
-      </style>
-      <svg width="960" height="960"></svg>
-      <script src="https://d3js.org/d3.v4.min.js"></script>
 
-	  <script>
-		  	// the bar chart and hour slider
-			//create the SVG with the correct dimensions 
-			var svg = d3.select("svg"),
-				margin = {top: 20, right: 20, bottom: 30, left: 120},
-				width = +svg.attr("width") - margin.left - margin.right,
-				height =200;
+		<div class="vis-holder">
+			<!-- Change viewbox to whatever you want, e.g. "0 0 1000 6000" This determines your aspect ratio and coordinate system -->
+			<!-- Delete all the sample SVG code below after the viewbox to before the closing tag. Populate this part of the SVG with D3. -->
+			<svg id="vis-svg" preserveAspectRatio="xMidYMid meet" class="marks" viewBox="0 0 1000 6000"></svg>
+
+			<!-- CHART VIZ -->
+			<!-- <div class="row align-items-center">
+				<div class="col-sm-2">
+					<p id="value-time"></p>
+				</div>
+				<div class="col-sm">
+					<div id="slider-time"></div>
+				</div>
+			</div>
+
+			<style>
+				.axis .domain {
+					display: none;
+				}
+
+			</style>
+			<svg width="960" height="960"></svg>
+			<script src="https://d3js.org/d3.v4.min.js"></script>
+
+			<script>
+				// the bar chart and hour slider
+				//create the SVG with the correct dimensions
+				var svg = d3.select('#vis-svg'),
+					margin = {
+						top: 20,
+						right: 20,
+						bottom: 30,
+						left: 120
+					},
+					width = +svg.attr("width") - margin.left - margin.right,
+					height = 200;
 				g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-	  
-			var y = d3.scaleBand()
-				.rangeRound([0, height])
-				.paddingInner(0.05)
-				.align(0.1);
-	  
-			var x = d3.scaleLinear()
-				.rangeRound([0, width]);
-	  
-			var m = d3.scaleOrdinal()
-				.range(["#98abc5", "#8a80a6"]);
-			
-			var z = d3.scaleOrdinal()
-				.range(["#98abc5"]);
-			
-			// load the CSV data 
-			d3.csv("Aggregated_Bar_Chart.csv", function(d, i, columns) {    
-			 return d
-			 
-			}, function(error, data) {
-			  if (error) throw error;
-	  
-			  var keys = data.columns.slice(1);
-			   var rest = keys[2];
-			   var array =[keys[0], keys[1]]
-	  
-			  // create the x, y and z domain of the bar chart
-			  y.domain(data.map(function(d) { return d.Street; }));	
-		
-			  x.domain([0, d3.max(data, function(d) {
-				return parseInt(d.Total)})])
-	  
-			  z.domain(array);
-			  
-			  // Append the rectangles onto the bar chart with the width
-			  g.append("g")
-				.selectAll("g")
-				.data(d3.stack().keys(array)(data))
-				.enter().append("g")
-				.attr("fill", function(d) {
-					 return "#8a80a6"; })
-				.selectAll("rect")
-				.data(function(d) { return d; })
-	  
-				.enter().append("rect")
-				.attr("class", "chartRow")
-				.attr("y", function(d) { return y(d.data.Street); })
-				.attr("x", function(d) { 
-								  return x(d[0]); })
-				  .attr("width", function(d) { return x(d[1]) - x(d[0]); })
-				  .attr("height", y.bandwidth());
-	  
-			  // the y axis 
-			  g.append("g")
-				  .attr("class", "axis")
-				  .attr("transform", "translate(0,0)")
-				  .call(d3.axisLeft(y));
-	  
-			  // the x axis
-			  g.append("g")
-				  .attr("class", "axis")
-				.attr("transform", "translate(0,"+height+")")
-				  .call(d3.axisBottom(x).ticks(null, "s"))
-				.append("text")
-				  .attr("y", 2)
-				  .attr("x", x(x.ticks().pop()) + 0.5)
-				  .attr("dy", "0.32em")
-				  .attr("fill", "#000")
-				  .attr("font-weight", "bold")
-				  .attr("text-anchor", "start")
-				  .text("Parking Spots")
-				.attr("transform", "translate("+ (-width) +",-10)");   	
-	  
-			  // create the legend for the bar chart
-			  var legend = g.append("g")
-				  .attr("font-family", "sans-serif")
-				  .attr("font-size", 12)
-				  .attr("text-anchor", "end")
-				.selectAll("g")
-				.data(array.slice().reverse())
-				.enter().append("g")
-			   .attr("transform", function(d, i) { return "translate(-50," + (300 + i * 20) + ")"; });
-	  
-			  // colors for the legend of bar chart
-			  legend.append("rect")
-				  .attr("x", width - 19)
-				  .attr("width", 19)
-				  .attr("height", 10)
-				  .attr("fill", m)
-	  
-			  // text of legend for bar chart
-			  legend.append("text")
-				  .attr("class", "legendtext")
-				  .attr("x", width - 24)
-				  .attr("y", 9.5)
-				  .attr("dy", "0.32em")
-				  .text(function(d) { return d; });
-		   
-					  
-			  // get the time of the data collection 
-				var dataTime = d3.range(0, 15).map(function(d) {
-				  return new Date(2019,9,29, 6+d );
-		  
-			});
-	  
-	  
-		  // function to update the bar chart link to the hour scroller given a new val of hour
-			function textChange(val) {
-				d3.selectAll("g.chartRow").remove();
-				d3.selectAll("text.legendtext").remove();
-				  if (val instanceof Date) {
-						  var hour = val.getHours()
-						  } else {
-							  var hour = val;
-						  }
-					  
-				  d3.select('p#value-time').text(d3.timeFormat('%H')(val));
-				  var rest = keys[0];
-				  var array =[keys[hour - 5]]
-				   var arrayy = [keys[0],keys[hour - 5]]
-				   var okay = d3.stack().keys(array)(data)
-		  
-				  g.append("g")
-				  .attr("class", "chartRow")
-	  
-				  .selectAll("g")
-				  .data(d3.stack().keys(array)(data))
-				  .enter().append("g")
-				  .attr("fill", function(d) {
-					 return z(d.key); })
-				  .selectAll("rect")
-				  .data(function(d) { return d; })
-				  .enter().append("rect")
-				  .attr("y", function(d) { return y(d.data.Street); })
-				  .attr("x", function(d) { 
-								  return x(d[0]); })
-				  .attr("width", function(d) { return x(d[1]) - x(d[0]); })
-				  .attr("height", y.bandwidth());
-	  
-				  // update the legend with the new time 
-				  var legend = g.append("g")
-					  .attr("font-family", "sans-serif")
-					  .attr("font-size", 12)
-					  .attr("text-anchor", "end")
-						  .selectAll("g")
-						  .data(arrayy.slice().reverse())
-						  .enter().append("g")
-							   .attr("transform", function(d, i) { return "translate(-50," + (300 + i * 20) + ")"; });
-	  
-				  legend.append("text")
-					  .attr("class", "legendtext")
-					  .attr("x", width - 24)
-					  .attr("y", 9.5)
-					  .attr("dy", "0.32em")
-					  .text(function(d) { 
-						  console.log("jiim")
-						  console.log(d)
-						  return d; });
-	  
-		}
-	  
-					// slider for the hour updates 
-				  var sliderTime = d3
-					  .sliderBottom()
-					  .min(d3.min(dataTime))
-					  .max(d3.max(dataTime))
-					  .step(1000 * 60 * 60)
-					  .width(300)
-					  .tickFormat(d3.timeFormat('%H'))
-					  .tickValues(dataTime)
-	  
-					  .default(new Date(2019, 9, 29).getHours())
-					  .on('onchange', val => {
-					  textChange(val, g); 
-					  });
-	  
-				  var gTime = d3
-					  .select('div#slider-time')
-					  .append('svg')
-					  .attr('width', 500)
-					  .attr('height', 100)
-					  .append('g')
-					  .attr('transform', 'translate(30,30)');
-	  
+
+				var y = d3.scaleBand()
+					.rangeRound([0, height])
+					.paddingInner(0.05)
+					.align(0.1);
+
+				var x = d3.scaleLinear()
+					.rangeRound([0, width]);
+
+				var m = d3.scaleOrdinal()
+					.range(["#98abc5", "#8a80a6"]);
+
+				var z = d3.scaleOrdinal()
+					.range(["#98abc5"]);
+
+				// load the CSV data
+				d3.csv("Aggregated_Bar_Chart.csv", function(d, i, columns) {
+					return d
+
+				}, function(error, data) {
+					if (error) throw error;
+
+					var keys = data.columns.slice(1);
+					var rest = keys[2];
+					var array = [keys[0], keys[1]]
+
+					// create the x, y and z domain of the bar chart
+					y.domain(data.map(function(d) {
+						return d.Street;
+					}));
+
+					x.domain([0, d3.max(data, function(d) {
+						return parseInt(d.Total)
+					})])
+
+					z.domain(array);
+
+					// Append the rectangles onto the bar chart with the width
+					g.append("g")
+						.selectAll("g")
+						.data(d3.stack().keys(array)(data))
+						.enter().append("g")
+						.attr("fill", function(d) {
+							return "#8a80a6";
+						})
+						.selectAll("rect")
+						.data(function(d) {
+							return d;
+						})
+
+						.enter().append("rect")
+						.attr("class", "chartRow")
+						.attr("y", function(d) {
+							return y(d.data.Street);
+						})
+						.attr("x", function(d) {
+							return x(d[0]);
+						})
+						.attr("width", function(d) {
+							return x(d[1]) - x(d[0]);
+						})
+						.attr("height", y.bandwidth());
+
+					// the y axis
+					g.append("g")
+						.attr("class", "axis")
+						.attr("transform", "translate(0,0)")
+						.call(d3.axisLeft(y));
+
+					// the x axis
+					g.append("g")
+						.attr("class", "axis")
+						.attr("transform", "translate(0," + height + ")")
+						.call(d3.axisBottom(x).ticks(null, "s"))
+						.append("text")
+						.attr("y", 2)
+						.attr("x", x(x.ticks().pop()) + 0.5)
+						.attr("dy", "0.32em")
+						.attr("fill", "#000")
+						.attr("font-weight", "bold")
+						.attr("text-anchor", "start")
+						.text("Parking Spots")
+						.attr("transform", "translate(" + (-width) + ",-10)");
+
+					// create the legend for the bar chart
+					var legend = g.append("g")
+						.attr("font-family", "sans-serif")
+						.attr("font-size", 12)
+						.attr("text-anchor", "end")
+						.selectAll("g")
+						.data(array.slice().reverse())
+						.enter().append("g")
+						.attr("transform", function(d, i) {
+							return "translate(-50," + (300 + i * 20) + ")";
+						});
+
+					// colors for the legend of bar chart
+					legend.append("rect")
+						.attr("x", width - 19)
+						.attr("width", 19)
+						.attr("height", 10)
+						.attr("fill", m)
+
+					// text of legend for bar chart
+					legend.append("text")
+						.attr("class", "legendtext")
+						.attr("x", width - 24)
+						.attr("y", 9.5)
+						.attr("dy", "0.32em")
+						.text(function(d) {
+							return d;
+						});
+
+
+					// get the time of the data collection
+					var dataTime = d3.range(0, 15).map(function(d) {
+						return new Date(2019, 9, 29, 6 + d);
+
+					});
+
+
+					// function to update the bar chart link to the hour scroller given a new val of hour
+					function textChange(val) {
+						d3.selectAll("g.chartRow").remove();
+						d3.selectAll("text.legendtext").remove();
+						if (val instanceof Date) {
+							var hour = val.getHours()
+						} else {
+							var hour = val;
+						}
+
+						d3.select('p#value-time').text(d3.timeFormat('%H')(val));
+						var rest = keys[0];
+						var array = [keys[hour - 5]]
+						var arrayy = [keys[0], keys[hour - 5]]
+						var okay = d3.stack().keys(array)(data)
+
+						g.append("g")
+							.attr("class", "chartRow")
+
+							.selectAll("g")
+							.data(d3.stack().keys(array)(data))
+							.enter().append("g")
+							.attr("fill", function(d) {
+								return z(d.key);
+							})
+							.selectAll("rect")
+							.data(function(d) {
+								return d;
+							})
+							.enter().append("rect")
+							.attr("y", function(d) {
+								return y(d.data.Street);
+							})
+							.attr("x", function(d) {
+								return x(d[0]);
+							})
+							.attr("width", function(d) {
+								return x(d[1]) - x(d[0]);
+							})
+							.attr("height", y.bandwidth());
+
+						// update the legend with the new time
+						var legend = g.append("g")
+							.attr("font-family", "sans-serif")
+							.attr("font-size", 12)
+							.attr("text-anchor", "end")
+							.selectAll("g")
+							.data(arrayy.slice().reverse())
+							.enter().append("g")
+							.attr("transform", function(d, i) {
+								return "translate(-50," + (300 + i * 20) + ")";
+							});
+
+						legend.append("text")
+							.attr("class", "legendtext")
+							.attr("x", width - 24)
+							.attr("y", 9.5)
+							.attr("dy", "0.32em")
+							.text(function(d) {
+								console.log("jiim")
+								console.log(d)
+								return d;
+							});
+
+					}
+
+					// slider for the hour updates
+					var sliderTime = d3
+						.sliderBottom()
+						.min(d3.min(dataTime))
+						.max(d3.max(dataTime))
+						.step(1000 * 60 * 60)
+						.width(300)
+						.tickFormat(d3.timeFormat('%H'))
+						.tickValues(dataTime)
+
+						.default(new Date(2019, 9, 29).getHours())
+						.on('onchange', val => {
+							textChange(val, g);
+						});
+
+					var gTime = d3
+						.select('div#slider-time')
+						.append('svg')
+						.attr('width', 500)
+						.attr('height', 100)
+						.append('g')
+						.attr('transform', 'translate(30,30)');
+
 					gTime.call(sliderTime);
-	  
+
 					d3.select('p#value-time').text(d3.timeFormat('%H')(sliderTime.value()));
-	  
-	  });
-			</script>
 
+				});
 
-     
+			</script> -->
 
-    <div class="vis-holder">
-      <!-- Change viewbox to whatever you want, e.g. "0 0 1000 6000" This determines your aspect ratio and coordinate system -->
-      <!-- Delete all the sample SVG code below after the viewbox to before the closing tag. Populate this part of the SVG with D3. -->
-      <svg id="vis-svg"
-        preserveAspectRatio="xMidYMid meet" class="marks" viewBox="0 0 1000 6000">
+			<!-- Don't delete the closing tag! -->
+			<!-- </svg> -->
+		</div>
 
-      <!-- Don't delete the closing tag! -->
-      </svg>
-    </div>
+		<!-- Your writeup goes here -->
+		<div class="content-column">
 
-    <!-- Your writeup goes here -->
-    <div class = "content-column">
+			<h1>Demo Video</h1>
 
-      <h1>Demo Video</h1>
+			<p><em>Embedded MP4 demo video using the HTML5 &lt;video&gt; tag. For example, this screen recording Prof. Cody Dunne made of Mike Bostock's flexible transitions in D3 slide:</em></p>
 
-      <p><em>Embedded MP4 demo video using the HTML5 &lt;video&gt; tag. For example, this screen recording Prof. Cody Dunne made of Mike Bostock's flexible transitions in D3 slide:</em></p>
+			<video controls width="100%">
+				<source src="http://www.ccs.neu.edu/home/cody/courses/shared/d3-flexible-transitions.mp4" type="video/mp4">
+				<p>Your browser doesn't support HTML5 video. Here is
+					a <a href="http://www.ccs.neu.edu/home/cody/courses/shared/d3-flexible-transitions.mp4">link to the video</a> instead.</p>
+			</video>
 
-      <video controls width="100%">
-        <source src="http://www.ccs.neu.edu/home/cody/courses/shared/d3-flexible-transitions.mp4" type="video/mp4">
-        <p>Your browser doesn't support HTML5 video. Here is
-         a <a href="http://www.ccs.neu.edu/home/cody/courses/shared/d3-flexible-transitions.mp4">link to the video</a> instead.</p>
-      </video>
-
-      <h1>Visualization explanation</h1>
+			<h1>Visualization explanation</h1>
 
 			<p>Our visualization includes an interactive map showing occupancy rate, as well
 				a bar chart that shows the empty and occupied parking spots on each street.
@@ -611,7 +372,7 @@
 				not only to know the proportion of spots filled, but to know exactly how many
 				spots are left. We used a simple stacked bar chart to show this data, which uses area to
 				show the parking capacity of a certain street, as well as area and color to show the breakdown of
-		  	empty versus occupied spots.</p>
+				empty versus occupied spots.</p>
 			<p> For interactivity, our goal was to have the slider to change the time,
 				checkboxes to filter by interactivity, and brushing and linking that would highlight the street
 				in the bar chart when it is clicked on in the map view (and vice versa).</p>
@@ -620,7 +381,7 @@
 			<p>Below, you will find links to our presentation slides.</p>
 			<p>INSERT LINK HERE</p>
 
-      <h1>Data Analysis</h1>
+			<h1>Data Analysis</h1>
 
 			<p>Our data was collected during a parking survey conducted in Chester Square from 6 a.m. to 8 p.m. on Oct. 29, 2019.</P>
 			<p>Filled spots, empty spots, and blocked spots were recorded by hand on the hour.
@@ -637,87 +398,87 @@
 				The output was a csv file with polygon coordinates (floats), occupancy
 				counts (integers), occupancy rates (floats), and percentages (floats).</p>
 
-      <h1>Task Analysis</h1>
+			<h1>Task Analysis</h1>
 
-	  <table style="border: 1px solid black">
-	  <tr id="header">
-		<td> Index </td>
-		<td> Domain Task </td>
-		<td> Analytic Task </td>
-		<td> Search Task </td>
-		<td> Analyze Task </td>
-	  </tr>
-	  <tr>
-	    <td> 1 </td>
-		<td> What are the occupancy rates at different times of the day? </td>
-		<td> Identify </td>
-		<td> Browse </td>
-		<td> Discover </td>
-	  </tr>
-		<tr>
-	    <td> 2 </td>
-		<td> Where are the problem areas for after-work parking? </td>
-		<td> Identify </td>
-		<td> Browse </td>
-		<td> Present </td>
-	  </tr>
-		<tr>
-	    <td> 3 </td>
-		<td> What is the average duration a single vehicle is parked? </td>
-		<td> Identify </td>
-		<td> Lookup </td>
-		<td> Present </td>
-	  </tr>
-	  <tr>
-	    <td> 4 </td>
-		<td> Who are the owners of vehicles parked in the SA? </td>
-		<td> Identify </td>
-		<td> Browse </td>
-		<td> Discover </td>
-	  </tr>
-		<td> 5 </td>
-		<td> How do the various parking regulations affect occupancy and turnover rates? </td>
-		<td> Summarize </td>
-		<td> Explore </td>
-		<td> Present </td>
-	  </tr>
-	  <tr>
-	    <td> 6 </td>
-		<td> What are the turnover rates for different times of day? </td>
-		<td> Compare </td>
-		<td> Browse </td>
-		<td> Present </td>
-	  </tr>
+			<table style="border: 1px solid black">
+				<tr id="header">
+					<td> Index </td>
+					<td> Domain Task </td>
+					<td> Analytic Task </td>
+					<td> Search Task </td>
+					<td> Analyze Task </td>
+				</tr>
+				<tr>
+					<td> 1 </td>
+					<td> What are the occupancy rates at different times of the day? </td>
+					<td> Identify </td>
+					<td> Browse </td>
+					<td> Discover </td>
+				</tr>
+				<tr>
+					<td> 2 </td>
+					<td> Where are the problem areas for after-work parking? </td>
+					<td> Identify </td>
+					<td> Browse </td>
+					<td> Present </td>
+				</tr>
+				<tr>
+					<td> 3 </td>
+					<td> What is the average duration a single vehicle is parked? </td>
+					<td> Identify </td>
+					<td> Lookup </td>
+					<td> Present </td>
+				</tr>
+				<tr>
+					<td> 4 </td>
+					<td> Who are the owners of vehicles parked in the SA? </td>
+					<td> Identify </td>
+					<td> Browse </td>
+					<td> Discover </td>
+				</tr>
+				<td> 5 </td>
+				<td> How do the various parking regulations affect occupancy and turnover rates? </td>
+				<td> Summarize </td>
+				<td> Explore </td>
+				<td> Present </td>
+				</tr>
+				<tr>
+					<td> 6 </td>
+					<td> What are the turnover rates for different times of day? </td>
+					<td> Compare </td>
+					<td> Browse </td>
+					<td> Present </td>
+				</tr>
 
-	  </table>
+			</table>
 
-      <p>This task table shows that our main goal is to understand how the occupancy
-			rates fluctuate throughout the day. It is also to understand problem areas for parking.
-			What are the areas that most frequently have no available spaces? By understanding
-			where the problem areas are and what time of the day issues arise, we can help the Neighborhood
-			Association prioritize certain areas for improvement.</p>
+			<p>This task table shows that our main goal is to understand how the occupancy
+				rates fluctuate throughout the day. It is also to understand problem areas for parking.
+				What are the areas that most frequently have no available spaces? By understanding
+				where the problem areas are and what time of the day issues arise, we can help the Neighborhood
+				Association prioritize certain areas for improvement.</p>
 			<p>The final results of our project are geared toward presentation and discovery. We want
-			the Association to be able to take this visualization and present its findings to
-			community members or local government figures. In order to achieve our task goals, we
-			knew this visualization had to be simple, uncluttered, and easily understood by individuals without a data science background.
-			We wanted it to tell the story of a day of parking in Chester Square, which is partially why we used the recognizable shape
-			of Chester Square in our map.</p>
+				the Association to be able to take this visualization and present its findings to
+				community members or local government figures. In order to achieve our task goals, we
+				knew this visualization had to be simple, uncluttered, and easily understood by individuals without a data science background.
+				We wanted it to tell the story of a day of parking in Chester Square, which is partially why we used the recognizable shape
+				of Chester Square in our map.</p>
 			<p>Our top two tasks both had to do with identifying and browsing, so we decided to create a visualization
-			that would answer both of those questions. We abstracted these tasks together to create the new
-			task goal of understanding the number/roportion of free spots throughout the day.</p>
+				that would answer both of those questions. We abstracted these tasks together to create the new
+				task goal of understanding the number/roportion of free spots throughout the day.</p>
 
-      <h1>Design Process</h1>
+			<h1>Design Process</h1>
 			<p>Below, you can see our initial visualization draft. Originally, we had imagined
-			the color scale as red, yellow, and green. Spatial position is one of the most valuable
-			encodings in data visualization, and we wanted to use a map to show where exactly the
-	 		problem areas are for parking. We simplified the map down to just streets (rather than
-			including landmarks and buildings) because we wanted to avoid chart clutter. In this
-			original sketch, we imagined that the bar chart on the bottom would show the number of available
-			spots in the area at each hour. We did this because we wanted our vis to be very practical and usable
-			in the goal of showing people how easy it is to find parking at a specific time. Color coding on this
-			bar chart would have corresponded to the color scale for the map, with green meaning more spots are available
-			and red meaning less spots are available. A slider in this sketch controls the time of day currently shown on the map.
-			For each selected time of day, that bar on the bar chart would have been highlighted. </p>
+				the color scale as red, yellow, and green. Spatial position is one of the most valuable
+				encodings in data visualization, and we wanted to use a map to show where exactly the
+				problem areas are for parking. We simplified the map down to just streets (rather than
+				including landmarks and buildings) because we wanted to avoid chart clutter. In this
+				original sketch, we imagined that the bar chart on the bottom would show the number of available
+				spots in the area at each hour. We did this because we wanted our vis to be very practical and usable
+				in the goal of showing people how easy it is to find parking at a specific time. Color coding on this
+				bar chart would have corresponded to the color scale for the map, with green meaning more spots are available
+				and red meaning less spots are available. A slider in this sketch controls the time of day currently shown on the map.
+				For each selected time of day, that bar on the bar chart would have been highlighted. </p>
 			<img src="Brian_Viz1.jpeg" alt="First visualization sketch" style="width:700px;height:600px;">
 			<p>Our next visualization sketch, shown below, was done digitally using Tableau and
 				Adobe Illustrator. We made a few very substantial changes in this iteration. One of these
@@ -744,44 +505,45 @@
 				visualization that, given more time, we would have included.
 				INSERT WHAT FINAL DESIGN DECISIONS WERE MADE</p>
 
-    <h1>Conclusion</h1>
-	  <p>Parking is an extraordinarily important part of urban life. It allows people
-			to own cars and have greater freedom of transportation. But, especially in a
-			city like Boston, real estate is incredibly valuable and cars take up
-			a lot of space. </p>
-		<p> This parking survey and the following vis was designed to identify
-			parking problem areas in Chester Square, analyze how efficiently people park, and
-			prompt ideas for improving parking in the neighborhood. When we began this project,
-			none of us had any experience with parking analysis or parking surveys, but throughout
-			the course of this project we began to understand how bad parking or bad parking spot
-			design can have resonating effects on the layout of a neighborhood. Parking availability
-			can vastly effect quality of life for residents because it could mean the difference
-			between going straight home after a long day at work or having to trudge for 10 minutes
-			in the cold darkness to get home.</p>
+			<h1>Conclusion</h1>
+			<p>Parking is an extraordinarily important part of urban life. It allows people
+				to own cars and have greater freedom of transportation. But, especially in a
+				city like Boston, real estate is incredibly valuable and cars take up
+				a lot of space. </p>
+			<p> This parking survey and the following vis was designed to identify
+				parking problem areas in Chester Square, analyze how efficiently people park, and
+				prompt ideas for improving parking in the neighborhood. When we began this project,
+				none of us had any experience with parking analysis or parking surveys, but throughout
+				the course of this project we began to understand how bad parking or bad parking spot
+				design can have resonating effects on the layout of a neighborhood. Parking availability
+				can vastly effect quality of life for residents because it could mean the difference
+				between going straight home after a long day at work or having to trudge for 10 minutes
+				in the cold darkness to get home.</p>
 			<p> Through our experiences walking around Chester Square, as well as our data
 				analysis, we discovered that there are parking issues in the neighborhood. There
 				were many people who parked very far away from eachother, but did not leave enough
 				space for another car to park. A suggestion we have is for local government to
 				add painted parking spots onto the street so that people are directed to park more
 				efficiently. INSERT ANOTHER CONCLUSION MADE FROM VISUALIZATION.</p>
-		<p>For further analysis, we would also recommend a follow-up parking survey
-			be performed on a day with more ideal conditions. We were forced to work on a
-			 rainy day when there was construction, which skewed our results. </p>
+			<p>For further analysis, we would also recommend a follow-up parking survey
+				be performed on a day with more ideal conditions. We were forced to work on a
+				rainy day when there was construction, which skewed our results. </p>
 
 
-      <h1>Acknowledgements</h1>
+			<h1>Acknowledgements</h1>
 
-      <p><em>List here where any code, packages/libraries, text, images, designs, etc. that you leverage come from.</em></p>
+			<p><em>List here where any code, packages/libraries, text, images, designs, etc. that you leverage come from.</em></p>
 
-      <ul>
-        <li><a href="https://d3js.org/">D3: Data-Driven Documents</a> by Mike Bostock.</li>
-        <li><a href="https://codepo8.github.io/css-fork-on-github-ribbon/#">Pure CSS responsive "Fork me on GitHub" ribbon</a> by Chris Heilmann</li>
-      </ul>
+			<ul>
+				<li><a href="https://d3js.org/">D3: Data-Driven Documents</a> by Mike Bostock.</li>
+				<li><a href="https://codepo8.github.io/css-fork-on-github-ribbon/#">Pure CSS responsive "Fork me on GitHub" ribbon</a> by Chris Heilmann</li>
+			</ul>
 
-    </div>
+		</div>
 
-    <!-- Scripts at the end avoid need for dealing with async, defer, or onload event handlers -->
-    <script src="lib/d3.v5.12.0/d3.min.js"></script>
-    <script src="visualization.js"></script>
+		<!-- Scripts at the end avoid need for dealing with async, defer, or onload event handlers -->
+		<script src="lib/d3.v5.12.0/d3.min.js"></script>
+		<script src="visualization.js"></script>
 	</body>
+
 </html>

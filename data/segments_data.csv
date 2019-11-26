@@ -1,0 +1,31 @@
+id,Segment Number,Street Side,Route Number,Street Name,Street Direction,Start Bound Street,End Bound Street,x1,y1,x2,y2,source,target
+1R,1.0,R,1,Massachusetts Avenue,North,Shawmut Avenue,Chester Square - 2.1,0.5,2.0,0.5,1.0,1,2
+2.1R,2.1,R,2,Chester Square - 2.1,North,Massachusetts Avenue,Chester Square - 2.2,0.5,1.5,0.6875,1.25,2,11
+2.1L,2.1,L,2,Chester Square - 2.1,North,Massachusetts Avenue,Chester Square - 2.2,0.5,1.5,0.6875,1.25,2,11
+2.2L,2.2,L,2,Chester Square - 2.2,North,Chester Square - 2.1,Chester Square - 2.3,0.6875,1.25,0.6875,0.75,11,12
+2.2R,2.2,R,2,Chester Square - 2.2,North,Chester Square - 2.1,Chester Square - 2.3,0.6875,1.25,0.6875,0.75,11,12
+2.3R,2.3,R,2,Chester Square - 2.3,North,Chester Square - 2.2,Massachusetts Avenue,0.6875,0.75,0.5,0.5,12,13
+2.3L,2.3,L,2,Chester Square - 2.3,North,Chester Square - 2.2,Massachusetts Avenue,0.6875,0.75,0.5,0.5,12,13
+3.1R,3.1,R,3a,Massachusetts Avenue,North,Chester Square - 2.1,Chester Square - 2.3,0.5,1.5,0.5,0.5,2,3
+3.2R,3.2,R,3b,Massachusetts Avenue,North,Chester Square - 2.3,Tremont Street,0.5,0.5,0.5,0.0,3,6
+4R,4.0,R,4,Tremont Street,West,Massachusetts Avenue,W. Springfield Street,0.5,0.0,1.0,0.0,6,8
+5R,5.0,R,5,Tremont Street,East,W. Springfield Street,Massachusetts Avenue,1.0,0.0,0.5,0.0,8,6
+6R,6.0,R,6,Tremont Street,East,Massachusetts Avenue,Northampton Street,0.5,0.0,0.0,0.0,6,7
+7R,7.0,R,7,Tremont Street,West,Northampton Street,Massachusetts Avenue,0.0,0.0,0.5,0.0,7,6
+8R,8.0,R,8,Massachusetts Avenue,South,Tremont Street,Chester Square - 9.1,0.5,0.0,0.5,0.5,6,4
+9.1R,9.1,R,9,Chester Square - 9.1,South,Massachusetts Avenue,Chester Square - 9.2,0.5,0.5,0.3125,0.75,4,13
+9.1L,9.1,L,9,Chester Square - 9.1,South,Massachusetts Avenue,Chester Square - 9.2,0.5,0.5,0.3125,0.75,4,13
+9.2R,9.2,R,9,Chester Square - 9.2,South,Chester Square - 9.1,Chester Square - 9.3,0.3125,0.75,0.3125,1.25,13,14
+9.2L,9.2,L,9,Chester Square - 9.2,South,Chester Square - 9.1,Chester Square - 9.3,0.3125,0.75,0.3125,1.25,13,14
+9.3R,9.3,R,9,Chester Square - 9.3,South,Chester Square - 9.2,Massachusetts Avenue,0.3125,1.25,0.5,1.5,14,5
+9.3L,9.3,L,9,Chester Square - 9.3,South,Chester Square - 9.2,Massachusetts Avenue,0.3125,1.25,0.5,1.5,14,5
+10.1R,10.1,R,10a,Massachusetts Avenue,South,Chester Square - 9.1,Chester Square - 9.3,0.5,0.5,0.5,1.5,4,5
+10.2R,10.2,R,10b,Massachusetts Avenue,South,Chester Square - 9.3,Shawmut Avenue,0.5,1.5,0.5,2.0,5,1
+11L,11.0,L,11,Shawmut Avenue,West,Massachusetts Avenue,Northampton Street,0.5,2.0,0.0,2.0,1,9
+11R,11.0,R,11,Shawmut Avenue,West,Massachusetts Avenue,Northampton Street,0.5,2.0,0.0,2.0,1,9
+12L,12.0,L,12,Northampton Street,North,Shawmut Avenue,Tremont Street,0.0,2.0,0.0,0.0,9,7
+12R,12.0,R,12,Northampton Street,North,Shawmut Avenue,Tremont Street,0.0,2.0,0.0,0.0,9,7
+13R,13.0,R,13,W. Springfield Street,South,Tremont Street,Shawmut Avenue,1.0,0.0,1.0,2.0,8,10
+13L,13.0,L,13,W. Springfield Street,South,Tremont Street,Shawmut Avenue,1.0,0.0,1.0,2.0,8,10
+14R,14.0,R,14,Shawmut Avenue,West,W. Springfield Street,Massachusetts Avenue,1.0,2.0,0.5,2.0,10,1
+14L,14.0,L,14,Shawmut Avenue,West,W. Springfield Street,Massachusetts Avenue,1.0,2.0,0.5,2.0,10,1

@@ -1,0 +1,15 @@
+id,Section A,Section B,x,y
+1,Massachusetts Avenue,Shawmut Avenue,0.5,2.0
+2,Massachusetts Avenue,Chester Square - 2.1,0.5,1.5
+3,Massachusetts Avenue,Chester Square - 2.3,0.5,0.5
+4,Massachusetts Avenue,Chester Square - 9.1,0.5,0.5
+5,Massachusetts Avenue,Chester Square - 9.3,0.5,1.5
+6,Massachusetts Avenue,Tremont Street,0.5,0.0
+7,Tremont Street,Northampton Street,0.0,0.0
+8,Tremont Street,W. Springfield Street,1.0,0.0
+9,Shawmut Avenue,Northampton Street,0.0,2.0
+10,Shawmut Avenue,W. Springfield Street,1.0,2.0
+11,Chester Square - 2.1,Chester Square - 2.2,0.6875,1.25
+12,Chester Square - 2.2,Chester Square - 2.3,0.6875,0.75
+13,Chester Square - 9.1,Chester Square - 9.2,0.3125,0.75
+14,Chester Square - 9.2,Chester Square - 9.3,0.3125,1.25

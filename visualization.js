@@ -66,7 +66,7 @@ function drawSegments(segments) {
       return d['Route Number'] + d['Street Side'];
     })
     .attr('stroke-width', stokeWidth)
-    .attr('stroke', 'black')
+    .attr('stroke', 'grey')
     .attr('x1', function(d) {
       return scaleX(d.x1);
     })
@@ -80,6 +80,64 @@ function drawSegments(segments) {
       return scaleY(d.y2);
     })
 };
+
+function labelStreets() {
+  var streetLabels = [
+    {
+      name: 'Tremont St.',
+      x: 0.4,
+      y: -0.1,
+      transform: null
+    },
+    {
+      name: 'Shawmut Ave.',
+      x: 0.37,
+      y: 2.1,
+      transform: null
+    },
+    {
+      name: 'W. Springfield St.',
+      x: 1.1,
+      y: 1,
+      transform: null
+    },
+    {
+      name: 'Northampton St.',
+      x: -0.38,
+      y: 1,
+      transform: null
+    },
+    {
+      name: 'Mass. Ave.',
+      x: 0.56,
+      y: 0.25,
+      transform: null
+    },
+    {
+      name: 'Chester Sq.',
+      x: 0.65,
+      y: 1.45,
+      transform: null
+    },
+    {
+      name: 'Chester Sq.',
+      x: 0.15,
+      y: 0.55,
+      transform: null
+    }
+  ]
+
+  for (street of streetLabels) {
+    mapSvg.append('text')
+                   .attr("x", scaleX(street.x))
+                  .attr("y",  scaleY(street.y))
+                  .text(street.name)
+                  .attr('transform', street.transform)
+                 .attr("font-family", "sans-serif")
+                 .attr("font-size", "10px")
+                 .attr("fill", "black");
+  }
+}
 
 d3.csv('./data/intersections_data.csv')
   .then(function(intersections_data) {
@@ -130,6 +188,7 @@ d3.csv('./data/intersections_data.csv')
           });
           drawSegments(segments_data);
           drawIntersections(intersections);
+          labelStreets();
 
           d3.csv('./Aggregated_FINALV2.csv')
             .then(function(agg_data) {
@@ -162,6 +221,8 @@ d3.csv('./data/intersections_data.csv')
               gTime.call(sliderTime);
 
               d3.select('p#value-time').text(d3.timeFormat('%I')(sliderTime.value()));
+
+              updateDisplayedTime('6:00 AM Occupied')
 
               function updateDisplayedTime(time) {
                 mapSvg.selectAll('line')

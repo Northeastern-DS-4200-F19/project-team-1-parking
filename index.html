@@ -20,10 +20,10 @@
     <meta name="msapplication-config" content="/favicons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
   </head>
-  
+
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://unpkg.com/d3-simple-slider"></script>
-  
+
   <link
     rel="stylesheet"
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -358,7 +358,7 @@
 
 
 
-	
+
 	<div class="row align-items-center">
 		<div class="col-sm-2"><p id="value-time"></p></div>
 		<div class="col-sm"><div id="slider-time"></div></div>
@@ -374,46 +374,46 @@
 
 	  <script>
 		  	// the bar chart and hour slider
-			//create the SVG with the correct dimensions 
+			//create the SVG with the correct dimensions
 			var svg = d3.select("svg"),
 				margin = {top: 20, right: 20, bottom: 30, left: 120},
 				width = +svg.attr("width") - margin.left - margin.right,
 				height =200;
 				g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-	  
+
 			var y = d3.scaleBand()
 				.rangeRound([0, height])
 				.paddingInner(0.05)
 				.align(0.1);
-	  
+
 			var x = d3.scaleLinear()
 				.rangeRound([0, width]);
-	  
+
 			var m = d3.scaleOrdinal()
 				.range(["#98abc5", "#8a80a6"]);
-			
+
 			var z = d3.scaleOrdinal()
 				.range(["#98abc5"]);
-			
-			// load the CSV data 
-			d3.csv("Aggregated_Bar_Chart.csv", function(d, i, columns) {    
+
+			// load the CSV data
+			d3.csv("Aggregated_Bar_Chart.csv", function(d, i, columns) {
 			 return d
-			 
+
 			}, function(error, data) {
 			  if (error) throw error;
-	  
+
 			  var keys = data.columns.slice(1);
 			   var rest = keys[2];
 			   var array =[keys[0], keys[1]]
-	  
+
 			  // create the x, y and z domain of the bar chart
-			  y.domain(data.map(function(d) { return d.Street; }));	
-		
+			  y.domain(data.map(function(d) { return d.Street; }));
+
 			  x.domain([0, d3.max(data, function(d) {
 				return parseInt(d.Total)})])
-	  
+
 			  z.domain(array);
-			  
+
 			  // Append the rectangles onto the bar chart with the width
 			  g.append("g")
 				.selectAll("g")
@@ -423,21 +423,21 @@
 					 return "#8a80a6"; })
 				.selectAll("rect")
 				.data(function(d) { return d; })
-	  
+
 				.enter().append("rect")
 				.attr("class", "chartRow")
 				.attr("y", function(d) { return y(d.data.Street); })
-				.attr("x", function(d) { 
+				.attr("x", function(d) {
 								  return x(d[0]); })
 				  .attr("width", function(d) { return x(d[1]) - x(d[0]); })
 				  .attr("height", y.bandwidth());
-	  
-			  // the y axis 
+
+			  // the y axis
 			  g.append("g")
 				  .attr("class", "axis")
 				  .attr("transform", "translate(0,0)")
 				  .call(d3.axisLeft(y));
-	  
+
 			  // the x axis
 			  g.append("g")
 				  .attr("class", "axis")
@@ -451,8 +451,8 @@
 				  .attr("font-weight", "bold")
 				  .attr("text-anchor", "start")
 				  .text("Parking Spots")
-				.attr("transform", "translate("+ (-width) +",-10)");   	
-	  
+				.attr("transform", "translate("+ (-width) +",-10)");
+
 			  // create the legend for the bar chart
 			  var legend = g.append("g")
 				  .attr("font-family", "sans-serif")
@@ -462,14 +462,14 @@
 				.data(array.slice().reverse())
 				.enter().append("g")
 			   .attr("transform", function(d, i) { return "translate(-50," + (300 + i * 20) + ")"; });
-	  
+
 			  // colors for the legend of bar chart
 			  legend.append("rect")
 				  .attr("x", width - 19)
 				  .attr("width", 19)
 				  .attr("height", 10)
 				  .attr("fill", m)
-	  
+
 			  // text of legend for bar chart
 			  legend.append("text")
 				  .attr("class", "legendtext")
@@ -477,15 +477,15 @@
 				  .attr("y", 9.5)
 				  .attr("dy", "0.32em")
 				  .text(function(d) { return d; });
-		   
-					  
-			  // get the time of the data collection 
+
+
+			  // get the time of the data collection
 				var dataTime = d3.range(0, 15).map(function(d) {
 				  return new Date(2019,9,29, 6+d );
-		  
+
 			});
-	  
-	  
+
+
 		  // function to update the bar chart link to the hour scroller given a new val of hour
 			function textChange(val) {
 				d3.selectAll("g.chartRow").remove();
@@ -495,16 +495,16 @@
 						  } else {
 							  var hour = val;
 						  }
-					  
+
 				  d3.select('p#value-time').text(d3.timeFormat('%H')(val));
 				  var rest = keys[0];
 				  var array =[keys[hour - 5]]
 				   var arrayy = [keys[0],keys[hour - 5]]
 				   var okay = d3.stack().keys(array)(data)
-		  
+
 				  g.append("g")
 				  .attr("class", "chartRow")
-	  
+
 				  .selectAll("g")
 				  .data(d3.stack().keys(array)(data))
 				  .enter().append("g")
@@ -514,12 +514,12 @@
 				  .data(function(d) { return d; })
 				  .enter().append("rect")
 				  .attr("y", function(d) { return y(d.data.Street); })
-				  .attr("x", function(d) { 
+				  .attr("x", function(d) {
 								  return x(d[0]); })
 				  .attr("width", function(d) { return x(d[1]) - x(d[0]); })
 				  .attr("height", y.bandwidth());
-	  
-				  // update the legend with the new time 
+
+				  // update the legend with the new time
 				  var legend = g.append("g")
 					  .attr("font-family", "sans-serif")
 					  .attr("font-size", 12)
@@ -528,20 +528,20 @@
 						  .data(arrayy.slice().reverse())
 						  .enter().append("g")
 							   .attr("transform", function(d, i) { return "translate(-50," + (300 + i * 20) + ")"; });
-	  
+
 				  legend.append("text")
 					  .attr("class", "legendtext")
 					  .attr("x", width - 24)
 					  .attr("y", 9.5)
 					  .attr("dy", "0.32em")
-					  .text(function(d) { 
+					  .text(function(d) {
 						  console.log("jiim")
 						  console.log(d)
 						  return d; });
-	  
+
 		}
-	  
-					// slider for the hour updates 
+
+					// slider for the hour updates
 				  var sliderTime = d3
 					  .sliderBottom()
 					  .min(d3.min(dataTime))
@@ -550,12 +550,12 @@
 					  .width(300)
 					  .tickFormat(d3.timeFormat('%H'))
 					  .tickValues(dataTime)
-	  
+
 					  .default(new Date(2019, 9, 29).getHours())
 					  .on('onchange', val => {
-					  textChange(val, g); 
+					  textChange(val, g);
 					  });
-	  
+
 				  var gTime = d3
 					  .select('div#slider-time')
 					  .append('svg')
@@ -563,16 +563,16 @@
 					  .attr('height', 100)
 					  .append('g')
 					  .attr('transform', 'translate(30,30)');
-	  
+
 					gTime.call(sliderTime);
-	  
+
 					d3.select('p#value-time').text(d3.timeFormat('%H')(sliderTime.value()));
-	  
+
 	  });
 			</script>
 
 
-     
+
 
     <div class="vis-holder">
       <!-- Change viewbox to whatever you want, e.g. "0 0 1000 6000" This determines your aspect ratio and coordinate system -->
@@ -618,7 +618,7 @@
 			<p>Below, you can see screenshots of our final visualization.</p>
 			<p>INSERT PNG HERE</p>
 			<p>Below, you will find links to our presentation slides.</p>
-			<p>INSERT LINK HERE</p>
+			<p><a href="https://docs.google.com/presentation/d/1URYgCU0x31HCd6G91Mb_p8MAu7sQfnMg_Ls6fnZZxog/edit?usp=sharing">LINK</a></p>
 
       <h1>Data Analysis</h1>
 

@@ -410,7 +410,7 @@
 			  y.domain(data.map(function(d) { return d.Street; }));	
 		
 			  x.domain([0, d3.max(data, function(d) {
-				return parseInt(d.Total)})])
+				return parseInt(d.Empty)})])
 	  
 			  z.domain(array);
 			  
@@ -549,13 +549,13 @@
 					  .step(1000 * 60 * 60)
 					  .width(300)
 					  .tickFormat(d3.timeFormat('%H'))
-					  .tickValues(dataTime)
+					  .tickValues(convertTime(dataTime))
 	  
 					  .default(new Date(2019, 9, 29).getHours())
 					  .on('onchange', val => {
-					  textChange(val, g); 
+					  	textChange(val, g); 
 					  });
-	  
+				
 				  var gTime = d3
 					  .select('div#slider-time')
 					  .append('svg')
@@ -567,6 +567,21 @@
 					gTime.call(sliderTime);
 	  
 					d3.select('p#value-time').text(d3.timeFormat('%H')(sliderTime.value()));
+
+					function convertTime(hours) {
+						console.log(hours)
+						var timeValue; 
+						if (hours > 0 && hours <= 12) {
+							timeValue= "" + hours;
+						} else if (hours > 12) {
+							timeValue= "" + (hours - 12);
+						} else if (hours == 0) {
+							timeValue= "12";
+						}
+						console.log(timeValue)
+						return timeValue
+
+					}
 	  
 	  });
 			</script>

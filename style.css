@@ -9,7 +9,7 @@ h1, h2, h3 {
 	line-height: 1.2
 }
 
-table, tr{
+table, tr {
 	border: 1px solid black;
 	background-color: #d46a6a;
 	border-collapse: collapse;
@@ -39,7 +39,7 @@ tr#header {
   height: 100%;
 }
 
-/* Fork on GitHub ribbon via https://codepo8.github.io/css-fork-on-github-ribbon/# */  
+/* Fork on GitHub ribbon via https://codepo8.github.io/css-fork-on-github-ribbon/# */
 #forkongithub a{
 	background:#00F;
 	color:#fff;
@@ -49,7 +49,7 @@ tr#header {
 	font-weight:bold;
 	padding:5px 40px;
 	font-size:1rem;
-	line-height:2rem;
+	line-height:1.4rem;
 	position:relative;
 	transition:0.5s;
 }
@@ -71,9 +71,9 @@ tr#header {
 	bottom:1px;
 	top:auto;
 }
-@media screen and (min-width:800px){
+@media screen and (min-width:1000px){
 	#forkongithub{
-		position:fixed;
+		position:absolute;
 		display:block;
 		top:0;
 		right:0;
@@ -95,5 +95,3 @@ tr#header {
 		box-shadow:4px 4px 10px rgba(0,0,0,0.8);
 	}
 }
-
-

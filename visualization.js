@@ -18,51 +18,6 @@ var barSvg = svg.append( 'svg' )
 
 /* 0.2. Misc. DataArrays and Global Variables
  *************************************************************/
-
-var streetLabels = [ {
-		name: 'Tremont St.',
-		x: 0.4,
-		y: -0.1,
-		transform: null
-	},
-	{
-		name: 'Shawmut Ave.',
-		x: 0.37,
-		y: 2.1,
-		transform: null
-	},
-	{
-		name: 'W. Springfield St.',
-		x: 1.1,
-		y: 1,
-		transform: 'rotate(90)'
-	},
-	{
-		name: 'Northampton St.',
-		x: -0.38,
-		y: 1,
-		transform: null
-	},
-	{
-		name: 'Mass. Ave.',
-		x: 0.56,
-		y: 0.25,
-		transform: null
-	},
-	{
-		name: 'Chester Sq.',
-		x: 0.65,
-		y: 1.45,
-		transform: null
-	},
-	{
-		name: 'Chester Sq.',
-		x: 0.15,
-		y: 0.55,
-		transform: null
-	}
-]
-
 var rXPlus = [ 1, 2.1, 2.3, 2.2, 3.1, 3.2, 12 ];
 var rYPlus = [ 2.1, 9.3, 4, 7, 11, 14 ];
 var rDiag = [ 2.1, 2.3, 9.1, 9.3 ]
@@ -81,10 +36,6 @@ var mapYScale = ( mapXScale * mapYRatio );
 var mapHorizMargin = 100;
 var mapVertMargin = 200;
 
-
-/* 1. VIS.1: Street Occupancy Map
- *************************************************************/
-
 function scaleX( rawX ) {
 	return ( rawX * mapXScale ) + mapHorizMargin;
 };
@@ -93,9 +44,75 @@ function scaleY( rawY ) {
 	return ( rawY * mapYScale ) + mapVertMargin;
 };
 
-var redWhiteGreenColorScale = d3.scaleLinear()
-	.domain( [ 0, 10, 50 ] )
-	.range( [ "green", "white", "red" ] );
+var streetLabels = [ {
+		name: 'Tremont St.',
+		x: 0.5,
+		y: -0.1,
+		transform: null
+	},
+	{
+		name: 'Shawmut Ave.',
+		x: 0.5,
+		y: 2.1,
+		transform: null
+	},
+	{
+		name: 'W. Springfield St.',
+		x: 1.1,
+		y: 1,
+		transform: 'rotate(90,' + scaleX( 1.1 ) + ',' + scaleY( 1 ) + ')'
+	},
+	{
+		name: 'Northampton St.',
+		x: -0.1,
+		y: 1.0,
+		transform: 'rotate(-90,' + scaleX( -0.1 ) + ',' + scaleY( 1 ) + ')'
+	},
+	{
+		name: 'Mass. Ave.',
+		x: 0.57,
+		y: 0.25,
+		transform: 'rotate(90,' + scaleX( 0.57 ) + ',' + scaleY( 0.25 ) + ')'
+	},
+	{
+		name: 'Mass. Ave.',
+		x: 0.43,
+		y: 1.75,
+		transform: 'rotate(-90,' + scaleX( 0.43 ) + ',' + scaleY( 1.75 ) + ')'
+	},
+	{
+		name: 'Chester Sq.',
+		x: 0.77,
+		y: 1,
+		transform: 'rotate(90,' + scaleX( 0.77 ) + ',' + scaleY( 1 ) + ')'
+	},
+	{
+		name: 'Chester Sq.',
+		x: 0.22,
+		y: 1,
+		transform: 'rotate(-90,' + scaleX( 0.22 ) + ',' + scaleY( 1 ) + ')'
+	}
+]
+
+
+/* 1. VIS.1: Street Occupancy Map
+ *************************************************************/
+
+// var colorScale = d3.scaleLinear()
+// 	.domain( [ 0, 0.25, 0.5, 0.75, 1 ] )
+// 	.range( [ 'green', 'yellow', 'white', 'orange', 'red' ] );
+
+var colorScale = d3.scaleLinear()
+	.domain( [ 0, 0.5, 1 ] )
+	.range( [ 'green', 'white', 'red' ] );
+
+// var colorScale = d3.scaleLinear()
+// 	.domain( [ 0, 0.5, 1 ] )
+// 	.range( [ 'green', 'yellow', 'red' ] );
+
+// var colorScale = d3.scaleSequential()
+// 	.domain( [ 0, 1 ] )
+// 	.interpolator( d3.interpolateYlOrRd );
 
 // // CIRCULAR INTERSECTIONS
 // function drawIntersections( intersections, strokeWidth ) {
@@ -115,10 +132,11 @@ var redWhiteGreenColorScale = d3.scaleLinear()
 
 // SQUARE INTERSECTIONS
 function drawIntersections( intersections, strokeWidth ) {
-	mapSvg.selectAll( 'rect' )
+	mapSvg.selectAll( '.intersection' )
 		.data( intersections )
 		.enter()
 		.append( 'rect' )
+		.attr( 'class', 'intersection' )
 		.attr( 'fill', outlineColor )
 		.attr( 'x', function( d ) {
 			return scaleX( d.x - polyPointDist ) - ( strokeWidth * 0.5 );
@@ -177,47 +195,48 @@ function drawSegments( segments, strokeWidth, isParkingArea ) {
 function labelStreets() {
 	for ( street of streetLabels ) {
 		mapSvg.append( 'text' )
-			.attr( "x", scaleX( street.x ) )
-			.attr( "y", scaleY( street.y ) )
+			.attr( 'x', scaleX( street.x ) )
+			.attr( 'y', scaleY( street.y ) )
 			.text( street.name )
 			.attr( 'transform', street.transform )
-			.attr( "font-family", "sans-serif" )
-			.attr( "font-size", "10px" )
-			.attr( "fill", outlineColor );
+			.attr( 'text-anchor', 'middle' )
+			.attr( 'font-family', 'sans-serif' )
+			.attr( 'font-size', '10px' )
+			.attr( 'fill', outlineColor );
 	}
 }
 
 mapSvg.append( 'text' )
-	.attr( "x", scaleX( -0.2 ) )
-	.attr( "y", scaleY( -0.23 ) )
+	.attr( 'x', scaleX( -0.2 ) )
+	.attr( 'y', scaleY( -0.23 ) )
 	.text( 'Street Occupancy Map' )
-	.attr( "font-family", "sans-serif" )
-	.attr( "font-size", "20px" )
-	.attr( "fill", "black" );
+	.attr( 'font-family', 'sans-serif' )
+	.attr( 'font-size', '20px' )
+	.attr( 'fill', 'black' );
 
 mapSvg.append( 'text' )
-	.attr( "x", scaleX( -0.2 ) )
-	.attr( "y", scaleY( -0.70 ) )
+	.attr( 'x', scaleX( -0.2 ) )
+	.attr( 'y', scaleY( -0.70 ) )
 	.text( 'Survey Time' )
-	.attr( "font-family", "sans-serif" )
-	.attr( "font-size", "20px" )
-	.attr( "fill", "black" );
+	.attr( 'font-family', 'sans-serif' )
+	.attr( 'font-size', '20px' )
+	.attr( 'fill', 'black' );
 
 mapSvg.append( 'text' )
-	.attr( "x", scaleX( 1.75 ) )
-	.attr( "y", scaleY( -0.23 ) )
+	.attr( 'x', scaleX( 1.75 ) )
+	.attr( 'y', scaleY( -0.23 ) )
 	.text( 'Parking Inventory Bar Chart' )
-	.attr( "font-family", "sans-serif" )
-	.attr( "font-size", "20px" )
-	.attr( "fill", "black" );
+	.attr( 'font-family', 'sans-serif' )
+	.attr( 'font-size', '20px' )
+	.attr( 'fill', 'black' );
 
 mapSvg.append( 'text' )
-	.attr( "x", scaleX( 1.75 ) )
-	.attr( "y", scaleY( -0.15 ) )
+	.attr( 'x', scaleX( 1.75 ) )
+	.attr( 'y', scaleY( -0.15 ) )
 	.text( 'coming soon...' )
-	.attr( "font-family", "sans-serif" )
-	.attr( "font-size", "10px" )
-	.attr( "fill", "black" );
+	.attr( 'font-family', 'sans-serif' )
+	.attr( 'font-size', '10px' )
+	.attr( 'fill', 'black' );
 
 d3.csv( './data/intersections_data.csv' )
 	.then( function( intersections_data ) {
@@ -327,12 +346,12 @@ d3.csv( './data/intersections_data.csv' )
 										return ( a[ 'Route Number' ] === idVal && ( a[ 'Side of Street' ].charAt( 0 ) === idSide ) );
 									} );
 									var occupancy_total = agg_value[ 'Total Spots' ];
-									var occupancy_rate = agg_value[ time ];
+									var occupancy_rate = agg_value[ time ] / occupancy_total;
 
 									if ( ( timeVal.getHours() >= 9 && timeVal.getHours() <= 17 ) && ( '1' === idVal || '2' === idVal ) ) {
 										return 'gray'
 									} else {
-										return redWhiteGreenColorScale( occupancy_rate );
+										return colorScale( occupancy_rate );
 									}
 								} );
 						}
@@ -341,15 +360,50 @@ d3.csv( './data/intersections_data.csv' )
 	} );
 
 
+var outlineWidth = 2;
+
+mapSvg.selectAll( '.rect2' )
+	.data( d3.range( 0, 1, 0.03 ) )
+	.enter()
+	.append( 'rect' )
+	.attr( 'class', 'colorLegend' )
+	.attr( 'x', function( d ) {
+		return scaleX( d ) - ( outlineWidth + ( 11 / 2 ) );
+	} )
+	.attr( 'y', function( d ) {
+		return scaleY( 2.2 ) - ( outlineWidth );
+	} )
+	.attr( 'width', 13 + outlineWidth )
+	.attr( 'height', 32 + outlineWidth )
+	.style( 'fill', outlineColor );
+
+mapSvg.selectAll( '.rect' )
+	.data( d3.range( 0, 1, 0.03 ) )
+	.enter()
+	.append( 'rect' )
+	.attr( 'class', 'colorLegend' )
+	.attr( 'x', function( d ) {
+		return scaleX( d ) - ( 11 / 2 );
+	} )
+	.attr( 'y', function( d ) {
+		return scaleY( 2.2 );
+	} )
+	.attr( 'width', 11 )
+	.attr( 'height', 30 )
+	.style( 'fill', function( d ) {
+		return colorScale( d );
+	} );
+
+
 
 /* 2. VIZ.2: Stacked Bar Chart
  *************************************************************/
-//  <div class="row align-items-center">
-// 	 <div class="col-sm-2">
-// 		 <p id="value-time"></p>
+//  <div class='row align-items-center'>
+// 	 <div class='col-sm-2'>
+// 		 <p id='value-time'></p>
 // 	 </div>
-// 	 <div class="col-sm">
-// 		 <div id="slider-time"></div>
+// 	 <div class='col-sm'>
+// 		 <div id='slider-time'></div>
 // 	 </div>
 //  </div>
 //
@@ -359,8 +413,8 @@ d3.csv( './data/intersections_data.csv' )
 // 	 }
 //
 //  </style>
-//  <svg width="960" height="960"></svg>
-//  <script src="https://d3js.org/d3.v4.min.js"></script>
+//  <svg width='960' height='960'></svg>
+//  <script src='https://d3js.org/d3.v4.min.js'></script>
 //
 //  <script>
 // 	 // the bar chart and hour slider
@@ -372,9 +426,9 @@ d3.csv( './data/intersections_data.csv' )
 // 			 bottom: 30,
 // 			 left: 120
 // 		 },
-// 		 width = +svg.attr("width") - margin.left - margin.right,
+// 		 width = +svg.attr('width') - margin.left - margin.right,
 // 		 height = 200;
-// 	 g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+// 	 g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 //
 // 	 var y = d3.scaleBand()
 // 		 .rangeRound([0, height])
@@ -385,13 +439,13 @@ d3.csv( './data/intersections_data.csv' )
 // 		 .rangeRound([0, width]);
 //
 // 	 var m = d3.scaleOrdinal()
-// 		 .range(["#98abc5", "#8a80a6"]);
+// 		 .range(['#98abc5', '#8a80a6']);
 //
 // 	 var z = d3.scaleOrdinal()
-// 		 .range(["#98abc5"]);
+// 		 .range(['#98abc5']);
 //
 // 	 // load the CSV data
-// 	 d3.csv("Aggregated_Bar_Chart.csv", function(d, i, columns) {
+// 	 d3.csv('Aggregated_Bar_Chart.csv', function(d, i, columns) {
 // 		 return d
 //
 // 	 }, function(error, data) {
@@ -413,77 +467,77 @@ d3.csv( './data/intersections_data.csv' )
 // 		 z.domain(array);
 //
 // 		 // Append the rectangles onto the bar chart with the width
-// 		 g.append("g")
-// 			 .selectAll("g")
+// 		 g.append('g')
+// 			 .selectAll('g')
 // 			 .data(d3.stack().keys(array)(data))
-// 			 .enter().append("g")
-// 			 .attr("fill", function(d) {
-// 				 return "#8a80a6";
+// 			 .enter().append('g')
+// 			 .attr('fill', function(d) {
+// 				 return '#8a80a6';
 // 			 })
-// 			 .selectAll("rect")
+// 			 .selectAll('rect')
 // 			 .data(function(d) {
 // 				 return d;
 // 			 })
 //
-// 			 .enter().append("rect")
-// 			 .attr("class", "chartRow")
-// 			 .attr("y", function(d) {
+// 			 .enter().append('rect')
+// 			 .attr('class', 'chartRow')
+// 			 .attr('y', function(d) {
 // 				 return y(d.data.Street);
 // 			 })
-// 			 .attr("x", function(d) {
+// 			 .attr('x', function(d) {
 // 				 return x(d[0]);
 // 			 })
-// 			 .attr("width", function(d) {
+// 			 .attr('width', function(d) {
 // 				 return x(d[1]) - x(d[0]);
 // 			 })
-// 			 .attr("height", y.bandwidth());
+// 			 .attr('height', y.bandwidth());
 //
 // 		 // the y axis
-// 		 g.append("g")
-// 			 .attr("class", "axis")
-// 			 .attr("transform", "translate(0,0)")
+// 		 g.append('g')
+// 			 .attr('class', 'axis')
+// 			 .attr('transform', 'translate(0,0)')
 // 			 .call(d3.axisLeft(y));
 //
 // 		 // the x axis
-// 		 g.append("g")
-// 			 .attr("class", "axis")
-// 			 .attr("transform", "translate(0," + height + ")")
-// 			 .call(d3.axisBottom(x).ticks(null, "s"))
-// 			 .append("text")
-// 			 .attr("y", 2)
-// 			 .attr("x", x(x.ticks().pop()) + 0.5)
-// 			 .attr("dy", "0.32em")
-// 			 .attr("fill", "#000")
-// 			 .attr("font-weight", "bold")
-// 			 .attr("text-anchor", "start")
-// 			 .text("Parking Spots")
-// 			 .attr("transform", "translate(" + (-width) + ",-10)");
+// 		 g.append('g')
+// 			 .attr('class', 'axis')
+// 			 .attr('transform', 'translate(0,' + height + ')')
+// 			 .call(d3.axisBottom(x).ticks(null, 's'))
+// 			 .append('text')
+// 			 .attr('y', 2)
+// 			 .attr('x', x(x.ticks().pop()) + 0.5)
+// 			 .attr('dy', '0.32em')
+// 			 .attr('fill', '#000')
+// 			 .attr('font-weight', 'bold')
+// 			 .attr('text-anchor', 'start')
+// 			 .text('Parking Spots')
+// 			 .attr('transform', 'translate(' + (-width) + ',-10)');
 //
 // 		 // create the legend for the bar chart
-// 		 var legend = g.append("g")
-// 			 .attr("font-family", "sans-serif")
-// 			 .attr("font-size", 12)
-// 			 .attr("text-anchor", "end")
-// 			 .selectAll("g")
+// 		 var legend = g.append('g')
+// 			 .attr('font-family', 'sans-serif')
+// 			 .attr('font-size', 12)
+// 			 .attr('text-anchor', 'end')
+// 			 .selectAll('g')
 // 			 .data(array.slice().reverse())
-// 			 .enter().append("g")
-// 			 .attr("transform", function(d, i) {
-// 				 return "translate(-50," + (300 + i * 20) + ")";
+// 			 .enter().append('g')
+// 			 .attr('transform', function(d, i) {
+// 				 return 'translate(-50,' + (300 + i * 20) + ')';
 // 			 });
 //
 // 		 // colors for the legend of bar chart
-// 		 legend.append("rect")
-// 			 .attr("x", width - 19)
-// 			 .attr("width", 19)
-// 			 .attr("height", 10)
-// 			 .attr("fill", m)
+// 		 legend.append('rect')
+// 			 .attr('x', width - 19)
+// 			 .attr('width', 19)
+// 			 .attr('height', 10)
+// 			 .attr('fill', m)
 //
 // 		 // text of legend for bar chart
-// 		 legend.append("text")
-// 			 .attr("class", "legendtext")
-// 			 .attr("x", width - 24)
-// 			 .attr("y", 9.5)
-// 			 .attr("dy", "0.32em")
+// 		 legend.append('text')
+// 			 .attr('class', 'legendtext')
+// 			 .attr('x', width - 24)
+// 			 .attr('y', 9.5)
+// 			 .attr('dy', '0.32em')
 // 			 .text(function(d) {
 // 				 return d;
 // 			 });
@@ -498,8 +552,8 @@ d3.csv( './data/intersections_data.csv' )
 //
 // 		 // function to update the bar chart link to the hour scroller given a new val of hour
 // 		 function textChange(val) {
-// 			 d3.selectAll("g.chartRow").remove();
-// 			 d3.selectAll("text.legendtext").remove();
+// 			 d3.selectAll('g.chartRow').remove();
+// 			 d3.selectAll('text.legendtext').remove();
 // 			 if (val instanceof Date) {
 // 				 var hour = val.getHours()
 // 			 } else {
@@ -512,50 +566,50 @@ d3.csv( './data/intersections_data.csv' )
 // 			 var arrayy = [keys[0], keys[hour - 5]]
 // 			 var okay = d3.stack().keys(array)(data)
 //
-// 			 g.append("g")
-// 				 .attr("class", "chartRow")
+// 			 g.append('g')
+// 				 .attr('class', 'chartRow')
 //
-// 				 .selectAll("g")
+// 				 .selectAll('g')
 // 				 .data(d3.stack().keys(array)(data))
-// 				 .enter().append("g")
-// 				 .attr("fill", function(d) {
+// 				 .enter().append('g')
+// 				 .attr('fill', function(d) {
 // 					 return z(d.key);
 // 				 })
-// 				 .selectAll("rect")
+// 				 .selectAll('rect')
 // 				 .data(function(d) {
 // 					 return d;
 // 				 })
-// 				 .enter().append("rect")
-// 				 .attr("y", function(d) {
+// 				 .enter().append('rect')
+// 				 .attr('y', function(d) {
 // 					 return y(d.data.Street);
 // 				 })
-// 				 .attr("x", function(d) {
+// 				 .attr('x', function(d) {
 // 					 return x(d[0]);
 // 				 })
-// 				 .attr("width", function(d) {
+// 				 .attr('width', function(d) {
 // 					 return x(d[1]) - x(d[0]);
 // 				 })
-// 				 .attr("height", y.bandwidth());
+// 				 .attr('height', y.bandwidth());
 //
 // 			 // update the legend with the new time
-// 			 var legend = g.append("g")
-// 				 .attr("font-family", "sans-serif")
-// 				 .attr("font-size", 12)
-// 				 .attr("text-anchor", "end")
-// 				 .selectAll("g")
+// 			 var legend = g.append('g')
+// 				 .attr('font-family', 'sans-serif')
+// 				 .attr('font-size', 12)
+// 				 .attr('text-anchor', 'end')
+// 				 .selectAll('g')
 // 				 .data(arrayy.slice().reverse())
-// 				 .enter().append("g")
-// 				 .attr("transform", function(d, i) {
-// 					 return "translate(-50," + (300 + i * 20) + ")";
+// 				 .enter().append('g')
+// 				 .attr('transform', function(d, i) {
+// 					 return 'translate(-50,' + (300 + i * 20) + ')';
 // 				 });
 //
-// 			 legend.append("text")
-// 				 .attr("class", "legendtext")
-// 				 .attr("x", width - 24)
-// 				 .attr("y", 9.5)
-// 				 .attr("dy", "0.32em")
+// 			 legend.append('text')
+// 				 .attr('class', 'legendtext')
+// 				 .attr('x', width - 24)
+// 				 .attr('y', 9.5)
+// 				 .attr('dy', '0.32em')
 // 				 .text(function(d) {
-// 					 console.log("jiim")
+// 					 console.log('jiim')
 // 					 console.log(d)
 // 					 return d;
 // 				 });
@@ -589,67 +643,67 @@ d3.csv( './data/intersections_data.csv' )
 // 	 z.domain(array);
 //
 // 	 // Append the rectangles onto the bar chart with the width
-// 	 g.append("g")
-// 	 .selectAll("g")
+// 	 g.append('g')
+// 	 .selectAll('g')
 // 	 .data(d3.stack().keys(array)(data))
-// 	 .enter().append("g")
-// 	 .attr("fill", function(d) {
-// 			return "#8a80a6"; })
-// 	 .selectAll("rect")
+// 	 .enter().append('g')
+// 	 .attr('fill', function(d) {
+// 			return '#8a80a6'; })
+// 	 .selectAll('rect')
 // 	 .data(function(d) { return d; })
 //
-// 	 .enter().append("rect")
-// 	 .attr("class", "chartRow")
-// 	 .attr("y", function(d) { return y(d.data.Street); })
-// 	 .attr("x", function(d) {
+// 	 .enter().append('rect')
+// 	 .attr('class', 'chartRow')
+// 	 .attr('y', function(d) { return y(d.data.Street); })
+// 	 .attr('x', function(d) {
 // 						 return x(d[0]); })
-// 		 .attr("width", function(d) { return x(d[1]) - x(d[0]); })
-// 		 .attr("height", y.bandwidth());
+// 		 .attr('width', function(d) { return x(d[1]) - x(d[0]); })
+// 		 .attr('height', y.bandwidth());
 //
 // 	 // the y axis
-// 	 g.append("g")
-// 		 .attr("class", "axis")
-// 		 .attr("transform", "translate(0,0)")
+// 	 g.append('g')
+// 		 .attr('class', 'axis')
+// 		 .attr('transform', 'translate(0,0)')
 // 		 .call(d3.axisLeft(y));
 //
 // 	 // the x axis
-// 	 g.append("g")
-// 		 .attr("class", "axis")
-// 	 .attr("transform", "translate(0,"+height+")")
-// 		 .call(d3.axisBottom(x).ticks(null, "s"))
-// 	 .append("text")
-// 		 .attr("y", 2)
-// 		 .attr("x", x(x.ticks().pop()) + 0.5)
-// 		 .attr("dy", "0.32em")
-// 		 .attr("fill", "#000")
-// 		 .attr("font-weight", "bold")
-// 		 .attr("text-anchor", "start")
-// 		 .text("Parking Spots")
-// 	 .attr("transform", "translate("+ (-width) +",-10)");
+// 	 g.append('g')
+// 		 .attr('class', 'axis')
+// 	 .attr('transform', 'translate(0,'+height+')')
+// 		 .call(d3.axisBottom(x).ticks(null, 's'))
+// 	 .append('text')
+// 		 .attr('y', 2)
+// 		 .attr('x', x(x.ticks().pop()) + 0.5)
+// 		 .attr('dy', '0.32em')
+// 		 .attr('fill', '#000')
+// 		 .attr('font-weight', 'bold')
+// 		 .attr('text-anchor', 'start')
+// 		 .text('Parking Spots')
+// 	 .attr('transform', 'translate('+ (-width) +',-10)');
 //
 // 	 // create the legend for the bar chart
-// 	 var legend = g.append("g")
-// 		 .attr("font-family", "sans-serif")
-// 		 .attr("font-size", 12)
-// 		 .attr("text-anchor", "end")
-// 	 .selectAll("g")
+// 	 var legend = g.append('g')
+// 		 .attr('font-family', 'sans-serif')
+// 		 .attr('font-size', 12)
+// 		 .attr('text-anchor', 'end')
+// 	 .selectAll('g')
 // 	 .data(array.slice().reverse())
-// 	 .enter().append("g")
-// 		.attr("transform", function(d, i) { return "translate(-50," + (300 + i * 20) + ")"; });
+// 	 .enter().append('g')
+// 		.attr('transform', function(d, i) { return 'translate(-50,' + (300 + i * 20) + ')'; });
 //
 // 	 // colors for the legend of bar chart
-// 	 legend.append("rect")
-// 		 .attr("x", width - 19)
-// 		 .attr("width", 19)
-// 		 .attr("height", 10)
-// 		 .attr("fill", m)
+// 	 legend.append('rect')
+// 		 .attr('x', width - 19)
+// 		 .attr('width', 19)
+// 		 .attr('height', 10)
+// 		 .attr('fill', m)
 //
 // 	 // text of legend for bar chart
-// 	 legend.append("text")
-// 		 .attr("class", "legendtext")
-// 		 .attr("x", width - 24)
-// 		 .attr("y", 9.5)
-// 		 .attr("dy", "0.32em")
+// 	 legend.append('text')
+// 		 .attr('class', 'legendtext')
+// 		 .attr('x', width - 24)
+// 		 .attr('y', 9.5)
+// 		 .attr('dy', '0.32em')
 // 		 .text(function(d) { return d; });
 //
 //
@@ -662,8 +716,8 @@ d3.csv( './data/intersections_data.csv' )
 //
 //  // function to update the bar chart link to the hour scroller given a new val of hour
 //  function textChange(val) {
-// 	 d3.selectAll("g.chartRow").remove();
-// 	 d3.selectAll("text.legendtext").remove();
+// 	 d3.selectAll('g.chartRow').remove();
+// 	 d3.selectAll('text.legendtext').remove();
 // 		 if (val instanceof Date) {
 // 				 var hour = val.getHours()
 // 				 } else {
@@ -676,40 +730,40 @@ d3.csv( './data/intersections_data.csv' )
 // 			var arrayy = [keys[0],keys[hour - 5]]
 // 			var okay = d3.stack().keys(array)(data)
 //
-// 		 g.append("g")
-// 		 .attr("class", "chartRow")
+// 		 g.append('g')
+// 		 .attr('class', 'chartRow')
 //
-// 		 .selectAll("g")
+// 		 .selectAll('g')
 // 		 .data(d3.stack().keys(array)(data))
-// 		 .enter().append("g")
-// 		 .attr("fill", function(d) {
+// 		 .enter().append('g')
+// 		 .attr('fill', function(d) {
 // 			return z(d.key); })
-// 		 .selectAll("rect")
+// 		 .selectAll('rect')
 // 		 .data(function(d) { return d; })
-// 		 .enter().append("rect")
-// 		 .attr("y", function(d) { return y(d.data.Street); })
-// 		 .attr("x", function(d) {
+// 		 .enter().append('rect')
+// 		 .attr('y', function(d) { return y(d.data.Street); })
+// 		 .attr('x', function(d) {
 // 						 return x(d[0]); })
-// 		 .attr("width", function(d) { return x(d[1]) - x(d[0]); })
-// 		 .attr("height", y.bandwidth());
+// 		 .attr('width', function(d) { return x(d[1]) - x(d[0]); })
+// 		 .attr('height', y.bandwidth());
 //
 // 		 // update the legend with the new time
-// 		 var legend = g.append("g")
-// 			 .attr("font-family", "sans-serif")
-// 			 .attr("font-size", 12)
-// 			 .attr("text-anchor", "end")
-// 				 .selectAll("g")
+// 		 var legend = g.append('g')
+// 			 .attr('font-family', 'sans-serif')
+// 			 .attr('font-size', 12)
+// 			 .attr('text-anchor', 'end')
+// 				 .selectAll('g')
 // 				 .data(arrayy.slice().reverse())
-// 				 .enter().append("g")
-// 						.attr("transform", function(d, i) { return "translate(-50," + (300 + i * 20) + ")"; });
+// 				 .enter().append('g')
+// 						.attr('transform', function(d, i) { return 'translate(-50,' + (300 + i * 20) + ')'; });
 //
-// 		 legend.append("text")
-// 			 .attr("class", "legendtext")
-// 			 .attr("x", width - 24)
-// 			 .attr("y", 9.5)
-// 			 .attr("dy", "0.32em")
+// 		 legend.append('text')
+// 			 .attr('class', 'legendtext')
+// 			 .attr('x', width - 24)
+// 			 .attr('y', 9.5)
+// 			 .attr('dy', '0.32em')
 // 			 .text(function(d) {
-// 				 console.log("jiim")
+// 				 console.log('jiim')
 // 				 console.log(d)
 // 				 return d; });
 //
@@ -888,7 +942,7 @@ d3.csv( './data/intersections_data.csv' )
 //     console.log(polyPoints);
 //     return polyPoints;
 //   })
-//   .attr("stroke","black");
+//   .attr('stroke','black');
 // };
 //
 // d3.csv('./data/intersections_data.csv')

@@ -222,7 +222,7 @@ mapSvg.append( 'text' )
 	.attr( 'font-size', '20px' )
 	.attr( 'fill', 'black' );
 
-mapSvg.append( 'text' )
+barSvg.append( 'text' )
 	.attr( 'x', scaleX( 1.75 ) )
 	.attr( 'y', scaleY( -0.23 ) )
 	.text( 'Parking Inventory Bar Chart' )
@@ -230,7 +230,7 @@ mapSvg.append( 'text' )
 	.attr( 'font-size', '20px' )
 	.attr( 'fill', 'black' );
 
-mapSvg.append( 'text' )
+barSvg.append( 'text' )
 	.attr( 'x', scaleX( 1.75 ) )
 	.attr( 'y', scaleY( -0.15 ) )
 	.text( 'coming soon...' )
@@ -398,414 +398,198 @@ mapSvg.selectAll( '.rect' )
 
 /* 2. VIZ.2: Stacked Bar Chart
  *************************************************************/
-//  <div class='row align-items-center'>
-// 	 <div class='col-sm-2'>
-// 		 <p id='value-time'></p>
-// 	 </div>
-// 	 <div class='col-sm'>
-// 		 <div id='slider-time'></div>
-// 	 </div>
-//  </div>
-//
-//  <style>
-// 	 .axis .domain {
-// 		 display: none;
-// 	 }
-//
-//  </style>
-//  <svg width='960' height='960'></svg>
-//  <script src='https://d3js.org/d3.v4.min.js'></script>
-//
-//  <script>
-// 	 // the bar chart and hour slider
-// 	 //create the SVG with the correct dimensions
-// 	 var svg = d3.select('#vis-svg'),
-// 		 margin = {
-// 			 top: 20,
-// 			 right: 20,
-// 			 bottom: 30,
-// 			 left: 120
-// 		 },
-// 		 width = +svg.attr('width') - margin.left - margin.right,
-// 		 height = 200;
-// 	 g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-//
-// 	 var y = d3.scaleBand()
-// 		 .rangeRound([0, height])
-// 		 .paddingInner(0.05)
-// 		 .align(0.1);
-//
-// 	 var x = d3.scaleLinear()
-// 		 .rangeRound([0, width]);
-//
-// 	 var m = d3.scaleOrdinal()
-// 		 .range(['#98abc5', '#8a80a6']);
-//
-// 	 var z = d3.scaleOrdinal()
-// 		 .range(['#98abc5']);
-//
-// 	 // load the CSV data
-// 	 d3.csv('Aggregated_Bar_Chart.csv', function(d, i, columns) {
-// 		 return d
-//
-// 	 }, function(error, data) {
-// 		 if (error) throw error;
-//
-// 		 var keys = data.columns.slice(1);
-// 		 var rest = keys[2];
-// 		 var array = [keys[0], keys[1]]
-//
-// 		 // create the x, y and z domain of the bar chart
-// 		 y.domain(data.map(function(d) {
-// 			 return d.Street;
-// 		 }));
-//
-// 		 x.domain([0, d3.max(data, function(d) {
-// 			 return parseInt(d.Total)
-// 		 })])
-//
-// 		 z.domain(array);
-//
-// 		 // Append the rectangles onto the bar chart with the width
-// 		 g.append('g')
-// 			 .selectAll('g')
-// 			 .data(d3.stack().keys(array)(data))
-// 			 .enter().append('g')
-// 			 .attr('fill', function(d) {
-// 				 return '#8a80a6';
-// 			 })
-// 			 .selectAll('rect')
-// 			 .data(function(d) {
-// 				 return d;
-// 			 })
-//
-// 			 .enter().append('rect')
-// 			 .attr('class', 'chartRow')
-// 			 .attr('y', function(d) {
-// 				 return y(d.data.Street);
-// 			 })
-// 			 .attr('x', function(d) {
-// 				 return x(d[0]);
-// 			 })
-// 			 .attr('width', function(d) {
-// 				 return x(d[1]) - x(d[0]);
-// 			 })
-// 			 .attr('height', y.bandwidth());
-//
+	var margin = {
+			 top: 20,
+			 right: 20,
+			 bottom: 30,
+			 left: 120
+		 }
+	 	width = +svg.attr('width') - margin.left - margin.right,
+        height = 200;
+	 var y = d3.scaleBand()
+		 .rangeRound([0, height])
+		 .paddingInner(0.05)
+		 .align(0.1);
+
+	 var x = d3.scaleLinear()
+		 .rangeRound([0, width]);
+
+	 var m = d3.scaleOrdinal()
+		 .range(['#98abc5', '#8a80a6']);
+
+	 var z = d3.scaleOrdinal()
+		 .range(['#98abc5']);
+
+
+	
+	d3.csv('Aggregated_Bar_Chart.csv')
+	 .then( function( d, i, columns ) {
+		 console.log("hello")
+		 var keys = d.columns.slice(1);
+		 var rest = keys[2];
+		 var array = [keys[0], keys[1]]
+		 //  create the x, y and z domain of the bar chart
+		  y.domain(d.map(function(d) {
+			  return d.Street;
+		  }));
+		  
+ 
+		  x.domain([0, d3.max(d, function(d) {
+			  return parseInt(d.Total)
+		  })])
+ 
+		  z.domain(array);
+		//   console.log(array)
+		  
+		barSvg.append('barSvg')
+		.selectAll('barSvg')
+		.data(d3.stack().keys(array)(d))
+		.enter().append('barSvg')
+		.attr('fill', function(d) {
+			console.log("arra")
+			console.log(array)
+			return '#8a80a6';
+		})
+		.selectAll('rect')
+		.data(function(d) {
+			return d;
+			})
+			.enter().append('rect')
+			.attr('class', 'chartRow')
+			.attr('y', function(d) {
+				console.log(d.data["Street Name"])
+				return y(d.data["Street Name"]);
+			})
+			.attr('x', function(d) {
+				console.log("okay")
+				console.log(d[0])
+				return d[0];
+			})
+			.attr('width', function(d) {
+				return d[1] - d[0];
+			})
+			.attr('height', y.bandwidth());
+
+	 })
+		
+	
+	
 // 		 // the y axis
-// 		 g.append('g')
-// 			 .attr('class', 'axis')
-// 			 .attr('transform', 'translate(0,0)')
-// 			 .call(d3.axisLeft(y));
+		 barSvg.append('barSvg')
+			 .attr('class', 'axis')
+			 .attr('transform', 'translate(0,0)')
+			 .call(d3.axisLeft(y));
 //
 // 		 // the x axis
-// 		 g.append('g')
-// 			 .attr('class', 'axis')
-// 			 .attr('transform', 'translate(0,' + height + ')')
-// 			 .call(d3.axisBottom(x).ticks(null, 's'))
-// 			 .append('text')
-// 			 .attr('y', 2)
-// 			 .attr('x', x(x.ticks().pop()) + 0.5)
-// 			 .attr('dy', '0.32em')
-// 			 .attr('fill', '#000')
-// 			 .attr('font-weight', 'bold')
-// 			 .attr('text-anchor', 'start')
-// 			 .text('Parking Spots')
-// 			 .attr('transform', 'translate(' + (-width) + ',-10)');
-//
-// 		 // create the legend for the bar chart
-// 		 var legend = g.append('g')
-// 			 .attr('font-family', 'sans-serif')
-// 			 .attr('font-size', 12)
-// 			 .attr('text-anchor', 'end')
-// 			 .selectAll('g')
-// 			 .data(array.slice().reverse())
-// 			 .enter().append('g')
-// 			 .attr('transform', function(d, i) {
-// 				 return 'translate(-50,' + (300 + i * 20) + ')';
-// 			 });
-//
-// 		 // colors for the legend of bar chart
-// 		 legend.append('rect')
-// 			 .attr('x', width - 19)
-// 			 .attr('width', 19)
-// 			 .attr('height', 10)
-// 			 .attr('fill', m)
-//
-// 		 // text of legend for bar chart
-// 		 legend.append('text')
-// 			 .attr('class', 'legendtext')
-// 			 .attr('x', width - 24)
-// 			 .attr('y', 9.5)
-// 			 .attr('dy', '0.32em')
-// 			 .text(function(d) {
-// 				 return d;
-// 			 });
-//
-//
-// 		 // get the time of the data collection
-// 		 var dataTime = d3.range(0, 15).map(function(d) {
-// 			 return new Date(2019, 9, 29, 6 + d);
-//
-// 		 });
-//
-//
-// 		 // function to update the bar chart link to the hour scroller given a new val of hour
-// 		 function textChange(val) {
-// 			 d3.selectAll('g.chartRow').remove();
-// 			 d3.selectAll('text.legendtext').remove();
-// 			 if (val instanceof Date) {
-// 				 var hour = val.getHours()
-// 			 } else {
-// 				 var hour = val;
-// 			 }
-//
-// 			 d3.select('p#value-time').text(d3.timeFormat('%H')(val));
-// 			 var rest = keys[0];
-// 			 var array = [keys[hour - 5]]
-// 			 var arrayy = [keys[0], keys[hour - 5]]
-// 			 var okay = d3.stack().keys(array)(data)
-//
-// 			 g.append('g')
-// 				 .attr('class', 'chartRow')
-//
-// 				 .selectAll('g')
-// 				 .data(d3.stack().keys(array)(data))
-// 				 .enter().append('g')
-// 				 .attr('fill', function(d) {
-// 					 return z(d.key);
-// 				 })
-// 				 .selectAll('rect')
-// 				 .data(function(d) {
-// 					 return d;
-// 				 })
-// 				 .enter().append('rect')
-// 				 .attr('y', function(d) {
-// 					 return y(d.data.Street);
-// 				 })
-// 				 .attr('x', function(d) {
-// 					 return x(d[0]);
-// 				 })
-// 				 .attr('width', function(d) {
-// 					 return x(d[1]) - x(d[0]);
-// 				 })
-// 				 .attr('height', y.bandwidth());
-//
-// 			 // update the legend with the new time
-// 			 var legend = g.append('g')
-// 				 .attr('font-family', 'sans-serif')
-// 				 .attr('font-size', 12)
-// 				 .attr('text-anchor', 'end')
-// 				 .selectAll('g')
-// 				 .data(arrayy.slice().reverse())
-// 				 .enter().append('g')
-// 				 .attr('transform', function(d, i) {
-// 					 return 'translate(-50,' + (300 + i * 20) + ')';
-// 				 });
-//
-// 			 legend.append('text')
-// 				 .attr('class', 'legendtext')
-// 				 .attr('x', width - 24)
-// 				 .attr('y', 9.5)
-// 				 .attr('dy', '0.32em')
-// 				 .text(function(d) {
-// 					 console.log('jiim')
-// 					 console.log(d)
-// 					 return d;
-// 				 });
-//
-// 		 }
-//
-// 		 // slider for the hour updates
-// 		 var sliderTime = d3
-// 			 .sliderBottom()
-// 			 .min(d3.min(dataTime))
-// 			 .max(d3.max(dataTime))
-// 			 .step(1000 * 60 * 60)
-// 			 .width(300)
-// 			 .tickFormat(d3.timeFormat('%H'))
-// 			 .tickValues(dataTime)
-//
-// 			 .default(new Date(2019, 9, 29).getHours())
-// 			 .on('onchange', val => {
-// 				 textChange(val, g);
-// 			 });
-//
-// 		 var gTime = d3
-// 			 .select('div#slider-time')
-// 			 .append('svg')
-// 			 .attr('width', 500)
-// 			 .attr('height', 100)
-// 			 .append('g')
-// 			 .attr('transform', 'translate(30,30)');
-//
-// 		 gTime.call(sliderTime);
-// 	 z.domain(array);
-//
-// 	 // Append the rectangles onto the bar chart with the width
-// 	 g.append('g')
-// 	 .selectAll('g')
-// 	 .data(d3.stack().keys(array)(data))
-// 	 .enter().append('g')
-// 	 .attr('fill', function(d) {
-// 			return '#8a80a6'; })
-// 	 .selectAll('rect')
-// 	 .data(function(d) { return d; })
-//
-// 	 .enter().append('rect')
-// 	 .attr('class', 'chartRow')
-// 	 .attr('y', function(d) { return y(d.data.Street); })
-// 	 .attr('x', function(d) {
-// 						 return x(d[0]); })
-// 		 .attr('width', function(d) { return x(d[1]) - x(d[0]); })
-// 		 .attr('height', y.bandwidth());
-//
-// 	 // the y axis
-// 	 g.append('g')
-// 		 .attr('class', 'axis')
-// 		 .attr('transform', 'translate(0,0)')
-// 		 .call(d3.axisLeft(y));
-//
-// 	 // the x axis
-// 	 g.append('g')
-// 		 .attr('class', 'axis')
-// 	 .attr('transform', 'translate(0,'+height+')')
-// 		 .call(d3.axisBottom(x).ticks(null, 's'))
-// 	 .append('text')
-// 		 .attr('y', 2)
-// 		 .attr('x', x(x.ticks().pop()) + 0.5)
-// 		 .attr('dy', '0.32em')
-// 		 .attr('fill', '#000')
-// 		 .attr('font-weight', 'bold')
-// 		 .attr('text-anchor', 'start')
-// 		 .text('Parking Spots')
-// 	 .attr('transform', 'translate('+ (-width) +',-10)');
-//
-// 	 // create the legend for the bar chart
-// 	 var legend = g.append('g')
-// 		 .attr('font-family', 'sans-serif')
-// 		 .attr('font-size', 12)
-// 		 .attr('text-anchor', 'end')
-// 	 .selectAll('g')
-// 	 .data(array.slice().reverse())
-// 	 .enter().append('g')
-// 		.attr('transform', function(d, i) { return 'translate(-50,' + (300 + i * 20) + ')'; });
-//
-// 	 // colors for the legend of bar chart
-// 	 legend.append('rect')
-// 		 .attr('x', width - 19)
-// 		 .attr('width', 19)
-// 		 .attr('height', 10)
-// 		 .attr('fill', m)
-//
-// 	 // text of legend for bar chart
-// 	 legend.append('text')
-// 		 .attr('class', 'legendtext')
-// 		 .attr('x', width - 24)
-// 		 .attr('y', 9.5)
-// 		 .attr('dy', '0.32em')
-// 		 .text(function(d) { return d; });
-//
-//
-// 	 // get the time of the data collection
-// 	 var dataTime = d3.range(0, 15).map(function(d) {
-// 		 return new Date(2019,9,29, 6+d );
-//
-//  });
-//
-//
-//  // function to update the bar chart link to the hour scroller given a new val of hour
-//  function textChange(val) {
-// 	 d3.selectAll('g.chartRow').remove();
-// 	 d3.selectAll('text.legendtext').remove();
-// 		 if (val instanceof Date) {
-// 				 var hour = val.getHours()
-// 				 } else {
-// 					 var hour = val;
-// 				 }
-//
-// 		 d3.select('p#value-time').text(d3.timeFormat('%H')(val));
-// 		 var rest = keys[0];
-// 		 var array =[keys[hour - 5]]
-// 			var arrayy = [keys[0],keys[hour - 5]]
-// 			var okay = d3.stack().keys(array)(data)
-//
-// 		 g.append('g')
-// 		 .attr('class', 'chartRow')
-//
-// 		 .selectAll('g')
-// 		 .data(d3.stack().keys(array)(data))
-// 		 .enter().append('g')
-// 		 .attr('fill', function(d) {
-// 			return z(d.key); })
-// 		 .selectAll('rect')
-// 		 .data(function(d) { return d; })
-// 		 .enter().append('rect')
-// 		 .attr('y', function(d) { return y(d.data.Street); })
-// 		 .attr('x', function(d) {
-// 						 return x(d[0]); })
-// 		 .attr('width', function(d) { return x(d[1]) - x(d[0]); })
-// 		 .attr('height', y.bandwidth());
-//
-// 		 // update the legend with the new time
-// 		 var legend = g.append('g')
-// 			 .attr('font-family', 'sans-serif')
-// 			 .attr('font-size', 12)
-// 			 .attr('text-anchor', 'end')
-// 				 .selectAll('g')
-// 				 .data(arrayy.slice().reverse())
-// 				 .enter().append('g')
-// 						.attr('transform', function(d, i) { return 'translate(-50,' + (300 + i * 20) + ')'; });
-//
-// 		 legend.append('text')
-// 			 .attr('class', 'legendtext')
-// 			 .attr('x', width - 24)
-// 			 .attr('y', 9.5)
-// 			 .attr('dy', '0.32em')
-// 			 .text(function(d) {
-// 				 console.log('jiim')
-// 				 console.log(d)
-// 				 return d; });
-//
-// }
-//
-// 		 // slider for the hour updates
-// 		 var sliderTime = d3
-// 			 .sliderBottom()
-// 			 .min(d3.min(dataTime))
-// 			 .max(d3.max(dataTime))
-// 			 .step(1000 * 60 * 60)
-// 			 .width(300)
-// 			 .tickFormat(d3.timeFormat('%H'))
-// 			 .tickValues(convertTime(dataTime))
-//
-// 			 .default(new Date(2019, 9, 29).getHours())
-// 			 .on('onchange', val => {
-// 				 textChange(val, g);
-// 			 });
-//
-// 		 var gTime = d3
-// 			 .select('div#slider-time')
-// 			 .append('svg')
-// 			 .attr('width', 500)
-// 			 .attr('height', 100)
-// 			 .append('g')
-// 			 .attr('transform', 'translate(30,30)');
-//
-// 		 gTime.call(sliderTime);
-//
-// 		 d3.select('p#value-time').text(d3.timeFormat('%H')(sliderTime.value()));
-//
-// });
-//  </script>
-// >>>>>>> c930ea811fdb17c199c21e640df70604fa63429f
-//
-// 		 d3.select('p#value-time').text(d3.timeFormat('%H')(sliderTime.value()));
-//
-// 	 });
-//
-//  </script>
+		 barSvg.append('barSvg')
+			 .attr('class', 'axis')
+			 .attr('transform', 'translate(0,' + height + ')')
+			 .call(d3.axisBottom(x).ticks(null, 's'))
+			 .append('text')
+			 .attr('y', 2)
+			 .attr('x', x(x.ticks().pop()) + 0.5)
+			 .attr('dy', '0.32em')
+			 .attr('fill', '#000')
+			 .attr('font-weight', 'bold')
+			 .attr('text-anchor', 'start')
+			 .text('Parking Spots')
+			 .attr('transform', 'translate(' + (-width) + ',-10)');
 
+		 // create the legend for the bar chart
+		 var legend = barSvg.append('barSvg')
+			 .attr('font-family', 'sans-serif')
+			 .attr('font-size', 12)
+			 .attr('text-anchor', 'end')
+			 .selectAll('g')
+			 .data(array.slice().reverse())
+			 .enter().append('g')
+			 .attr('transform', function(d, i) {
+				 return 'translate(-50,' + (300 + i * 20) + ')';
+			 });
+
+// 		 // colors for the legend of bar chart
+		 legend.append('rect')
+			 .attr('x', width - 19)
+			 .attr('width', 19)
+			 .attr('height', 10)
+			 .attr('fill', m)
+
+// 		 // text of legend for bar chart
+		 legend.append('text')
+			 .attr('class', 'legendtext')
+			 .attr('x', width - 24)
+			 .attr('y', 9.5)
+			 .attr('dy', '0.32em')
+			 .text(function(d) {
+				 return d;
+			 });
+
+
+// 		 // function to update the bar chart link to the hour scroller given a new val of hour
+		 function textChange(val) {
+			 d3.selectAll('g.chartRow').remove();
+			 d3.selectAll('text.legendtext').remove();
+			 if (val instanceof Date) {
+				 var hour = val.getHours()
+			 } else {
+				 var hour = val;
+			 }
+
+			 d3.select('p#value-time').text(d3.timeFormat('%H')(val));
+			 var rest = keys[0];
+			 var array = [keys[hour - 5]]
+			 var arrayy = [keys[0], keys[hour - 5]]
+			 var okay = d3.stack().keys(array)(data)
+
+			 g.append('g')
+				 .attr('class', 'chartRow')
+
+				 .selectAll('g')
+				 .data(d3.stack().keys(array)(data))
+				 .enter().append('g')
+				 .attr('fill', function(d) {
+					 return z(d.key);
+				 })
+				 .selectAll('rect')
+				 .data(function(d) {
+					 return d;
+				 })
+				 .enter().append('rect')
+				 .attr('y', function(d) {
+					 return y(d.data.Street);
+				 })
+				 .attr('x', function(d) {
+					 return x(d[0]);
+				 })
+				 .attr('width', function(d) {
+					 return x(d[1]) - x(d[0]);
+				 })
+				 .attr('height', y.bandwidth());
+
+			 // update the legend with the new time
+			 var legend = g.append('g')
+				 .attr('font-family', 'sans-serif')
+				 .attr('font-size', 12)
+				 .attr('text-anchor', 'end')
+				 .selectAll('g')
+				 .data(arrayy.slice().reverse())
+				 .enter().append('g')
+				 .attr('transform', function(d, i) {
+					 return 'translate(-50,' + (300 + i * 20) + ')';
+				 });
+
+			 legend.append('text')
+				 .attr('class', 'legendtext')
+				 .attr('x', width - 24)
+				 .attr('y', 9.5)
+				 .attr('dy', '0.32em')
+				 .text(function(d) {
+					 console.log('jiim')
+					 console.log(d)
+					 return d;
+				 });
+
+		 }
 
 
 /* 3. Unused Code: Map Viz Responsive Quadrangles

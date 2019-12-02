@@ -424,22 +424,20 @@ mapSvg.selectAll( '.rect' )
 	
 	d3.csv('Aggregated_Bar_Chart.csv')
 	 .then( function( d, i, columns ) {
-		 console.log("hello")
 		 var keys = d.columns.slice(1);
-		 var rest = keys[2];
-		 var array = [keys[0], keys[1]]
+		 var array = [keys[keys.length-1], keys[0]]
+		 console.log("2 variables for bar chart")
+		 console.log(array)
 		 //  create the x, y and z domain of the bar chart
 		  y.domain(d.map(function(d) {
 			  return d.Street;
 		  }));
-		  
  
 		  x.domain([0, d3.max(d, function(d) {
 			  return parseInt(d.Total)
 		  })])
  
 		  z.domain(array);
-		//   console.log(array)
 		  
 		barSvg.append('barSvg')
 		.selectAll('barSvg')
@@ -461,7 +459,6 @@ mapSvg.selectAll( '.rect' )
 				return y(d.data["Street Name"]);
 			})
 			.attr('x', function(d) {
-				console.log("okay")
 				console.log(d[0])
 				return d[0];
 			})
@@ -469,7 +466,6 @@ mapSvg.selectAll( '.rect' )
 				return d[1] - d[0];
 			})
 			.attr('height', y.bandwidth());
-
 	 })
 		
 	
@@ -495,34 +491,34 @@ mapSvg.selectAll( '.rect' )
 			 .text('Parking Spots')
 			 .attr('transform', 'translate(' + (-width) + ',-10)');
 
-		 // create the legend for the bar chart
-		 var legend = barSvg.append('barSvg')
-			 .attr('font-family', 'sans-serif')
-			 .attr('font-size', 12)
-			 .attr('text-anchor', 'end')
-			 .selectAll('g')
-			 .data(array.slice().reverse())
-			 .enter().append('g')
-			 .attr('transform', function(d, i) {
-				 return 'translate(-50,' + (300 + i * 20) + ')';
-			 });
+// 		 // create the legend for the bar chart
+// 		 var legend = barSvg.append('barSvg')
+// 			 .attr('font-family', 'sans-serif')
+// 			 .attr('font-size', 12)
+// 			 .attr('text-anchor', 'end')
+// 			 .selectAll('g')
+// 			 .data(array.slice().reverse())
+// 			 .enter().append('g')
+// 			 .attr('transform', function(d, i) {
+// 				 return 'translate(-50,' + (300 + i * 20) + ')';
+// 			 });
 
-// 		 // colors for the legend of bar chart
-		 legend.append('rect')
-			 .attr('x', width - 19)
-			 .attr('width', 19)
-			 .attr('height', 10)
-			 .attr('fill', m)
+// // 		 // colors for the legend of bar chart
+// 		 legend.append('rect')
+// 			 .attr('x', width - 19)
+// 			 .attr('width', 19)
+// 			 .attr('height', 10)
+// 			 .attr('fill', m)
 
-// 		 // text of legend for bar chart
-		 legend.append('text')
-			 .attr('class', 'legendtext')
-			 .attr('x', width - 24)
-			 .attr('y', 9.5)
-			 .attr('dy', '0.32em')
-			 .text(function(d) {
-				 return d;
-			 });
+// // 		 // text of legend for bar chart
+// 		 legend.append('text')
+// 			 .attr('class', 'legendtext')
+// 			 .attr('x', width - 24)
+// 			 .attr('y', 9.5)
+// 			 .attr('dy', '0.32em')
+// 			 .text(function(d) {
+// 				 return d;
+// 			 });
 
 
 // 		 // function to update the bar chart link to the hour scroller given a new val of hour
@@ -536,10 +532,9 @@ mapSvg.selectAll( '.rect' )
 			 }
 
 			 d3.select('p#value-time').text(d3.timeFormat('%H')(val));
-			 var rest = keys[0];
 			 var array = [keys[hour - 5]]
 			 var arrayy = [keys[0], keys[hour - 5]]
-			 var okay = d3.stack().keys(array)(data)
+			//  var okay = d3.stack().keys(array)(data)
 
 			 g.append('g')
 				 .attr('class', 'chartRow')
@@ -567,27 +562,27 @@ mapSvg.selectAll( '.rect' )
 				 .attr('height', y.bandwidth());
 
 			 // update the legend with the new time
-			 var legend = g.append('g')
-				 .attr('font-family', 'sans-serif')
-				 .attr('font-size', 12)
-				 .attr('text-anchor', 'end')
-				 .selectAll('g')
-				 .data(arrayy.slice().reverse())
-				 .enter().append('g')
-				 .attr('transform', function(d, i) {
-					 return 'translate(-50,' + (300 + i * 20) + ')';
-				 });
+			//  var legend = g.append('g')
+			// 	 .attr('font-family', 'sans-serif')
+			// 	 .attr('font-size', 12)
+			// 	 .attr('text-anchor', 'end')
+			// 	 .selectAll('g')
+			// 	 .data(arrayy.slice().reverse())
+			// 	 .enter().append('g')
+			// 	 .attr('transform', function(d, i) {
+			// 		 return 'translate(-50,' + (300 + i * 20) + ')';
+			// 	 });
 
-			 legend.append('text')
-				 .attr('class', 'legendtext')
-				 .attr('x', width - 24)
-				 .attr('y', 9.5)
-				 .attr('dy', '0.32em')
-				 .text(function(d) {
-					 console.log('jiim')
-					 console.log(d)
-					 return d;
-				 });
+			//  legend.append('text')
+			// 	 .attr('class', 'legendtext')
+			// 	 .attr('x', width - 24)
+			// 	 .attr('y', 9.5)
+			// 	 .attr('dy', '0.32em')
+			// 	 .text(function(d) {
+			// 		 console.log('jiim')
+			// 		 console.log(d)
+			// 		 return d;
+			// 	 });
 
 		 }
 

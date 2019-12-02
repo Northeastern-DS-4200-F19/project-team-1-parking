@@ -8,12 +8,12 @@ var svg = d3.select( '#vis-svg' );
 
 var mapSvg = svg.append( 'svg' )
 	.attr( 'id', 'map-svg' )
-	.attr( 'width', '100%' )
+	.attr( 'width', '50%' )
 	.attr( 'height', '100%' );
 
 var barSvg = svg.append( 'svg' )
 	.attr( 'id', 'bar-svg' )
-	.attr( 'width', '100%' )
+	.attr( 'width', '50%' )
 	.attr( 'height', '100%' );
 
 /* 0.2. Misc. DataArrays and Global Variables
@@ -366,14 +366,27 @@ mapSvg.selectAll( '.rect' )
 
 /* 2. VIZ.2: Stacked Bar Chart
  *************************************************************/
+
+var barXScale = 250;
+var barYRatio = 1;
+var barYScale = ( barXScale * barYRatio );
+
+var barHorizMargin = ( mapHorizMargin + 100 );
+var barVertMargin = mapVertMargin;
+
 var margin = {
 	top: 20,
 	right: 20,
 	bottom: 30,
 	left: 120
 }
-width = +svg.attr( 'width' ) - margin.left - margin.right,
-	height = 200;
+
+var width = +svg.attr( 'width' ) - margin.left - margin.right;
+var height = 200;
+
+// var width = 500;
+// var height = 1000;
+
 var y = d3.scaleBand()
 	.rangeRound( [ 0, height ] )
 	.paddingInner( 0.05 )
@@ -388,14 +401,13 @@ var m = d3.scaleOrdinal()
 var z = d3.scaleOrdinal()
 	.range( [ '#98abc5' ] );
 
-
-
 d3.csv( 'Aggregated_Bar_Chart.csv' )
-	.then( function( d, i, columns ) {
-		console.log( "hello" )
+	.then( function( d ) {
 		var keys = d.columns.slice( 1 );
-		var rest = keys[ 2 ];
-		var array = [ keys[ 0 ], keys[ 1 ] ]
+		var array = [ keys[ 0 ], keys[ 1 ] ];
+		console.log( 'KEYS:\n', keys );
+		console.log( 'ARRAY:\n', array );
+		console.log( d.street );
 		//  create the x, y and z domain of the bar chart
 		y.domain( d.map( function( d ) {
 			return d.Street;
@@ -442,13 +454,13 @@ d3.csv( 'Aggregated_Bar_Chart.csv' )
 
 
 
-// 		 // the y axis
+// the y axis
 barSvg.append( 'barSvg' )
 	.attr( 'class', 'axis' )
 	.attr( 'transform', 'translate(0,0)' )
 	.call( d3.axisLeft( y ) );
 //
-// 		 // the x axis
+// the x axis
 barSvg.append( 'barSvg' )
 	.attr( 'class', 'axis' )
 	.attr( 'transform', 'translate(0,' + height + ')' )
@@ -463,35 +475,35 @@ barSvg.append( 'barSvg' )
 	.text( 'Parking Spots' )
 	.attr( 'transform', 'translate(' + ( -width ) + ',-10)' );
 
-// create the legend for the bar chart
-var legend = barSvg.append( 'barSvg' )
-	.attr( 'font-family', 'sans-serif' )
-	.attr( 'font-size', 12 )
-	.attr( 'text-anchor', 'end' )
-	.selectAll( 'g' )
-	.data( array.slice().reverse() )
-	.enter()
-	.append( 'g' )
-	.attr( 'transform', function( d, i ) {
-		return 'translate(-50,' + ( 300 + i * 20 ) + ')';
-	} );
-
-// 		 // colors for the legend of bar chart
-legend.append( 'rect' )
-	.attr( 'x', width - 19 )
-	.attr( 'width', 19 )
-	.attr( 'height', 10 )
-	.attr( 'fill', m )
-
-// 		 // text of legend for bar chart
-legend.append( 'text' )
-	.attr( 'class', 'legendtext' )
-	.attr( 'x', width - 24 )
-	.attr( 'y', 9.5 )
-	.attr( 'dy', '0.32em' )
-	.text( function( d ) {
-		return d;
-	} );
+// // create the legend for the bar chart
+// var legend = barSvg.append( 'barSvg' )
+// 	.attr( 'font-family', 'sans-serif' )
+// 	.attr( 'font-size', 12 )
+// 	.attr( 'text-anchor', 'end' )
+// 	.selectAll( 'g' )
+// 	.data( array.slice().reverse() )
+// 	.enter()
+// 	.append( 'g' )
+// 	.attr( 'transform', function( d, i ) {
+// 		return 'translate(-50,' + ( 300 + i * 20 ) + ')';
+// 	} );
+//
+// // 		 // colors for the legend of bar chart
+// legend.append( 'rect' )
+// 	.attr( 'x', width - 19 )
+// 	.attr( 'width', 19 )
+// 	.attr( 'height', 10 )
+// 	.attr( 'fill', m )
+//
+// // 		 // text of legend for bar chart
+// legend.append( 'text' )
+// 	.attr( 'class', 'legendtext' )
+// 	.attr( 'x', width - 24 )
+// 	.attr( 'y', 9.5 )
+// 	.attr( 'dy', '0.32em' )
+// 	.text( function( d ) {
+// 		return d;
+// 	} );
 
 
 // function to update the bar chart link to the hour scroller given a new val of hour

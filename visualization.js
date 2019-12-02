@@ -8,16 +8,17 @@ var svg = d3.select( '#vis-svg' );
 
 var mapSvg = svg.append( 'svg' )
 	.attr( 'id', 'map-svg' )
-	.attr( 'width', '100%' )
+	.attr( 'width', '50%' )
 	.attr( 'height', '100%' );
 
 var barSvg = svg.append( 'svg' )
 	.attr( 'id', 'bar-svg' )
-	.attr( 'width', '100%' )
+	.attr( 'width', '50%' )
 	.attr( 'height', '100%' );
 
 /* 0.2. Misc. DataArrays and Global Variables
  *************************************************************/
+
 var rXPlus = [ 1, 2.1, 2.3, 2.2, 3.1, 3.2, 12 ];
 var rYPlus = [ 2.1, 9.3, 4, 7, 11, 14 ];
 var rDiag = [ 2.1, 2.3, 9.1, 9.3 ]
@@ -98,37 +99,25 @@ var streetLabels = [ {
 /* 1. VIS.1: Street Occupancy Map
  *************************************************************/
 
+// // 1.1 UNUSED CODE
+//
+// // ALTERNATIVE COLOR SCALES
+//
 // var colorScale = d3.scaleLinear()
 // 	.domain( [ 0, 0.25, 0.5, 0.75, 1 ] )
 // 	.range( [ 'green', 'yellow', 'white', 'orange', 'red' ] );
-
-var colorScale = d3.scaleLinear()
-	.domain( [ 0, 0.5, 1 ] )
-	.range( [ 'green', 'white', 'red' ] );
-
+//
 // var colorScale = d3.scaleLinear()
 // 	.domain( [ 0, 0.5, 1 ] )
 // 	.range( [ 'green', 'yellow', 'red' ] );
-
+//
 // var colorScale = d3.scaleSequential()
 // 	.domain( [ 0, 1 ] )
 // 	.interpolator( d3.interpolateYlOrRd );
 
-// // CIRCULAR INTERSECTIONS
-// function drawIntersections( intersections, strokeWidth ) {
-// 	mapSvg.selectAll( 'circle' )
-// 		.data( intersections )
-// 		.enter()
-// 		.append( 'circle' )
-// 		.attr( 'fill', outlineColor )
-// 		.attr( 'cx', function( d ) {
-// 			return scaleX( +d.x );
-// 		} )
-// 		.attr( 'cy', function( d ) {
-// 			return scaleY( +d.y - ( polyPointDist * 0.5 ) ) + ( strokeWidth * 0.25 );
-// 		} )
-// 		.attr( 'r', pointRadius );
-// };
+var colorScale = d3.scaleLinear()
+	.domain( [ 0, 0.5, 1 ] )
+	.range( [ 'green', 'white', 'red' ] );
 
 // SQUARE INTERSECTIONS
 function drawIntersections( intersections, strokeWidth ) {
@@ -147,27 +136,6 @@ function drawIntersections( intersections, strokeWidth ) {
 		.attr( 'width', strokeWidth * ( 11 / 6 ) )
 		.attr( 'height', strokeWidth * ( 11 / 6 ) );
 };
-
-// // POLYGON INTERSECTIONS
-// function drawIntersections( intersections, strokeWidth ) {
-// 	mapSvg.selectAll( 'polygon' )
-// 		.data( intersections )
-// 		.enter()
-// 		.append( 'polygon' )
-// 		.attr( 'stroke', 'black' )
-// 		.attr( 'points', function( d ) {
-// 			return [
-// 				scaleX( +d.x ) - strokeWidth,
-// 				scaleY( +d.y ) - strokeWidth,
-// 				scaleX( +d.x ) - strokeWidth,
-// 				scaleY( +d.y ) + strokeWidth,
-// 				scaleX( +d.x ) + strokeWidth,
-// 				scaleY( +d.y ) + strokeWidth,
-// 				scaleX( +d.x ) + strokeWidth,
-// 				scaleY( +d.y ) - strokeWidth
-// 			];
-// 		} );
-// };
 
 function drawSegments( segments, strokeWidth, isParkingArea ) {
 	var className = ( isParkingArea ? 'fill' : 'outline' );
@@ -398,6 +366,14 @@ mapSvg.selectAll( '.rect' )
 
 /* 2. VIZ.2: Stacked Bar Chart
  *************************************************************/
+
+var barXScale = 250;
+var barYRatio = 1;
+var barYScale = ( barXScale * barYRatio );
+
+var barHorizMargin = ( mapHorizMargin + 100 );
+var barVertMargin = mapVertMargin;
+
 	var margin = {
 			 top: 20,
 			 right: 20,
@@ -590,6 +566,8 @@ mapSvg.selectAll( '.rect' )
 /* 3. Unused Code: Map Viz Responsive Quadrangles
  *************************************************************/
 
+// // ----------
+// // ATTEMPT AT RESPONSIVE POLYGONS
 //
 // function calcSlope(segment) {
 //   var dY = (segment.y2 - segment.y1);
@@ -740,3 +718,66 @@ mapSvg.selectAll( '.rect' )
 //         drawParkingPolygons(segments_data);
 //       });
 //   });
+// // ---------
+//
+// // ---------
+// // DIFFERENT INTERSECTION SHAPES
+//
+// // CIRCULAR INTERSECTIONS
+// function drawIntersections( intersections, strokeWidth ) {
+// 	mapSvg.selectAll( 'circle' )
+// 		.data( intersections )
+// 		.enter()
+// 		.append( 'circle' )
+// 		.attr( 'fill', outlineColor )
+// 		.attr( 'cx', function( d ) {
+// 			return scaleX( +d.x );
+// 		} )
+// 		.attr( 'cy', function( d ) {
+// 			return scaleY( +d.y - ( polyPointDist * 0.5 ) ) + ( strokeWidth * 0.25 );
+// 		} )
+// 		.attr( 'r', pointRadius );
+// };
+//
+// // POLYGON INTERSECTIONS
+// function drawIntersections( intersections, strokeWidth ) {
+// 	mapSvg.selectAll( 'polygon' )
+// 		.data( intersections )
+// 		.enter()
+// 		.append( 'polygon' )
+// 		.attr( 'stroke', 'black' )
+// 		.attr( 'points', function( d ) {
+// 			return [
+// 				scaleX( +d.x ) - strokeWidth,
+// 				scaleY( +d.y ) - strokeWidth,
+// 				scaleX( +d.x ) - strokeWidth,
+// 				scaleY( +d.y ) + strokeWidth,
+// 				scaleX( +d.x ) + strokeWidth,
+// 				scaleY( +d.y ) + strokeWidth,
+// 				scaleX( +d.x ) + strokeWidth,
+// 				scaleY( +d.y ) - strokeWidth
+// 			];
+// 		} );
+// };
+// // --------
+//
+// // --------
+// // RENAMED GLOBAL VARIABLES
+// var R_X_PLUS = [ 1, 2.1, 2.3, 2.2, 3.1, 3.2, 12 ];
+// var R_Y_PLUS = [ 2.1, 9.3, 4, 7, 11, 14 ];
+// var R_DIAG = [ 2.1, 2.3, 9.1, 9.3 ]
+//
+// var AREA_STROKE_WIDTH = 8;
+// var OUTLINE_STROKE_WIDTH = 12;
+// var POINT_RADIUS = 13.5;
+// var POLY_POINT_DIST = 0.02;
+//
+// var OUTLINE_COLOR = '#505050';
+//
+// var MAP_X_SCALE = 250;
+// var MAP_Y_RATIO = 1;
+// var MAP_Y_SCALE = ( mapXScale * mapYRatio );
+//
+// var MAP_HORIZ_MARGIN = 100;
+// var MAP_VERT_MARGIN = 200;
+// // --------

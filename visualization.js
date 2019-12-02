@@ -18,6 +18,7 @@ var barSvg = svg.append( 'svg' )
 
 /* 0.2. Misc. DataArrays and Global Variables
  *************************************************************/
+
 var rXPlus = [ 1, 2.1, 2.3, 2.2, 3.1, 3.2, 12 ];
 var rYPlus = [ 2.1, 9.3, 4, 7, 11, 14 ];
 var rDiag = [ 2.1, 2.3, 9.1, 9.3 ]
@@ -98,37 +99,25 @@ var streetLabels = [ {
 /* 1. VIS.1: Street Occupancy Map
  *************************************************************/
 
+// // 1.1 UNUSED CODE
+//
+// // ALTERNATIVE COLOR SCALES
+//
 // var colorScale = d3.scaleLinear()
 // 	.domain( [ 0, 0.25, 0.5, 0.75, 1 ] )
 // 	.range( [ 'green', 'yellow', 'white', 'orange', 'red' ] );
-
-var colorScale = d3.scaleLinear()
-	.domain( [ 0, 0.5, 1 ] )
-	.range( [ 'green', 'white', 'red' ] );
-
+//
 // var colorScale = d3.scaleLinear()
 // 	.domain( [ 0, 0.5, 1 ] )
 // 	.range( [ 'green', 'yellow', 'red' ] );
-
+//
 // var colorScale = d3.scaleSequential()
 // 	.domain( [ 0, 1 ] )
 // 	.interpolator( d3.interpolateYlOrRd );
 
-// // CIRCULAR INTERSECTIONS
-// function drawIntersections( intersections, strokeWidth ) {
-// 	mapSvg.selectAll( 'circle' )
-// 		.data( intersections )
-// 		.enter()
-// 		.append( 'circle' )
-// 		.attr( 'fill', outlineColor )
-// 		.attr( 'cx', function( d ) {
-// 			return scaleX( +d.x );
-// 		} )
-// 		.attr( 'cy', function( d ) {
-// 			return scaleY( +d.y - ( polyPointDist * 0.5 ) ) + ( strokeWidth * 0.25 );
-// 		} )
-// 		.attr( 'r', pointRadius );
-// };
+var colorScale = d3.scaleLinear()
+	.domain( [ 0, 0.5, 1 ] )
+	.range( [ 'green', 'white', 'red' ] );
 
 // SQUARE INTERSECTIONS
 function drawIntersections( intersections, strokeWidth ) {
@@ -147,27 +136,6 @@ function drawIntersections( intersections, strokeWidth ) {
 		.attr( 'width', strokeWidth * ( 11 / 6 ) )
 		.attr( 'height', strokeWidth * ( 11 / 6 ) );
 };
-
-// // POLYGON INTERSECTIONS
-// function drawIntersections( intersections, strokeWidth ) {
-// 	mapSvg.selectAll( 'polygon' )
-// 		.data( intersections )
-// 		.enter()
-// 		.append( 'polygon' )
-// 		.attr( 'stroke', 'black' )
-// 		.attr( 'points', function( d ) {
-// 			return [
-// 				scaleX( +d.x ) - strokeWidth,
-// 				scaleY( +d.y ) - strokeWidth,
-// 				scaleX( +d.x ) - strokeWidth,
-// 				scaleY( +d.y ) + strokeWidth,
-// 				scaleX( +d.x ) + strokeWidth,
-// 				scaleY( +d.y ) + strokeWidth,
-// 				scaleX( +d.x ) + strokeWidth,
-// 				scaleY( +d.y ) - strokeWidth
-// 			];
-// 		} );
-// };
 
 function drawSegments( segments, strokeWidth, isParkingArea ) {
 	var className = ( isParkingArea ? 'fill' : 'outline' );
@@ -398,203 +366,206 @@ mapSvg.selectAll( '.rect' )
 
 /* 2. VIZ.2: Stacked Bar Chart
  *************************************************************/
-	var margin = {
-			 top: 20,
-			 right: 20,
-			 bottom: 30,
-			 left: 120
-		 }
-	 	width = +svg.attr('width') - margin.left - margin.right,
-        height = 200;
-	 var y = d3.scaleBand()
-		 .rangeRound([0, height])
-		 .paddingInner(0.05)
-		 .align(0.1);
+var margin = {
+	top: 20,
+	right: 20,
+	bottom: 30,
+	left: 120
+}
+width = +svg.attr( 'width' ) - margin.left - margin.right,
+	height = 200;
+var y = d3.scaleBand()
+	.rangeRound( [ 0, height ] )
+	.paddingInner( 0.05 )
+	.align( 0.1 );
 
-	 var x = d3.scaleLinear()
-		 .rangeRound([0, width]);
+var x = d3.scaleLinear()
+	.rangeRound( [ 0, width ] );
 
-	 var m = d3.scaleOrdinal()
-		 .range(['#98abc5', '#8a80a6']);
+var m = d3.scaleOrdinal()
+	.range( [ '#98abc5', '#8a80a6' ] );
 
-	 var z = d3.scaleOrdinal()
-		 .range(['#98abc5']);
+var z = d3.scaleOrdinal()
+	.range( [ '#98abc5' ] );
 
 
-	
-	d3.csv('Aggregated_Bar_Chart.csv')
-	 .then( function( d, i, columns ) {
-		 console.log("hello")
-		 var keys = d.columns.slice(1);
-		 var rest = keys[2];
-		 var array = [keys[0], keys[1]]
-		 //  create the x, y and z domain of the bar chart
-		  y.domain(d.map(function(d) {
-			  return d.Street;
-		  }));
-		  
- 
-		  x.domain([0, d3.max(d, function(d) {
-			  return parseInt(d.Total)
-		  })])
- 
-		  z.domain(array);
-		//   console.log(array)
-		  
-		barSvg.append('barSvg')
-		.selectAll('barSvg')
-		.data(d3.stack().keys(array)(d))
-		.enter().append('barSvg')
-		.attr('fill', function(d) {
-			console.log("arra")
-			console.log(array)
-			return '#8a80a6';
-		})
-		.selectAll('rect')
-		.data(function(d) {
-			return d;
-			})
-			.enter().append('rect')
-			.attr('class', 'chartRow')
-			.attr('y', function(d) {
-				console.log(d.data["Street Name"])
-				return y(d.data["Street Name"]);
-			})
-			.attr('x', function(d) {
-				console.log("okay")
-				console.log(d[0])
-				return d[0];
-			})
-			.attr('width', function(d) {
-				return d[1] - d[0];
-			})
-			.attr('height', y.bandwidth());
 
-	 })
-		
-	
-	
+d3.csv( 'Aggregated_Bar_Chart.csv' )
+	.then( function( d, i, columns ) {
+		console.log( "hello" )
+		var keys = d.columns.slice( 1 );
+		var rest = keys[ 2 ];
+		var array = [ keys[ 0 ], keys[ 1 ] ]
+		//  create the x, y and z domain of the bar chart
+		y.domain( d.map( function( d ) {
+			return d.Street;
+		} ) );
+
+
+		x.domain( [ 0, d3.max( d, function( d ) {
+			return parseInt( d.Total )
+		} ) ] )
+
+		z.domain( array );
+		console.log( array )
+
+		barSvg.append( 'barSvg' )
+			.selectAll( 'barSvg' )
+			.data( d3.stack().keys( array )( d ) )
+			.enter().append( 'barSvg' )
+			.attr( 'fill', function( d ) {
+				console.log( "array" )
+				console.log( array )
+				return '#8a80a6';
+			} )
+			.selectAll( 'rect' )
+			.data( function( d ) {
+				return d;
+			} )
+			.enter().append( 'rect' )
+			.attr( 'class', 'chartRow' )
+			.attr( 'y', function( d ) {
+				console.log( d.data[ "Street Name" ] )
+				return y( d.data[ "Street Name" ] );
+			} )
+			.attr( 'x', function( d ) {
+				console.log( "okay" )
+				console.log( d[ 0 ] )
+				return d[ 0 ];
+			} )
+			.attr( 'width', function( d ) {
+				return d[ 1 ] - d[ 0 ];
+			} )
+			.attr( 'height', y.bandwidth() );
+
+	} )
+
+
+
 // 		 // the y axis
-		 barSvg.append('barSvg')
-			 .attr('class', 'axis')
-			 .attr('transform', 'translate(0,0)')
-			 .call(d3.axisLeft(y));
+barSvg.append( 'barSvg' )
+	.attr( 'class', 'axis' )
+	.attr( 'transform', 'translate(0,0)' )
+	.call( d3.axisLeft( y ) );
 //
 // 		 // the x axis
-		 barSvg.append('barSvg')
-			 .attr('class', 'axis')
-			 .attr('transform', 'translate(0,' + height + ')')
-			 .call(d3.axisBottom(x).ticks(null, 's'))
-			 .append('text')
-			 .attr('y', 2)
-			 .attr('x', x(x.ticks().pop()) + 0.5)
-			 .attr('dy', '0.32em')
-			 .attr('fill', '#000')
-			 .attr('font-weight', 'bold')
-			 .attr('text-anchor', 'start')
-			 .text('Parking Spots')
-			 .attr('transform', 'translate(' + (-width) + ',-10)');
+barSvg.append( 'barSvg' )
+	.attr( 'class', 'axis' )
+	.attr( 'transform', 'translate(0,' + height + ')' )
+	.call( d3.axisBottom( x ).ticks( null, 's' ) )
+	.append( 'text' )
+	.attr( 'y', 2 )
+	.attr( 'x', x( x.ticks().pop() ) + 0.5 )
+	.attr( 'dy', '0.32em' )
+	.attr( 'fill', '#000' )
+	.attr( 'font-weight', 'bold' )
+	.attr( 'text-anchor', 'start' )
+	.text( 'Parking Spots' )
+	.attr( 'transform', 'translate(' + ( -width ) + ',-10)' );
 
-		 // create the legend for the bar chart
-		 var legend = barSvg.append('barSvg')
-			 .attr('font-family', 'sans-serif')
-			 .attr('font-size', 12)
-			 .attr('text-anchor', 'end')
-			 .selectAll('g')
-			 .data(array.slice().reverse())
-			 .enter().append('g')
-			 .attr('transform', function(d, i) {
-				 return 'translate(-50,' + (300 + i * 20) + ')';
-			 });
+// create the legend for the bar chart
+var legend = barSvg.append( 'barSvg' )
+	.attr( 'font-family', 'sans-serif' )
+	.attr( 'font-size', 12 )
+	.attr( 'text-anchor', 'end' )
+	.selectAll( 'g' )
+	.data( array.slice().reverse() )
+	.enter()
+	.append( 'g' )
+	.attr( 'transform', function( d, i ) {
+		return 'translate(-50,' + ( 300 + i * 20 ) + ')';
+	} );
 
 // 		 // colors for the legend of bar chart
-		 legend.append('rect')
-			 .attr('x', width - 19)
-			 .attr('width', 19)
-			 .attr('height', 10)
-			 .attr('fill', m)
+legend.append( 'rect' )
+	.attr( 'x', width - 19 )
+	.attr( 'width', 19 )
+	.attr( 'height', 10 )
+	.attr( 'fill', m )
 
 // 		 // text of legend for bar chart
-		 legend.append('text')
-			 .attr('class', 'legendtext')
-			 .attr('x', width - 24)
-			 .attr('y', 9.5)
-			 .attr('dy', '0.32em')
-			 .text(function(d) {
-				 return d;
-			 });
+legend.append( 'text' )
+	.attr( 'class', 'legendtext' )
+	.attr( 'x', width - 24 )
+	.attr( 'y', 9.5 )
+	.attr( 'dy', '0.32em' )
+	.text( function( d ) {
+		return d;
+	} );
 
 
-// 		 // function to update the bar chart link to the hour scroller given a new val of hour
-		 function textChange(val) {
-			 d3.selectAll('g.chartRow').remove();
-			 d3.selectAll('text.legendtext').remove();
-			 if (val instanceof Date) {
-				 var hour = val.getHours()
-			 } else {
-				 var hour = val;
-			 }
+// function to update the bar chart link to the hour scroller given a new val of hour
+function textChange( val ) {
+	d3.selectAll( 'g.chartRow' ).remove();
+	d3.selectAll( 'text.legendtext' ).remove();
+	if ( val instanceof Date ) {
+		var hour = val.getHours()
+	} else {
+		var hour = val;
+	}
 
-			 d3.select('p#value-time').text(d3.timeFormat('%H')(val));
-			 var rest = keys[0];
-			 var array = [keys[hour - 5]]
-			 var arrayy = [keys[0], keys[hour - 5]]
-			 var okay = d3.stack().keys(array)(data)
+	d3.select( 'p#value-time' ).text( d3.timeFormat( '%H' )( val ) );
+	var rest = keys[ 0 ];
+	var array = [ keys[ hour - 5 ] ]
+	var arrayy = [ keys[ 0 ], keys[ hour - 5 ] ]
+	var okay = d3.stack().keys( array )( data )
 
-			 g.append('g')
-				 .attr('class', 'chartRow')
+	g.append( 'g' )
+		.attr( 'class', 'chartRow' )
 
-				 .selectAll('g')
-				 .data(d3.stack().keys(array)(data))
-				 .enter().append('g')
-				 .attr('fill', function(d) {
-					 return z(d.key);
-				 })
-				 .selectAll('rect')
-				 .data(function(d) {
-					 return d;
-				 })
-				 .enter().append('rect')
-				 .attr('y', function(d) {
-					 return y(d.data.Street);
-				 })
-				 .attr('x', function(d) {
-					 return x(d[0]);
-				 })
-				 .attr('width', function(d) {
-					 return x(d[1]) - x(d[0]);
-				 })
-				 .attr('height', y.bandwidth());
+		.selectAll( 'g' )
+		.data( d3.stack().keys( array )( data ) )
+		.enter().append( 'g' )
+		.attr( 'fill', function( d ) {
+			return z( d.key );
+		} )
+		.selectAll( 'rect' )
+		.data( function( d ) {
+			return d;
+		} )
+		.enter().append( 'rect' )
+		.attr( 'y', function( d ) {
+			return y( d.data.Street );
+		} )
+		.attr( 'x', function( d ) {
+			return x( d[ 0 ] );
+		} )
+		.attr( 'width', function( d ) {
+			return x( d[ 1 ] ) - x( d[ 0 ] );
+		} )
+		.attr( 'height', y.bandwidth() );
 
-			 // update the legend with the new time
-			 var legend = g.append('g')
-				 .attr('font-family', 'sans-serif')
-				 .attr('font-size', 12)
-				 .attr('text-anchor', 'end')
-				 .selectAll('g')
-				 .data(arrayy.slice().reverse())
-				 .enter().append('g')
-				 .attr('transform', function(d, i) {
-					 return 'translate(-50,' + (300 + i * 20) + ')';
-				 });
+	// update the legend with the new time
+	var legend = g.append( 'g' )
+		.attr( 'font-family', 'sans-serif' )
+		.attr( 'font-size', 12 )
+		.attr( 'text-anchor', 'end' )
+		.selectAll( 'g' )
+		.data( arrayy.slice().reverse() )
+		.enter().append( 'g' )
+		.attr( 'transform', function( d, i ) {
+			return 'translate(-50,' + ( 300 + i * 20 ) + ')';
+		} );
 
-			 legend.append('text')
-				 .attr('class', 'legendtext')
-				 .attr('x', width - 24)
-				 .attr('y', 9.5)
-				 .attr('dy', '0.32em')
-				 .text(function(d) {
-					 console.log('jiim')
-					 console.log(d)
-					 return d;
-				 });
+	legend.append( 'text' )
+		.attr( 'class', 'legendtext' )
+		.attr( 'x', width - 24 )
+		.attr( 'y', 9.5 )
+		.attr( 'dy', '0.32em' )
+		.text( function( d ) {
+			console.log( 'jiim' )
+			console.log( d )
+			return d;
+		} );
 
-		 }
+}
 
 
 /* 3. Unused Code: Map Viz Responsive Quadrangles
  *************************************************************/
 
+// // ----------
+// // ATTEMPT AT RESPONSIVE POLYGONS
 //
 // function calcSlope(segment) {
 //   var dY = (segment.y2 - segment.y1);
@@ -745,3 +716,66 @@ mapSvg.selectAll( '.rect' )
 //         drawParkingPolygons(segments_data);
 //       });
 //   });
+// // ---------
+//
+// // ---------
+// // DIFFERENT INTERSECTION SHAPES
+//
+// // CIRCULAR INTERSECTIONS
+// function drawIntersections( intersections, strokeWidth ) {
+// 	mapSvg.selectAll( 'circle' )
+// 		.data( intersections )
+// 		.enter()
+// 		.append( 'circle' )
+// 		.attr( 'fill', outlineColor )
+// 		.attr( 'cx', function( d ) {
+// 			return scaleX( +d.x );
+// 		} )
+// 		.attr( 'cy', function( d ) {
+// 			return scaleY( +d.y - ( polyPointDist * 0.5 ) ) + ( strokeWidth * 0.25 );
+// 		} )
+// 		.attr( 'r', pointRadius );
+// };
+//
+// // POLYGON INTERSECTIONS
+// function drawIntersections( intersections, strokeWidth ) {
+// 	mapSvg.selectAll( 'polygon' )
+// 		.data( intersections )
+// 		.enter()
+// 		.append( 'polygon' )
+// 		.attr( 'stroke', 'black' )
+// 		.attr( 'points', function( d ) {
+// 			return [
+// 				scaleX( +d.x ) - strokeWidth,
+// 				scaleY( +d.y ) - strokeWidth,
+// 				scaleX( +d.x ) - strokeWidth,
+// 				scaleY( +d.y ) + strokeWidth,
+// 				scaleX( +d.x ) + strokeWidth,
+// 				scaleY( +d.y ) + strokeWidth,
+// 				scaleX( +d.x ) + strokeWidth,
+// 				scaleY( +d.y ) - strokeWidth
+// 			];
+// 		} );
+// };
+// // --------
+//
+// // --------
+// // RENAMED GLOBAL VARIABLES
+// var R_X_PLUS = [ 1, 2.1, 2.3, 2.2, 3.1, 3.2, 12 ];
+// var R_Y_PLUS = [ 2.1, 9.3, 4, 7, 11, 14 ];
+// var R_DIAG = [ 2.1, 2.3, 9.1, 9.3 ]
+//
+// var AREA_STROKE_WIDTH = 8;
+// var OUTLINE_STROKE_WIDTH = 12;
+// var POINT_RADIUS = 13.5;
+// var POLY_POINT_DIST = 0.02;
+//
+// var OUTLINE_COLOR = '#505050';
+//
+// var MAP_X_SCALE = 250;
+// var MAP_Y_RATIO = 1;
+// var MAP_Y_SCALE = ( mapXScale * mapYRatio );
+//
+// var MAP_HORIZ_MARGIN = 100;
+// var MAP_VERT_MARGIN = 200;
+// // --------

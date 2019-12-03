@@ -3,21 +3,26 @@
 
 /* 0.1. SVG selection & creation
  *************************************************************/
-var margin = {top: 20, right: 50, bottom: 30, left: 20};
+var margin = {
+	top: 20,
+	right: 50,
+	bottom: 30,
+	left: 20
+};
 
 var svg = d3.select( '#vis-svg' );
 
 var mapSvg = svg.append( 'svg' )
 	.attr( 'id', 'map-svg' )
-		.attr("width", "50%")
-		.attr("height", "100%");
-	// .append("g")
-	// 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");;
+	.attr( "width", "50%" )
+	.attr( "height", "100%" );
+// .append("g")
+// 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");;
 
 var barSvg = svg.append( 'svg' )
-		.attr( 'id', 'bar-svg' )
-		.attr( 'width', '100%' )
-		.attr( 'height', '100%' );
+	.attr( 'id', 'bar-svg' )
+	.attr( 'width', '100%' )
+	.attr( 'height', '100%' );
 
 
 /* 0.2. Misc. DataArrays and Global Variables
@@ -334,7 +339,7 @@ var yAdj = 2.3;
 var mapOutlineWidth = mapFillWidth + outlineSize;
 var mapOutlineHeight = mapFillHeight + outlineSize;
 
-mapSvg.selectAll( 'rect.mapLgndOutline' )
+mapSvg.selectAll( '.mapLgndOutline' )
 	.data( mapLgndArr )
 	.enter()
 	.append( 'rect' )
@@ -350,7 +355,7 @@ mapSvg.selectAll( 'rect.mapLgndOutline' )
 	.style( 'fill', outlineColor );
 
 
-mapSvg.selectAll( 'rect.mapLgndFill' )
+mapSvg.selectAll( '.mapLgndFill' )
 	.data( mapLgndArr )
 	.enter()
 	.append( 'rect' )
@@ -376,7 +381,7 @@ mapSvg.selectAll( 'rect.mapLgndFill' )
 /* 2. VIZ.2: Stacked Bar Chart
  *************************************************************/
 
- barSvg.append( 'text' )
+barSvg.append( 'text' )
 	.attr( 'x', scaleX( 1.75 ) )
 	.attr( 'y', scaleY( -0.23 ) )
 	.text( 'Parking Inventory Bar Chart' )
@@ -429,13 +434,13 @@ d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
 		var xPadding = 5;
 		var lenData = agg_bar_data.length;
 		var keys = agg_bar_data.columns.slice( 1 );
-		var array = [ keys [keys.length -1], keys[ 0 ] ];
+		var array = [ keys[ keys.length - 1 ], keys[ 0 ] ];
 
 
 		// Instantiate the X Axis
 
 		// var tickVals = [ 0.5, 3.5, 6.5, 9.5, 12.5, 15.5 ];
-		var tickVals = [ 0.25, 1.25,2.25, 3.25, 4.25, 5.25 ];
+		var tickVals = [ 0.25, 1.25, 2.25, 3.25, 4.25, 5.25 ];
 		var tickLabels = agg_bar_data.map( s => s[ 'Street Name' ] );
 
 		var xScale = d3.scaleLinear()
@@ -443,11 +448,11 @@ d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
 			.domain( [ 0, 3 ] )
 			.range( [ chartStartX, chartEndX ] );
 
-		var xAxis = d3.axisTop(xScale)
-			.tickSize(5)
+		var xAxis = d3.axisTop( xScale )
+			.tickSize( 5 )
 			.tickValues( tickVals )
 			.tickFormat( function( d, i ) {
-				console.log(tickLabels[i])
+				console.log( tickLabels[ i ] )
 				return tickLabels[ i ]
 			} );
 
@@ -545,13 +550,13 @@ d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
 // 	}
 
 
-		// Create Y axis
+// Create Y axis
 
-	// 	barSvg.append( 'g' )
-	// 		.attr( 'class', 'axis' )
-	// 		.attr( 'transform', 'translate(' + axisX + ', 0)' )
-	// 		.call( yAxis );
-	// ;
+// 	barSvg.append( 'g' )
+// 		.attr( 'class', 'axis' )
+// 		.attr( 'transform', 'translate(' + axisX + ', 0)' )
+// 		.call( yAxis );
+// ;
 
 
 // width = +svg.attr( 'width' ) - margin.left - margin.right, height = 200;

@@ -428,21 +428,26 @@ d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
 		var maxY = findMaxTotal( agg_bar_data );
 		var xPadding = 5;
 		var lenData = agg_bar_data.length;
+		var keys = agg_bar_data.columns.slice( 1 );
+		var array = [ keys [keys.length -1], keys[ 0 ] ];
 
 
 		// Instantiate the X Axis
 
-		var tickVals = [ 0.5, 3.5, 6.5, 9.5, 12.5, 15.5 ];
+		// var tickVals = [ 0.5, 3.5, 6.5, 9.5, 12.5, 15.5 ];
+		var tickVals = [ 0.25, 1.25,2.25, 3.25, 4.25, 5.25 ];
 		var tickLabels = agg_bar_data.map( s => s[ 'Street Name' ] );
 
 		var xScale = d3.scaleLinear()
-			.domain( [ 0, lenData ] )
+			// .domain( [ 0, lenData ] )
+			.domain( [ 0, 3 ] )
 			.range( [ chartStartX, chartEndX ] );
 
 		var xAxis = d3.axisTop(xScale)
-			.tickSize(10)
+			.tickSize(5)
 			.tickValues( tickVals )
 			.tickFormat( function( d, i ) {
+				console.log(tickLabels[i])
 				return tickLabels[ i ]
 			} );
 
@@ -482,15 +487,12 @@ d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
 			} )
 			.style( 'fill', 'gray' );
 
-
 		// Create the X Axis
 
 		barSvg.append( 'g' )
 			.attr( 'class', 'xaxis axis' )
 			.attr( "transform", "translate(" + ( -barSpacing ) + "," + axisY + ")" )
 			.call( xAxis );
-
-		// Create the X Axis
 
 		// Create Y axis
 

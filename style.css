@@ -99,3 +99,7 @@ tr#header {
 .container {
   float: left;
 }
+
+/* #bar-svg {
+	transform: translate(50%, 0%);
+} */

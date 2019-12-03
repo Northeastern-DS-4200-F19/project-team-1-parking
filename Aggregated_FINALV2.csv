@@ -2,7 +2,7 @@ Route Number,Side of Street,Street Name,6:00 AM Occupied,7:00 AM Occupied,8:00 A
 1,Right,Massachusetts Avenue,3,0,0,0,0,0,0,0,0,0,0,3,3,4,5,7,5,FALSE
 10a,Right,Massachusetts Avenue,18,16,16,13,18,17,16,15,17,16,15,16,18,17,18,19,18,FALSE
 10b,Right,Massachusetts Avenue,6,6,6,6,7,7,7,5,7,7,7,6,7,7,7,7,7,FALSE
-11,Left,Shawmut Avenue,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,0,6,TRUE
+11,Left,Shawmut Avenue,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,TRUE
 11,Right,Shawmut Avenue,8,8,7,6,7,7,7,8,7,7,6,4,7,7,6,9,8,FALSE
 12,Left,Northampton Street,33,31,28,25,27,27,23,23,28,27,29,32,37,37,40,48,40,FALSE
 12,Right,Northampton Street,31,27,21,19,19,22,19,19,16,19,19,23,25,30,33,43,33,FALSE
@@ -14,8 +14,8 @@ Route Number,Side of Street,Street Name,6:00 AM Occupied,7:00 AM Occupied,8:00 A
 2,Right,Chester Square,5,2,2,3,2,0,0,0,0,0,0,0,2,2,4,22,5,FALSE
 3a,Right,Massachusetts Avenue,16,17,17,15,18,19,19,19,17,15,14,11,11,15,10,24,19,FALSE
 3b,Right,Massachusetts Avenue,7,8,5,4,5,7,7,7,8,7,8,5,3,5,6,8,8,FALSE
-4,Right,Tremont Street,4,3,4,2,4,3,4,2,2,2,2,0,3,4,4,0,4,TRUE
-5,Right,Tremont Street,4,4,1,1,3,4,3,3,3,2,1,2,4,4,4,0,4,TRUE
+4,Right,Tremont Street,4,3,4,2,4,3,4,2,2,2,2,0,3,4,4,4,4,TRUE
+5,Right,Tremont Street,4,4,1,1,3,4,3,3,3,2,1,2,4,4,4,4,4,TRUE
 6,Right,Tremont Street,4,4,3,3,3,4,4,3,2,4,4,5,4,5,5,7,5,FALSE
 7,Right,Tremont Street,8,8,7,6,8,7,7,7,6,7,7,5,7,7,7,9,8,FALSE
 8,Right,Massachusetts Avenue,5,4,5,5,4,5,5,5,5,5,5,4,5,5,5,6,5,FALSE

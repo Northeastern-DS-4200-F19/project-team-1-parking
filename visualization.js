@@ -3,18 +3,22 @@
 
 /* 0.1. SVG selection & creation
  *************************************************************/
+var margin = {top: 20, right: 50, bottom: 30, left: 20};
 
 var svg = d3.select( '#vis-svg' );
 
 var mapSvg = svg.append( 'svg' )
 	.attr( 'id', 'map-svg' )
-	.attr( 'width', '50%' )
-	.attr( 'height', '100%' );
+		.attr("width", "50%")
+		.attr("height", "100%");
+	// .append("g")
+	// 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");;
 
 var barSvg = svg.append( 'svg' )
-	.attr( 'id', 'bar-svg' )
-	.attr( 'width', '50%' )
-	.attr( 'height', '100%' );
+		.attr( 'id', 'bar-svg' )
+		.attr( 'width', '100%' )
+		.attr( 'height', '100%' );
+
 
 /* 0.2. Misc. DataArrays and Global Variables
  *************************************************************/
@@ -389,105 +393,128 @@ mapSvg.selectAll( 'rect.mapLgndFill' )
 /* 2. VIZ.2: Stacked Bar Chart
  *************************************************************/
 
-var barXScale = 250;
-var barYRatio = 1;
-var barYScale = ( barXScale * barYRatio );
+ barSvg.append( 'text' )
+	.attr( 'x', scaleX( 1.75 ) )
+	.attr( 'y', scaleY( -0.23 ) )
+	.text( 'Parking Inventory Bar Chart' )
+	.attr( 'font-family', 'sans-serif' )
+	.attr( 'font-size', '20px' )
+	.attr( 'fill', 'black' );
 
-var barHorizMargin = ( mapHorizMargin + 100 );
-var barVertMargin = mapVertMargin;
+barSvg.append( 'text' )
+	.attr( 'x', scaleX( 1.75 ) )
+	.attr( 'y', scaleY( -0.15 ) )
+	.text( 'coming soon...' )
+	.attr( 'font-family', 'sans-serif' )
+	.attr( 'font-size', '10px' )
+	.attr( 'fill', 'black' );
 
-var margin = {
-	top: 20,
-	right: 20,
-	bottom: 30,
-	left: 120
-}
-width = +svg.attr( 'width' ) - margin.left - margin.right,
-	height = 200;
-var y = d3.scaleBand()
-	.rangeRound( [ 0, height ] )
-	.paddingInner( 0.05 )
-	.align( 0.1 );
-
-var x = d3.scaleLinear()
-	.rangeRound( [ 0, width ] );
-
-var m = d3.scaleOrdinal()
-	.range( [ '#98abc5', '#8a80a6' ] );
-
-var z = d3.scaleOrdinal()
-	.range( [ '#98abc5' ] );
+function findMaxTotal( data_arr ) {
+	var maxTotal = 0;
+	for ( street of data_arr ) {
+		var streetTotal = street[ 'Total Spots' ]
+		if ( streetTotal > maxTotal ) {
+			maxTotal = streetTotal;
+		} else {
+			continue
+		}
+	}
+	return maxTotal;
+};
 
 
+d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
+	function( agg_bar_data ) {
 
-d3.csv( 'Aggregated_Bar_Chart.csv' )
-	.then( function( d, i, columns ) {
-		var keys = d.columns.slice( 1 );
-		var array = [ keys[ keys.length - 1 ], keys[ 0 ] ]
-		console.log( "2 variables for bar chart" )
-		console.log( array )
-		//  create the x, y and z domain of the bar chart
-		y.domain( d.map( function( d ) {
-			return d.Street;
-		} ) );
+		var barXScale = 250;
+		var barYRatio = 1;
+		var barYScale = ( barXScale * barYRatio );
 
-		x.domain( [ 0, d3.max( d, function( d ) {
-			return parseInt( d.Total )
-		} ) ] )
+		var barHorizMargin = ( mapHorizMargin + 100 );
+		var barVertMargin = mapVertMargin;
 
-		z.domain( array );
+		var barSpacing = 7;
 
-		barSvg.append( 'barSvg' )
-			.selectAll( 'barSvg' )
-			.data( d3.stack().keys( array )( d ) )
-			.enter().append( 'barSvg' )
-			.attr( 'fill', function( d ) {
-				console.log( "arra" )
-				console.log( array )
-				return '#8a80a6';
+		var chartHorizMargin = 60;
+		var chartStartX = ( window.innerWidth * 0.5 ) + chartHorizMargin;
+		var chartEndX = window.innerWidth - chartHorizMargin;
+
+		var chartH = 500;
+		var chartW = ( chartEndX - chartStartX );
+
+		var maxY = findMaxTotal( agg_bar_data );
+		var xPadding = 5;
+		var lenData = agg_bar_data.length;
+
+
+		// Instantiate the X Axis
+
+		var tickVals = [ 0.5, 3.5, 6.5, 9.5, 12.5, 15.5 ];
+		var tickLabels = agg_bar_data.map( s => s[ 'Street Name' ] );
+
+		var xScale = d3.scaleLinear()
+			.domain( [ 0, lenData ] )
+			.range( [ chartStartX, chartEndX ] );
+
+		var xAxis = d3.axisTop(xScale)
+			.tickSize(10)
+			.tickValues( tickVals )
+			.tickFormat( function( d, i ) {
+				return tickLabels[ i ]
+			} );
+
+
+		// Instantiate the Y Axis
+		var yScaleMax = Math.ceil( maxY / 10 ) * 10;
+
+		var yScale = d3.scaleLinear()
+			.domain( [ 0, yScaleMax ] )
+			.range( [ barVertMargin, chartH + barVertMargin ] );
+
+		var yAxis = d3.axisLeft()
+			.scale( yScale );
+
+
+		// Instantiate the bars
+		var axisY = barVertMargin - barSpacing;
+		var axisX = xScale( 0 ) - barSpacing;
+		var axisYMargin = yScale( yScaleMax );
+
+		var barWidth = ( ( chartEndX - chartStartX ) / lenData ) - barSpacing;
+
+		barSvg.selectAll( '.bars' )
+			.data( agg_bar_data )
+			.enter()
+			.append( 'rect' )
+			.attr( 'class', 'bars' )
+			.attr( 'x', function( d, i ) {
+				return xScale( i );
 			} )
-			.selectAll( 'rect' )
-			.data( function( d ) {
-				return d;
-			} )
-			.enter().append( 'rect' )
-			.attr( 'class', 'chartRow' )
 			.attr( 'y', function( d ) {
-				console.log( d.data[ "Street Name" ] )
-				return y( d.data[ "Street Name" ] );
+				return barVertMargin;
 			} )
-			.attr( 'x', function( d ) {
-				console.log( d[ 0 ] )
-				return d[ 0 ];
+			.attr( 'width', barWidth )
+			.attr( 'height', function( d ) {
+				return yScale( d[ 'Total Spots' ] ) - barVertMargin;
 			} )
-			.attr( 'width', function( d ) {
-				return d[ 1 ] - d[ 0 ];
-			} )
-			.attr( 'height', y.bandwidth() );
-	} )
+			.style( 'fill', 'gray' );
 
 
+		// Create the X Axis
 
-// 		 // the y axis
-barSvg.append( 'barSvg' )
-	.attr( 'class', 'axis' )
-	.attr( 'transform', 'translate(0,0)' )
-	.call( d3.axisLeft( y ) );
-//
-// 		 // the x axis
-barSvg.append( 'barSvg' )
-	.attr( 'class', 'axis' )
-	.attr( 'transform', 'translate(0,' + height + ')' )
-	.call( d3.axisBottom( x ).ticks( null, 's' ) )
-	.append( 'text' )
-	.attr( 'y', 2 )
-	.attr( 'x', x( x.ticks().pop() ) + 0.5 )
-	.attr( 'dy', '0.32em' )
-	.attr( 'fill', '#000' )
-	.attr( 'font-weight', 'bold' )
-	.attr( 'text-anchor', 'start' )
-	.text( 'Parking Spots' )
-	.attr( 'transform', 'translate(' + ( -width ) + ',-10)' );
+		barSvg.append( 'g' )
+			.attr( 'class', 'xaxis axis' )
+			.attr( "transform", "translate(" + ( -barSpacing ) + "," + axisY + ")" )
+			.call( xAxis );
+
+
+		// Create Y axis
+
+		barSvg.append( 'g' )
+			.attr( 'class', 'axis' )
+			.attr( 'transform', 'translate(' + axisX + ', 0)' )
+			.call( yAxis );
+	} );
 
 // TODO: BAR CHART LEGEND
 //

@@ -21,7 +21,7 @@ var mapSvg = svg.append( 'svg' )
 
 var barSvg = svg.append( 'svg' )
 	.attr( 'id', 'bar-svg' )
-	.attr( 'width', '100%' )
+	.attr( 'width', '50%' )
 	.attr( 'height', '100%' );
 
 

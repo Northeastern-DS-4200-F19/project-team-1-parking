@@ -532,24 +532,24 @@ d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
 // 			 });
 
 
-// 		 // function to update the bar chart link to the hour scroller given a new val of hour
-function textChange( val ) {
-	d3.selectAll( 'g.chartRow' ).remove();
-	d3.selectAll( 'text.legendtext' ).remove();
-	if ( val instanceof Date ) {
-		var hour = val.getHours()
-	} else {
-		var hour = val;
-	}
+// // 		 // function to update the bar chart link to the hour scroller given a new val of hour
+// function textChange( val ) {
+// 	d3.selectAll( 'g.chartRow' ).remove();
+// 	d3.selectAll( 'text.legendtext' ).remove();
+// 	if ( val instanceof Date ) {
+// 		var hour = val.getHours()
+// 	} else {
+// 		var hour = val;
+// 	}
 
 
 		// Create Y axis
 
-		barSvg.append( 'g' )
-			.attr( 'class', 'axis' )
-			.attr( 'transform', 'translate(' + axisX + ', 0)' )
-			.call( yAxis );
-	};
+	// 	barSvg.append( 'g' )
+	// 		.attr( 'class', 'axis' )
+	// 		.attr( 'transform', 'translate(' + axisX + ', 0)' )
+	// 		.call( yAxis );
+	// ;
 
 
 // width = +svg.attr( 'width' ) - margin.left - margin.right, height = 200;

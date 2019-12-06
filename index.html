@@ -76,11 +76,15 @@
 
 		</div>
 
-  <div class="slider-holder" id="slider-location"></div>
+  <!-- <div class="slider-holder" id="slider-location"></div> -->
 	<div class="vis-holder">
-    <div class="map-holder" id="map"></div>
-    <div class="barchart-holder" id="barchart"></div>
-  </div>
+				<!-- Change viewbox to whatever you want, e.g. "0 0 1000 6000" This determines your aspect ratio and coordinate system -->
+				<!-- Delete all the sample SVG code below after the viewbox to before the closing tag. Populate this part of the SVG with D3. -->
+				<svg id="map" preserveAspectRatio="xMidYMid meet" class="marks" viewBox="0 0 1000 1000">
+				</svg>/</div>
+				<div><svg id="barchart" preserveAspectRatio="xMidYMid meet" class="marks" viewBox="0 0 1000 1000">
+				</svg>
+			</div>
 
 
 
@@ -284,9 +288,9 @@
 		<!-- Scripts at the end avoid need for dealing with async, defer, or onload event handlers -->
 		<script src="lib/d3.v5.12.0/d3.min.js"></script>
 		<script src="visualization.js"></script>
-  	<script src="js/barchart.js"></script>
-  	<script src="js/map.js"></script>
-  	<script src="js/slider.js"></script>
+  	<!-- <script src="barchart.js"></script>
+  	<script src="map.js"></script> -->
+  	<!-- <script src="js/slider.js"></script> -->
 	</body>
 
 </html>

@@ -10,19 +10,19 @@ var margin = {
 	left: 20
 };
 
-var svg = d3.select( '#vis-svg' );
+var msvg = d3.select( '#map' );
 
-var mapSvg = svg.append( 'svg' )
+var mapSvg = msvg.append( 'svg' )
 	.attr( 'id', 'map-svg' )
 	.attr( "width", "50%" )
 	.attr( "height", "100%" );
 // .append("g")
 // 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");;
 
-var barSvg = svg.append( 'svg' )
-	.attr( 'id', 'bar-svg' )
-	.attr( 'width', '50%' )
-	.attr( 'height', '100%' );
+// var barSvg = svg.append( 'svg' )
+// 	.attr( 'id', 'bar-svg' )
+// 	.attr( 'width', '50%' )
+// 	.attr( 'height', '100%' );
 
 
 /* 0.2. Misc. DataArrays and Global Variables
@@ -285,7 +285,7 @@ d3.csv( './data/intersections_data.csv' )
 								updateDisplayedTime( sliderTime, val );
 							} );
 
-						var gTime = svg.append( 'svg' )
+						var gTime = msvg.append( 'svg' )
 							.attr( 'width', '100%' )
 							.attr( 'height', '100%' )
 							.append( 'g' )
@@ -380,22 +380,21 @@ mapSvg.selectAll( '.mapLgndFill' )
 
 /* 2. VIZ.2: Stacked Bar Chart
  *************************************************************/
+var bsvg = d3.select( '#barchart' );
+
+ var barSvg = bsvg.append( 'svg' )
+ 	.attr( 'id', 'bar-svg' )
+ 	.attr( 'width', '100%' )
+ 	.attr( 'height', '100%' );
 
 barSvg.append( 'text' )
-	.attr( 'x', scaleX( 1.75 ) )
-	.attr( 'y', scaleY( -0.23 ) )
+	.attr( 'x', 20 )
+	.attr( 'y', 50 )
 	.text( 'Parking Inventory Bar Chart' )
 	.attr( 'font-family', 'sans-serif' )
 	.attr( 'font-size', '20px' )
 	.attr( 'fill', 'black' );
 
-barSvg.append( 'text' )
-	.attr( 'x', scaleX( 1.75 ) )
-	.attr( 'y', scaleY( -0.15 ) )
-	.text( 'coming soon...' )
-	.attr( 'font-family', 'sans-serif' )
-	.attr( 'font-size', '10px' )
-	.attr( 'fill', 'black' );
 
 function findMaxTotal( data_arr ) {
 	var maxTotal = 0;
@@ -418,18 +417,19 @@ d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
 		var barYRatio = 1;
 		var barYScale = ( barXScale * barYRatio );
 
+		//
 		var barHorizMargin = ( mapHorizMargin + 100 );
 		var barVertMargin = mapVertMargin;
-
+		//
 		var barSpacing = 7;
-
+		//
 		var chartHorizMargin = 60;
 		var chartStartX = ( window.innerWidth * 0.5 ) + chartHorizMargin;
 		var chartEndX = window.innerWidth - chartHorizMargin;
 
 		var chartH = 500;
-		var chartW = ( chartEndX - chartStartX );
-
+		var chartW = window.innerWidth * 0.5;
+		//
 		var maxY = findMaxTotal( agg_bar_data );
 		var xPadding = 5;
 		var lenData = agg_bar_data.length;
@@ -445,15 +445,15 @@ d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
 
 		var xScale = d3.scaleLinear()
 			// .domain( [ 0, lenData ] )
-			.domain( [ 0, 3 ] )
-			.range( [ chartStartX, chartEndX ] );
+			.domain( [ 0, lenData ] )
+			.range( [ 0, chartW ] );
 
 		var xAxis = d3.axisTop( xScale )
 			.tickSize( 5 )
 			.tickValues( tickVals )
 			.tickFormat( function( d, i ) {
-				console.log( tickLabels[ i ] )
-				return tickLabels[ i ]
+				console.log( tickLabels [ i ] )
+				return tickLabels [ i ]
 			} );
 
 
@@ -506,6 +506,10 @@ d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
 			.attr( 'transform', 'translate(' + axisX + ', 0)' )
 			.call( yAxis );
 	} );
+
+	barSvgElement = document.getElementsByTagName("svg")[1];
+	barSvgElement.style.position = "relative";
+	barSvgElement.style.left = "70%";
 
 // TODO: BAR CHART LEGEND
 //

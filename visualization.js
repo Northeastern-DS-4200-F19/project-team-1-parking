@@ -417,10 +417,10 @@ function findMaxTotal( data_arr ) {
 var legendSvg = d3.select("#barchart")
 
 // Handmade legend
-legendSvg.append("circle").attr("cx", 100).attr("cy",600).attr("r", 10).style("fill", "#7f868a")
-legendSvg.append("circle").attr("cx", 100).attr("cy",630).attr("r", 10).style("fill", "#db3232")
-legendSvg.append("text").attr("x", 130).attr("y", 600).text("Empty Spots").style("font-size", "20px").attr("alignment-baseline","middle")
-legendSvg.append("text").attr("x", 130).attr("y", 630).text("Occupied Spots").style("font-size", "20px").attr("alignment-baseline","middle")
+legendSvg.append("circle").attr("cx", 170).attr("cy",550).attr("r", 10).style("fill", "#7f868a")
+legendSvg.append("circle").attr("cx", 170).attr("cy", 580).attr("r", 10).style("fill", "#db3232")
+legendSvg.append("text").attr("x", 200).attr("y", 550).text("Empty Spots").style("font-size", "20px").attr("alignment-baseline","middle")
+legendSvg.append("text").attr("x", 200).attr("y", 580).text("Occupied Spots").style("font-size", "20px").attr("alignment-baseline","middle")
 
 
 d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
@@ -513,21 +513,6 @@ d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
 					.attr("width", function (d) {
 										    return x(d[currentTimeOcc]);
 						 })
-
-	//add a value label to the right of each bar
-// stackbars.append("text")
-// 			.attr("class", "label")
-// 			//y position of the label is halfway down the bar
-// 			.attr("y", function (d) {
-// 										             return y(d["Street Name"]) + y.bandwidth() / 2 + 4;
-// 										            })
-// 										            //x position is 3 pixels to the right of the bar
-// 										            .attr("x", function (d) {
-// 										                return x(d[currentTimeOcc]) - 50;
-// 										            })
-// 										            .text(function (d) {
-// 										                return d[currentTimeOcc];
-// 										            });
 
 stackbars.on('mouseover', function (d, i) {
           d3.select(this).transition()

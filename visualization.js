@@ -5,10 +5,14 @@
  *************************************************************/
 var margin = {
 	top: 20,
-	right: 50,
+	right: 200,
 	bottom: 30,
 	left: 150
 };
+
+var div = d3.select("body").append("div")
+     .attr("class", "tooltip-donut")
+     .style("opacity", 0);
 
 var msvg = d3.select( '#map' );
 
@@ -315,7 +319,7 @@ d3.csv( './data/intersections_data.csv' )
 									} else {
 										return colorScale( occupancy_rate );
 									}
-								} );
+								} )
 						}
 					} );
 			} );
@@ -409,11 +413,21 @@ function findMaxTotal( data_arr ) {
 	return maxTotal;
 };
 
+// create the legend
+var legendSvg = d3.select("#barchart")
+
+// Handmade legend
+legendSvg.append("circle").attr("cx", 100).attr("cy",600).attr("r", 10).style("fill", "#7f868a")
+legendSvg.append("circle").attr("cx", 100).attr("cy",630).attr("r", 10).style("fill", "#db3232")
+legendSvg.append("text").attr("x", 130).attr("y", 600).text("Empty Spots").style("font-size", "20px").attr("alignment-baseline","middle")
+legendSvg.append("text").attr("x", 130).attr("y", 630).text("Occupied Spots").style("font-size", "20px").attr("alignment-baseline","middle")
+
 
 d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
 	function( agg_bar_data ) {
+		var currentTimeOcc = "6:00 AM Occupied"
 
-		var barchartWidth = 600 - margin.left - margin.right,
+		var barchartWidth = 800 - margin.left - margin.right,
         barchartHeight = 1000 - margin.top - margin.bottom;
 
 		var barSvg = d3.select("#barchart").append("svg")
@@ -429,6 +443,7 @@ d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
 						        })]);
 
 		var y = d3.scaleBand()
+
 
 //            pay attention here ! the next statement is necessary . It is not part of 【conversion from v3 to v4】
 .domain(agg_bar_data.map(function(d) { return d["Street Name"]; }))
@@ -476,9 +491,64 @@ d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
 										                return x(d["Total Spots"]) + 3;
 										            })
 										            .text(function (d) {
-										                return d["Total Spots"];
+										                return ("There are " + (d["Total Spots"]-d[currentTimeOcc])
+																		+ " empty spots!");
 										            });
 
+	//stacked bar
+	var stackbars = barSvg.selectAll(".stackbar")
+									.data(agg_bar_data)
+									.enter()
+									.append("g")
+
+
+ //append rects
+			stackbars.append("rect")
+					.attr("class", "stackbar")
+					.attr("y", function (d) {
+										return y(d["Street Name"]);
+										})
+					.attr("height", y.bandwidth())
+					.attr("x", 0)
+					.attr("width", function (d) {
+										    return x(d[currentTimeOcc]);
+						 })
+
+	//add a value label to the right of each bar
+// stackbars.append("text")
+// 			.attr("class", "label")
+// 			//y position of the label is halfway down the bar
+// 			.attr("y", function (d) {
+// 										             return y(d["Street Name"]) + y.bandwidth() / 2 + 4;
+// 										            })
+// 										            //x position is 3 pixels to the right of the bar
+// 										            .attr("x", function (d) {
+// 										                return x(d[currentTimeOcc]) - 50;
+// 										            })
+// 										            .text(function (d) {
+// 										                return d[currentTimeOcc];
+// 										            });
+
+stackbars.on('mouseover', function (d, i) {
+          d3.select(this).transition()
+               .duration('50')
+               .attr('opacity', '.85');
+          div.transition()
+               .duration("50")
+               .style("opacity", 1);
+          let num = d[currentTimeOcc] + " spots are currently occupied.";
+          div.html(num)
+               .style("left", (d3.event.pageX + 10) + "px")
+               .style("top", (d3.event.pageY - 15) + "px");
+     })
+     .on('mouseout', function (d, i) {
+          d3.select(this).transition()
+               .duration('50')
+               .attr('opacity', '1');
+          div.transition()
+               .duration('50')
+               .style("opacity", 0);
+     });
 
 		// var barXScale = 250;
 		// var barYRatio = 1;

@@ -10,18 +10,18 @@ var margin = {
 	left: 150
 };
 
-var div = d3.select("body").append("div")
-     .attr("class", "tooltip-donut")
-     .style("opacity", 0);
+var div = d3.select( 'body' ).append( 'div' )
+	.attr( 'class', 'tooltip-donut' )
+	.style( 'opacity', 0 );
 
 var msvg = d3.select( '#map' );
 
 var mapSvg = msvg.append( 'svg' )
 	.attr( 'id', 'map-svg' )
-	.attr( "width", "50%" )
-	.attr( "height", "100%" );
-// .append("g")
-// 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");;
+	.attr( 'width', '50%' )
+	.attr( 'height', '100%' );
+// .append('g')
+// 	.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');;
 
 // var barSvg = svg.append( 'svg' )
 // 	.attr( 'id', 'bar-svg' )
@@ -203,6 +203,8 @@ mapSvg.append( 'text' )
 	.attr( 'font-size', '20px' )
 	.attr( 'fill', 'black' );
 
+var CUR_TIME_OCC = '6:00 AM Occupied'
+
 d3.csv( './data/intersections_data.csv' )
 	.then( function( intersections_data ) {
 		var intersections = intersections_data;
@@ -287,6 +289,7 @@ d3.csv( './data/intersections_data.csv' )
 							.on( 'onchange', val => {
 								sliderTime = d3.timeFormat( '%-I:%M %p' )( val ) + ' Occupied';
 								updateDisplayedTime( sliderTime, val );
+								drawStackedBars( sliderTime );
 							} );
 
 						var gTime = msvg.append( 'svg' )
@@ -414,220 +417,235 @@ function findMaxTotal( data_arr ) {
 };
 
 // create the legend
-var legendSvg = d3.select("#barchart")
+var legendSvg = d3.select( '#barchart' )
 
 // Handmade legend
-legendSvg.append("circle").attr("cx", 170).attr("cy",550).attr("r", 10).style("fill", "#7f868a")
-legendSvg.append("circle").attr("cx", 170).attr("cy", 580).attr("r", 10).style("fill", "#db3232")
-legendSvg.append("text").attr("x", 200).attr("y", 550).text("Empty Spots").style("font-size", "20px").attr("alignment-baseline","middle")
-legendSvg.append("text").attr("x", 200).attr("y", 580).text("Occupied Spots").style("font-size", "20px").attr("alignment-baseline","middle")
+legendSvg.append( 'circle' ).attr( 'cx', 170 ).attr( 'cy', 550 ).attr( 'r', 10 ).style( 'fill', '#7f868a' )
+legendSvg.append( 'circle' ).attr( 'cx', 170 ).attr( 'cy', 580 ).attr( 'r', 10 ).style( 'fill', '#db3232' )
+legendSvg.append( 'text' ).attr( 'x', 200 ).attr( 'y', 550 ).text( 'Empty Spots' ).style( 'font-size', '20px' ).attr( 'alignment-baseline', 'middle' )
+legendSvg.append( 'text' ).attr( 'x', 200 ).attr( 'y', 580 ).text( 'Occupied Spots' ).style( 'font-size', '20px' ).attr( 'alignment-baseline', 'middle' )
 
+let BAR_X;
+let BAR_Y;
 
 d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
 	function( agg_bar_data ) {
-		var currentTimeOcc = "6:00 AM Occupied"
 
 		var barchartWidth = 800 - margin.left - margin.right,
-        barchartHeight = 1000 - margin.top - margin.bottom;
+			barchartHeight = 1000 - margin.top - margin.bottom;
 
-		var barSvg = d3.select("#barchart").append("svg")
-            .attr("width", barchartWidth + margin.left + margin.right)
-            .attr("height", barchartHeight + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		var barSvg = d3.select( '#barchart' ).append( 'svg' )
+			.attr( 'width', barchartWidth + margin.left + margin.right )
+			.attr( 'height', barchartHeight + margin.top + margin.bottom )
+			.append( 'g' )
+			.attr( 'transform', 'translate(' + margin.left + ',' + margin.top + ')' );
 
 		var x = d3.scaleLinear()
-						        .range([0, barchartWidth])
-						        .domain([0, d3.max(agg_bar_data, function (d) {
-						            return d["Total Spots"];
-						        })]);
+			.range( [ 0, barchartWidth ] )
+			.domain( [ 0, d3.max( agg_bar_data, function( d ) {
+				return d[ 'Total Spots' ];
+			} ) ] );
+
+		BAR_X = x;
 
 		var y = d3.scaleBand()
+			.domain( agg_bar_data.map( function( d ) {
+				return d[ 'Street Name' ];
+			} ) )
+			.rangeRound( [ 0, barchartWidth ] )
+			.padding( 0.1 );
+
+		BAR_Y = y;
+
+		//make y axis to show bar names
+		var yAxis = d3.axisLeft()
+			.scale( y )
+			//no tick marks
+			.tickSize( 0 );
+
+		var gy = barSvg.append( 'g' )
+			.attr( 'class', 'y axis' )
+			.call( yAxis )
+
+		var bars = barSvg.selectAll( '.bar' )
+			.data( agg_bar_data )
+			.enter()
+			.append( 'g' )
+
+		//append rects
+		bars.append( 'rect' )
+			.attr( 'class', 'bar' )
+			.attr( 'y', function( d ) {
+				return y( d[ 'Street Name' ] );
+			} )
+			.attr( 'height', y.bandwidth() )
+			.attr( 'x', 0 )
+			.attr( 'width', function( d ) {
+				return x( d[ 'Total Spots' ] );
+			} );
+
+		drawStackedBars( '6:00 AM Occupied' );
+
+	} )
 
 
-//            pay attention here ! the next statement is necessary . It is not part of 【conversion from v3 to v4】
-.domain(agg_bar_data.map(function(d) { return d["Street Name"]; }))
+function drawStackedBars( currentTimeOcc ) {
 
-// below is the 【conversion from v3 to v4】
-.rangeRound([0, barchartWidth])
-.padding(0.1);
+	d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
+		function( agg_bar_data ) {
 
-	//make y axis to show bar names
-			var yAxis = d3.axisLeft()
-										 			.scale(y)
-										      //no tick marks
-										      .tickSize(0);
+			var barSvg = d3.select( '#barchart' );
+			var bars = barSvg.selectAll( '.bar' );
 
-		var gy = barSvg.append("g")
-										.attr("class", "y axis")
-										.call(yAxis)
+			//add a value label to the right of each bar
+			bars.append( 'text' )
+				.attr( 'class', 'label' )
+				//y position of the label is halfway down the bar
+				.attr( 'y', function( d ) {
+					return BAR_Y( d[ 'Street Name' ] ) + BAR_Y.bandwidth() / 2 + 4;
+				} )
+				//x position is 3 pixels to the right of the bar
+				.attr( 'x', function( d ) {
+					return BAR_X( d[ 'Total Spots' ] ) + 3;
+				} )
+				.text( function( d ) {
+					return ( 'There are ' + ( d[ 'Total Spots' ] - d[ currentTimeOcc ] ) +
+						' empty spots!' );
+				} );
 
-		var bars = barSvg.selectAll(".bar")
-									.data(agg_bar_data)
-									.enter()
-									.append("g")
+			//stacked bar
+			var stackbars = barSvg.selectAll( '.stackbar' )
+				.data( agg_bar_data )
+				.enter()
+				.append( 'g' )
 
- //append rects
-			bars.append("rect")
-					.attr("class", "bar")
-					.attr("y", function (d) {
-										return y(d["Street Name"]);
-										})
-					.attr("height", y.bandwidth())
-					.attr("x", 0)
-					.attr("width", function (d) {
-										    return x(d["Total Spots"]);
-						 });
+			//append rects
+			stackbars.append( 'rect' )
+				.attr( 'class', 'stackbar' )
+				.attr( 'y', function( d ) {
+					return BAR_Y( d[ 'Street Name' ] );
+				} )
+				.attr( 'height', BAR_Y.bandwidth() )
+				.attr( 'x', 0 )
+				.attr( 'width', function( d ) {
+					return BAR_X( d[ currentTimeOcc ] );
+				} );
 
-	//add a value label to the right of each bar
-	bars.append("text")
-			.attr("class", "label")
-			//y position of the label is halfway down the bar
-			.attr("y", function (d) {
-										             return y(d["Street Name"]) + y.bandwidth() / 2 + 4;
-										            })
-										            //x position is 3 pixels to the right of the bar
-										            .attr("x", function (d) {
-										                return x(d["Total Spots"]) + 3;
-										            })
-										            .text(function (d) {
-										                return ("There are " + (d["Total Spots"]-d[currentTimeOcc])
-																		+ " empty spots!");
-										            });
+			stackbars.on( 'mouseover', function( d, i ) {
+					d3.select( this ).transition()
+						.duration( '50' )
+						.attr( 'opacity', '.85' );
+					div.transition()
+						.duration( '50' )
+						.style( 'opacity', 1 );
+					let num = d[ currentTimeOcc ] + ' spots are currently occupied.';
+					div.html( num )
+						.style( 'left', ( d3.event.pageX + 10 ) + 'px' )
+						.style( 'top', ( d3.event.pageY - 15 ) + 'px' );
+				} )
+				.on( 'mouseout', function( d, i ) {
+					d3.select( this ).transition()
+						.duration( '50' )
+						.attr( 'opacity', '1' );
+					div.transition()
+						.duration( '50' )
+						.style( 'opacity', 0 );
+				} );
+		} )
+}
 
-	//stacked bar
-	var stackbars = barSvg.selectAll(".stackbar")
-									.data(agg_bar_data)
-									.enter()
-									.append("g")
-
-
- //append rects
-			stackbars.append("rect")
-					.attr("class", "stackbar")
-					.attr("y", function (d) {
-										return y(d["Street Name"]);
-										})
-					.attr("height", y.bandwidth())
-					.attr("x", 0)
-					.attr("width", function (d) {
-										    return x(d[currentTimeOcc]);
-						 })
-
-stackbars.on('mouseover', function (d, i) {
-          d3.select(this).transition()
-               .duration('50')
-               .attr('opacity', '.85');
-          div.transition()
-               .duration("50")
-               .style("opacity", 1);
-          let num = d[currentTimeOcc] + " spots are currently occupied.";
-          div.html(num)
-               .style("left", (d3.event.pageX + 10) + "px")
-               .style("top", (d3.event.pageY - 15) + "px");
-     })
-     .on('mouseout', function (d, i) {
-          d3.select(this).transition()
-               .duration('50')
-               .attr('opacity', '1');
-          div.transition()
-               .duration('50')
-               .style("opacity", 0);
-     });
-
-		// var barXScale = 250;
-		// var barYRatio = 1;
-		// var barYScale = ( barXScale * barYRatio );
-		//
-		// //
-		// var barHorizMargin = ( mapHorizMargin + 100 );
-		// var barVertMargin = mapVertMargin;
-		// //
-		// var barSpacing = 7;
-		// //
-		// var chartHorizMargin = 60;
-		// var chartStartX = ( window.innerWidth * 0.5 ) + chartHorizMargin;
-		// var chartEndX = window.innerWidth - chartHorizMargin;
-		//
-		// var chartH = 500;
-		// var chartW = window.innerWidth * 0.5;
-		// //
-		// var maxY = findMaxTotal( agg_bar_data );
-		// var xPadding = 5;
-		// var lenData = agg_bar_data.length;
-		// var keys = agg_bar_data.columns.slice( 1 );
-		// var array = [ keys[ keys.length - 1 ], keys[ 0 ] ];
-		//
-		//
-		// // Instantiate the X Axis
-		//
-		// // var tickVals = [ 0.5, 3.5, 6.5, 9.5, 12.5, 15.5 ];
-		// var tickVals = [ 0.25, 1.25, 2.25, 3.25, 4.25, 5.25 ];
-		// var tickLabels = agg_bar_data.map( s => s[ 'Street Name' ] );
-		//
-		// var xScale = d3.scaleLinear()
-		// 	// .domain( [ 0, lenData ] )
-		// 	.domain( [ 0, lenData ] )
-		// 	.range( [ 0, chartW ] );
-		//
-		// var xAxis = d3.axisTop( xScale )
-		// 	.tickSize( 5 )
-		// 	.tickValues( tickVals )
-		// 	.tickFormat( function( d, i ) {
-		// 		console.log( tickLabels [ i ] )
-		// 		return tickLabels [ i ]
-		// 	} );
-		//
-		//
-		// // Instantiate the Y Axis
-		// var yScaleMax = Math.ceil( maxY / 10 ) * 10;
-		//
-		// var yScale = d3.scaleLinear()
-		// 	.domain( [ 0, yScaleMax ] )
-		// 	.range( [ barVertMargin, chartH + barVertMargin ] );
-		//
-		// var yAxis = d3.axisLeft()
-		// 	.scale( yScale );
-		//
-		//
-		// // Instantiate the bars
-		// var axisY = barVertMargin - barSpacing;
-		// var axisX = xScale( 0 ) - barSpacing;
-		// var axisYMargin = yScale( yScaleMax );
-		//
-		// var barWidth = ( ( chartEndX - chartStartX ) / lenData ) - barSpacing;
-		//
-		// barSvg.selectAll( '.bars' )
-		// 	.data( agg_bar_data )
-		// 	.enter()
-		// 	.append( 'rect' )
-		// 	.attr( 'class', 'bars' )
-		// 	.attr( 'x', function( d, i ) {
-		// 		return xScale( i );
-		// 	} )
-		// 	.attr( 'y', function( d ) {
-		// 		return barVertMargin;
-		// 	} )
-		// 	.attr( 'width', barWidth )
-		// 	.attr( 'height', function( d ) {
-		// 		return yScale( d[ 'Total Spots' ] ) - barVertMargin;
-		// 	} )
-		// 	.style( 'fill', 'gray' );
-		//
-		// // Create the X Axis
-		//
-		// barSvg.append( 'g' )
-		// 	.attr( 'class', 'xaxis axis' )
-		// 	.attr( "transform", "translate(" + ( -barSpacing ) + "," + axisY + ")" )
-		// 	.call( xAxis );
-		//
-		// // Create Y axis
-		//
-		// barSvg.append( 'g' )
-		// 	.attr( 'class', 'axis' )
-		// 	.attr( 'transform', 'translate(' + axisX + ', 0)' )
-		// 	.call( yAxis );
-	} );
+// var barXScale = 250;
+// var barYRatio = 1;
+// var barYScale = ( barXScale * barYRatio );
+//
+// //
+// var barHorizMargin = ( mapHorizMargin + 100 );
+// var barVertMargin = mapVertMargin;
+// //
+// var barSpacing = 7;
+// //
+// var chartHorizMargin = 60;
+// var chartStartX = ( window.innerWidth * 0.5 ) + chartHorizMargin;
+// var chartEndX = window.innerWidth - chartHorizMargin;
+//
+// var chartH = 500;
+// var chartW = window.innerWidth * 0.5;
+// //
+// var maxY = findMaxTotal( agg_bar_data );
+// var xPadding = 5;
+// var lenData = agg_bar_data.length;
+// var keys = agg_bar_data.columns.slice( 1 );
+// var array = [ keys[ keys.length - 1 ], keys[ 0 ] ];
+//
+//
+// // Instantiate the X Axis
+//
+// // var tickVals = [ 0.5, 3.5, 6.5, 9.5, 12.5, 15.5 ];
+// var tickVals = [ 0.25, 1.25, 2.25, 3.25, 4.25, 5.25 ];
+// var tickLabels = agg_bar_data.map( s => s[ 'Street Name' ] );
+//
+// var xScale = d3.scaleLinear()
+// 	// .domain( [ 0, lenData ] )
+// 	.domain( [ 0, lenData ] )
+// 	.range( [ 0, chartW ] );
+//
+// var xAxis = d3.axisTop( xScale )
+// 	.tickSize( 5 )
+// 	.tickValues( tickVals )
+// 	.tickFormat( function( d, i ) {
+// 		console.log( tickLabels [ i ] )
+// 		return tickLabels [ i ]
+// 	} );
+//
+//
+// // Instantiate the Y Axis
+// var yScaleMax = Math.ceil( maxY / 10 ) * 10;
+//
+// var yScale = d3.scaleLinear()
+// 	.domain( [ 0, yScaleMax ] )
+// 	.range( [ barVertMargin, chartH + barVertMargin ] );
+//
+// var yAxis = d3.axisLeft()
+// 	.scale( yScale );
+//
+//
+// // Instantiate the bars
+// var axisY = barVertMargin - barSpacing;
+// var axisX = xScale( 0 ) - barSpacing;
+// var axisYMargin = yScale( yScaleMax );
+//
+// var barWidth = ( ( chartEndX - chartStartX ) / lenData ) - barSpacing;
+//
+// barSvg.selectAll( '.bars' )
+// 	.data( agg_bar_data )
+// 	.enter()
+// 	.append( 'rect' )
+// 	.attr( 'class', 'bars' )
+// 	.attr( 'x', function( d, i ) {
+// 		return xScale( i );
+// 	} )
+// 	.attr( 'y', function( d ) {
+// 		return barVertMargin;
+// 	} )
+// 	.attr( 'width', barWidth )
+// 	.attr( 'height', function( d ) {
+// 		return yScale( d[ 'Total Spots' ] ) - barVertMargin;
+// 	} )
+// 	.style( 'fill', 'gray' );
+//
+// // Create the X Axis
+//
+// barSvg.append( 'g' )
+// 	.attr( 'class', 'xaxis axis' )
+// 	.attr( 'transform', 'translate(' + ( -barSpacing ) + ',' + axisY + ')' )
+// 	.call( xAxis );
+//
+// // Create Y axis
+//
+// barSvg.append( 'g' )
+// 	.attr( 'class', 'axis' )
+// 	.attr( 'transform', 'translate(' + axisX + ', 0)' )
+// 	.call( yAxis );
 
 // TODO: BAR CHART LEGEND
 //

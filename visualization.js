@@ -493,7 +493,7 @@ mapSvg.selectAll( '.mapLgndFill' )
 
 mapSvg.append( 'text' )
 	.attr('position', 'absolute')
-	.attr('top', '1300px')
+	.attr('top', '2000px')
 	.attr('left', '100px')
 	.text( 'Scale: Green (Fully Unoccupied) -> White (Equally Occupied) -> Red (Fully Occupied)' )
 	.attr( 'font-family', 'sans-serif' )

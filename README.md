@@ -4,7 +4,7 @@ This template will help you get started with your project. Please look through a
 
 ## The Associated GitHub Pages Website
 
-This website is served automatically from the default `gh-pages` branch at https://northeastern-ds-4200-f19-staff.github.io/S-L-Project-Template/
+This website is served automatically from the default `gh-pages` branch at http://northeastern-ds-4200-f19.github.io/project-team-1-parking
 
 ## Setup
 
@@ -54,4 +54,3 @@ As you work with your team, you may have issues merging your changes. We recomme
 Instead of all working directly out of the main `gh-pages` branch, you can try adopting a Git branching model for development. See, e.g., [this article by Vincent Driessen](https://nvie.com/posts/a-successful-git-branching-model/) and the included image:
 
 ![Image of Git branching model by VIncent Driessen](http://www.ccs.neu.edu/home/cody/courses/shared/git-model.png)
-

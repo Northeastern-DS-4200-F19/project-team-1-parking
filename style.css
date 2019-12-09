@@ -109,10 +109,10 @@ tr#header {
 }
 
 .stackbar {
-	fill: #db3232;
+	fill: #1f1b1b;
 }
 
-.tooltip-donut {
+.tooltip-bar {
      position: absolute;
      text-align: center;
      padding: .5rem;

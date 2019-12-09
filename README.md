@@ -54,3 +54,11 @@ As you work with your team, you may have issues merging your changes. We recomme
 Instead of all working directly out of the main `gh-pages` branch, you can try adopting a Git branching model for development. See, e.g., [this article by Vincent Driessen](https://nvie.com/posts/a-successful-git-branching-model/) and the included image:
 
 ![Image of Git branching model by VIncent Driessen](http://www.ccs.neu.edu/home/cody/courses/shared/git-model.png)
+
+# Outside Sources
+
+For hover tooltip on bar chart: https://medium.com/@kj_schmidt/making-an-animated-donut-chart-with-d3-js-17751fde4679
+
+For bar chart legend: https://www.d3-graph-gallery.com/graph/custom_legend.html
+
+For bar chart template: https://bl.ocks.org/hrecht/f84012ee860cb4da66331f18d588eee3

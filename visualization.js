@@ -491,14 +491,6 @@ mapSvg.selectAll( '.mapLgndFill' )
 		}
 	} );
 
-mapSvg.append( 'text' )
-	.attr('position', 'absolute')
-	.attr('top', '2000px')
-	.attr('left', '100px')
-	.text( 'Scale: Green (Fully Unoccupied) -> White (Equally Occupied) -> Red (Fully Occupied)' )
-	.attr( 'font-family', 'sans-serif' )
-	.attr( 'font-size', '20px' )
-	.attr( 'fill', 'black' );
 	
 	
 

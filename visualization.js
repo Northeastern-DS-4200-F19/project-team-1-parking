@@ -490,3 +490,12 @@ mapSvg.selectAll( '.mapLgndFill' )
 			return 'gray';
 		}
 	} );
+
+mapSvg.append( 'text' )
+	.attr( 'x', scaleX( -0.2 ) )
+	.attr( 'y', scaleY( -0.70 ) )
+	.text( 'Scale' )
+	.attr( 'font-family', 'sans-serif' )
+	.attr( 'font-size', '20px' )
+	.attr( 'fill', 'black' );
+

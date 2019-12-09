@@ -3,20 +3,22 @@
 
 /* 0.1. SVG selection & creation
  *************************************************************/
-var margin = {
+
+
+let margin = {
 	top: 20,
 	right: 200,
 	bottom: 30,
 	left: 150
 };
 
-var div = d3.select("body").append("div")
+let div = d3.select("body").append("div")
      .attr("class", "tooltip-donut")
      .style("opacity", 0);
 
-var msvg = d3.select( '#map' );
+let msvg = d3.select( '#map' );
 
-var mapSvg = msvg.append( 'svg' )
+let mapSvg = msvg.append( 'svg' )
 	.attr( 'id', 'map-svg' )
 	.attr( "width", "50%" )
 	.attr( "height", "100%" );
@@ -32,14 +34,14 @@ var mapSvg = msvg.append( 'svg' )
 /* 0.2. Misc. DataArrays and Global Variables
  *************************************************************/
 
-var rXPlus = [ 1, 2.1, 2.3, 2.2, 3.1, 3.2, 12 ];
-var rYPlus = [ 2.1, 9.3, 4, 7, 11, 14 ];
-var rDiag = [ 2.1, 2.3, 9.1, 9.3 ]
+let rXPlus = [ 1, 2.1, 2.3, 2.2, 3.1, 3.2, 12 ];
+let rYPlus = [ 2.1, 9.3, 4, 7, 11, 14 ];
+let rDiag = [ 2.1, 2.3, 9.1, 9.3 ]
 
-var areaStrokeWidth = 8;
-var outlineStrokeWidth = 12;
-var pointRadius = 13.5;
-var polyPointDist = 0.02;
+let areaStrokeWidth = 8;
+let outlineStrokeWidth = 12;
+let pointRadius = 13.5;
+let polyPointDist = 0.02;
 
 var outlineColor = '#505050';
 
@@ -319,8 +321,117 @@ d3.csv( './data/intersections_data.csv' )
 									} else {
 										return colorScale( occupancy_rate );
 									}
-								} )
+								} );
+								d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
+									function( agg_bar_data ) {
+										//var currentTimeOcc = "6:00 AM Occupied"
+
+										var barchartWidth = 800 - margin.left - margin.right,
+								        barchartHeight = 1000 - margin.top - margin.bottom;
+
+										var barSvg = d3.select("#barchart").append("svg")
+								            .attr("width", barchartWidth + margin.left + margin.right)
+								            .attr("height", barchartHeight + margin.top + margin.bottom)
+								            .append("g")
+								            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+										var x = d3.scaleLinear()
+														        .range([0, barchartWidth])
+														        .domain([0, d3.max(agg_bar_data, function (d) {
+														            return d["Total Spots"];
+														        })]);
+
+										var y = d3.scaleBand()
+															.domain(agg_bar_data.map(function(d) { return d["Street Name"]; }))
+															.rangeRound([0, barchartWidth])
+															.padding(0.1);
+
+									//make y axis to show bar names
+											var yAxis = d3.axisLeft()
+																		 			.scale(y)
+																		      //no tick marks
+																		      .tickSize(0);
+
+										var gy = barSvg.append("g")
+																		.attr("class", "y axis")
+																		.call(yAxis)
+
+										var bars = barSvg.selectAll(".bar")
+																	.data(agg_bar_data)
+																	.enter()
+																	.append("g")
+
+								 //append rects
+											bars.append("rect")
+													.attr("class", "bar")
+													.attr("y", function (d) {
+																		return y(d["Street Name"]);
+																		})
+													.attr("height", y.bandwidth())
+													.attr("x", 0)
+													.attr("width", function (d) {
+																		    return x(d["Total Spots"]);
+														 });
+
+									//add a value label to the right of each bar
+									bars.append("text")
+											.attr("class", "label")
+											//y position of the label is halfway down the bar
+											.attr("y", function (d) {
+																		             return y(d["Street Name"]) + y.bandwidth() / 2 + 4;
+																		            })
+																		            //x position is 3 pixels to the right of the bar
+																		            .attr("x", function (d) {
+																		                return x(d["Total Spots"]) + 3;
+																		            });
+																		            // .text(function (d) {
+																		            //     return ("There are " + (d["Total Spots"]-d[time])
+																								// 		+ " empty spots!");
+																		            // });
+
+									//stacked bar
+									var stackbars = barSvg.selectAll(".stackbar")
+																	.data(agg_bar_data)
+																	.enter()
+																	.append("g")
+
+
+								 //append rects
+											stackbars.append("rect")
+													.attr("class", "stackbar")
+													.attr("y", function (d) {
+																		return y(d["Street Name"]);
+																		})
+													.attr("height", y.bandwidth())
+													.attr("x", 0)
+													.attr("width", function (d) {
+																		    return x(d[time]);
+														 })
+
+								stackbars.on('mouseover', function (d, i) {
+								          d3.select(this).transition()
+								               .duration('50')
+								               .attr('opacity', '.85');
+								          div.transition()
+								               .duration("50")
+								               .style("opacity", 1);
+								          let num = d[time] + " spots are currently occupied.";
+								          div.html(num)
+								               .style("left", (d3.event.pageX + 10) + "px")
+								               .style("top", (d3.event.pageY - 15) + "px");
+								     })
+								     .on('mouseout', function (d, i) {
+								          d3.select(this).transition()
+								               .duration('50')
+								               .attr('opacity', '1');
+								          div.transition()
+								               .duration('50')
+								               .style("opacity", 0);
+								     });
+									} );
 						}
+						// trying to add bar chart code
+
 					} );
 			} );
 	} );
@@ -399,19 +510,19 @@ mapSvg.selectAll( '.mapLgndFill' )
 // 	.attr( 'font-size', '20px' )
 // 	.attr( 'fill', 'black' );
 
-
-function findMaxTotal( data_arr ) {
-	var maxTotal = 0;
-	for ( street of data_arr ) {
-		var streetTotal = street[ 'Total Spots' ]
-		if ( streetTotal > maxTotal ) {
-			maxTotal = streetTotal;
-		} else {
-			continue
-		}
-	}
-	return maxTotal;
-};
+//
+// function findMaxTotal( data_arr ) {
+// 	var maxTotal = 0;
+// 	for ( street of data_arr ) {
+// 		var streetTotal = street[ 'Total Spots' ]
+// 		if ( streetTotal > maxTotal ) {
+// 			maxTotal = streetTotal;
+// 		} else {
+// 			continue
+// 		}
+// 	}
+// 	return maxTotal;
+// };
 
 // create the legend
 var legendSvg = d3.select("#barchart")
@@ -423,118 +534,113 @@ legendSvg.append("text").attr("x", 200).attr("y", 550).text("Empty Spots").style
 legendSvg.append("text").attr("x", 200).attr("y", 580).text("Occupied Spots").style("font-size", "20px").attr("alignment-baseline","middle")
 
 
-d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
-	function( agg_bar_data ) {
-		var currentTimeOcc = "6:00 AM Occupied"
-
-		var barchartWidth = 800 - margin.left - margin.right,
-        barchartHeight = 1000 - margin.top - margin.bottom;
-
-		var barSvg = d3.select("#barchart").append("svg")
-            .attr("width", barchartWidth + margin.left + margin.right)
-            .attr("height", barchartHeight + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-		var x = d3.scaleLinear()
-						        .range([0, barchartWidth])
-						        .domain([0, d3.max(agg_bar_data, function (d) {
-						            return d["Total Spots"];
-						        })]);
-
-		var y = d3.scaleBand()
-
-
-//            pay attention here ! the next statement is necessary . It is not part of 【conversion from v3 to v4】
-.domain(agg_bar_data.map(function(d) { return d["Street Name"]; }))
-
-// below is the 【conversion from v3 to v4】
-.rangeRound([0, barchartWidth])
-.padding(0.1);
-
-	//make y axis to show bar names
-			var yAxis = d3.axisLeft()
-										 			.scale(y)
-										      //no tick marks
-										      .tickSize(0);
-
-		var gy = barSvg.append("g")
-										.attr("class", "y axis")
-										.call(yAxis)
-
-		var bars = barSvg.selectAll(".bar")
-									.data(agg_bar_data)
-									.enter()
-									.append("g")
-
- //append rects
-			bars.append("rect")
-					.attr("class", "bar")
-					.attr("y", function (d) {
-										return y(d["Street Name"]);
-										})
-					.attr("height", y.bandwidth())
-					.attr("x", 0)
-					.attr("width", function (d) {
-										    return x(d["Total Spots"]);
-						 });
-
-	//add a value label to the right of each bar
-	bars.append("text")
-			.attr("class", "label")
-			//y position of the label is halfway down the bar
-			.attr("y", function (d) {
-										             return y(d["Street Name"]) + y.bandwidth() / 2 + 4;
-										            })
-										            //x position is 3 pixels to the right of the bar
-										            .attr("x", function (d) {
-										                return x(d["Total Spots"]) + 3;
-										            })
-										            .text(function (d) {
-										                return ("There are " + (d["Total Spots"]-d[currentTimeOcc])
-																		+ " empty spots!");
-										            });
-
-	//stacked bar
-	var stackbars = barSvg.selectAll(".stackbar")
-									.data(agg_bar_data)
-									.enter()
-									.append("g")
-
-
- //append rects
-			stackbars.append("rect")
-					.attr("class", "stackbar")
-					.attr("y", function (d) {
-										return y(d["Street Name"]);
-										})
-					.attr("height", y.bandwidth())
-					.attr("x", 0)
-					.attr("width", function (d) {
-										    return x(d[currentTimeOcc]);
-						 })
-
-stackbars.on('mouseover', function (d, i) {
-          d3.select(this).transition()
-               .duration('50')
-               .attr('opacity', '.85');
-          div.transition()
-               .duration("50")
-               .style("opacity", 1);
-          let num = d[currentTimeOcc] + " spots are currently occupied.";
-          div.html(num)
-               .style("left", (d3.event.pageX + 10) + "px")
-               .style("top", (d3.event.pageY - 15) + "px");
-     })
-     .on('mouseout', function (d, i) {
-          d3.select(this).transition()
-               .duration('50')
-               .attr('opacity', '1');
-          div.transition()
-               .duration('50')
-               .style("opacity", 0);
-     });
-
+// d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
+// 	function( agg_bar_data ) {
+// 		var currentTimeOcc = "6:00 AM Occupied"
+//
+// 		var barchartWidth = 800 - margin.left - margin.right,
+//         barchartHeight = 1000 - margin.top - margin.bottom;
+//
+// 		var barSvg = d3.select("#barchart").append("svg")
+//             .attr("width", barchartWidth + margin.left + margin.right)
+//             .attr("height", barchartHeight + margin.top + margin.bottom)
+//             .append("g")
+//             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+//
+// 		var x = d3.scaleLinear()
+// 						        .range([0, barchartWidth])
+// 						        .domain([0, d3.max(agg_bar_data, function (d) {
+// 						            return d["Total Spots"];
+// 						        })]);
+//
+// 		var y = d3.scaleBand()
+// 							.domain(agg_bar_data.map(function(d) { return d["Street Name"]; }))
+// 							.rangeRound([0, barchartWidth])
+// 							.padding(0.1);
+//
+// 	//make y axis to show bar names
+// 			var yAxis = d3.axisLeft()
+// 										 			.scale(y)
+// 										      //no tick marks
+// 										      .tickSize(0);
+//
+// 		var gy = barSvg.append("g")
+// 										.attr("class", "y axis")
+// 										.call(yAxis)
+//
+// 		var bars = barSvg.selectAll(".bar")
+// 									.data(agg_bar_data)
+// 									.enter()
+// 									.append("g")
+//
+//  //append rects
+// 			bars.append("rect")
+// 					.attr("class", "bar")
+// 					.attr("y", function (d) {
+// 										return y(d["Street Name"]);
+// 										})
+// 					.attr("height", y.bandwidth())
+// 					.attr("x", 0)
+// 					.attr("width", function (d) {
+// 										    return x(d["Total Spots"]);
+// 						 });
+//
+// 	//add a value label to the right of each bar
+// 	bars.append("text")
+// 			.attr("class", "label")
+// 			//y position of the label is halfway down the bar
+// 			.attr("y", function (d) {
+// 										             return y(d["Street Name"]) + y.bandwidth() / 2 + 4;
+// 										            })
+// 										            //x position is 3 pixels to the right of the bar
+// 										            .attr("x", function (d) {
+// 										                return x(d["Total Spots"]) + 3;
+// 										            })
+// 										            .text(function (d) {
+// 										                return ("There are " + (d["Total Spots"]-d[currentTimeOcc])
+// 																		+ " empty spots!");
+// 										            });
+//
+// 	//stacked bar
+// 	var stackbars = barSvg.selectAll(".stackbar")
+// 									.data(agg_bar_data)
+// 									.enter()
+// 									.append("g")
+//
+//
+//  //append rects
+// 			stackbars.append("rect")
+// 					.attr("class", "stackbar")
+// 					.attr("y", function (d) {
+// 										return y(d["Street Name"]);
+// 										})
+// 					.attr("height", y.bandwidth())
+// 					.attr("x", 0)
+// 					.attr("width", function (d) {
+// 										    return x(d[currentTimeOcc]);
+// 						 })
+//
+// stackbars.on('mouseover', function (d, i) {
+//           d3.select(this).transition()
+//                .duration('50')
+//                .attr('opacity', '.85');
+//           div.transition()
+//                .duration("50")
+//                .style("opacity", 1);
+//           let num = d[currentTimeOcc] + " spots are currently occupied.";
+//           div.html(num)
+//                .style("left", (d3.event.pageX + 10) + "px")
+//                .style("top", (d3.event.pageY - 15) + "px");
+//      })
+//      .on('mouseout', function (d, i) {
+//           d3.select(this).transition()
+//                .duration('50')
+//                .attr('opacity', '1');
+//           div.transition()
+//                .duration('50')
+//                .style("opacity", 0);
+//      });
+// 	} );
 		// var barXScale = 250;
 		// var barYRatio = 1;
 		// var barYScale = ( barXScale * barYRatio );
@@ -627,7 +733,7 @@ stackbars.on('mouseover', function (d, i) {
 		// 	.attr( 'class', 'axis' )
 		// 	.attr( 'transform', 'translate(' + axisX + ', 0)' )
 		// 	.call( yAxis );
-	} );
+
 
 // TODO: BAR CHART LEGEND
 //

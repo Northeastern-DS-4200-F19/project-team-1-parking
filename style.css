@@ -100,10 +100,6 @@ tr#header {
   float: left;
 }
 
-.fill:hover {
-	stroke-width:5;
-}
-
 .bar {
 	fill: #7f868a;
 }

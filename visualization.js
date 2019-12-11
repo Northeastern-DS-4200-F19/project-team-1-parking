@@ -24,8 +24,9 @@ legendSvg.append("circle").attr("cx", 170).attr("cy", 580).attr("r", 10).style("
 legendSvg.append("text").attr("x", 200).attr("y", 550).text("Empty Spots").style("font-size", "20px").attr("alignment-baseline","middle")
 legendSvg.append("text").attr("x", 200).attr("y", 580).text("Occupied Spots").style("font-size", "20px").attr("alignment-baseline","middle")
 
-let mapLegend = d3.select("#map")
-mapLegend.append("text").attr("x", 50).attr("y", 835).text("Green (All Open Spots) -> White (Half Spots Open) -> Red (No Open Spots)")
+// create a label for the map scale 
+let mapLegendLabel = d3.select("#map")
+mapLegendLabel.append("text").attr("x", 50).attr("y", 835).text("Green (All Open Spots) -> White (Half Spots Open) -> Red (No Open Spots)")
 .style("font-size", "10px").attr("alignment-baseline","middle")
 
 let msvg = d3.select( '#map' );
@@ -34,13 +35,6 @@ let mapSvg = msvg.append( 'svg' )
 	.attr( 'id', 'map-svg' )
 	.attr( "width", "50%" )
 	.attr( "height", "100%" );
-// .append("g")
-// 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");;
-
-// let barSvg = svg.append( 'svg' )
-// 	.attr( 'id', 'bar-svg' )
-// 	.attr( 'width', '50%' )
-// 	.attr( 'height', '100%' );
 
 
 /* 0.2. Misc. DataArrays and Global letiables

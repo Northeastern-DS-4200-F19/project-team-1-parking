@@ -286,6 +286,7 @@ d3.csv( './data/intersections_data.csv' )
 					.then( function( agg_data ) {
 
 						// instantiates the slider's start date
+						// slider credit: John Walley
 						let dataTime = d3.range( 0, 15 ).map( function( d ) {
 							let dt = new Date( 2019, 29, 9, 6, 0, 0, 0 );
 							dt.setMinutes( dt.getMinutes() + d * 60 );

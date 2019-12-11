@@ -24,6 +24,7 @@
 	</head>
 
 	<script src="https://d3js.org/d3.v5.min.js"></script>
+	<!-- slider credit: John Walley -->
 	<script src="https://unpkg.com/d3-simple-slider"></script>
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
@@ -73,21 +74,21 @@
 					<h1>Visualization</h1>
 
 					<p>Here is our final visualization. Use the slider to select the time of day shown.
-					Hover over the bar chart to see more details on empty and occupied spots.</p>
+						Hover over the bar chart to see more details on empty and occupied spots.</p>
 
 		</div>
 
-  <!-- <div class="slider-holder" id="slider-location"></div> -->
-	<div class="vis-holder">
-				<!-- Change viewbox to whatever you want, e.g. "0 0 1000 6000" This determines your aspect ratio and coordinate system -->
-				<!-- Delete all the sample SVG code below after the viewbox to before the closing tag. Populate this part of the SVG with D3. -->
-				<svg id="map" preserveAspectRatio="xMidYMid meet" class="marks" viewBox="0 0 1000 900">
-				</svg>/
+		<!-- <div class="slider-holder" id="slider-location"></div> -->
+		<div class="vis-holder">
+			<!-- Change viewbox to whatever you want, e.g. "0 0 1000 6000" This determines your aspect ratio and coordinate system -->
+			<!-- Delete all the sample SVG code below after the viewbox to before the closing tag. Populate this part of the SVG with D3. -->
+			<svg id="map" preserveAspectRatio="xMidYMid meet" class="marks" viewBox="0 0 1000 900">
+			</svg>/
 
-				</div>
-				<div><svg id="barchart" preserveAspectRatio="xMidYMid meet" class="marks" viewBox="0 0 1000 700">
-				</svg>
-			</div>
+		</div>
+		<div><svg id="barchart" preserveAspectRatio="xMidYMid meet" class="marks" viewBox="0 0 1000 700">
+			</svg>
+		</div>
 
 
 
@@ -119,7 +120,7 @@
 				show the parking capacity of a certain street, as well as area and color to show the breakdown of
 				empty versus occupied spots.</p>
 			<p> For interactivity, users can use the slider to update both visualizations, as well as hover over the
-			 bar chart for more detailed information on the number of empty and occupied spots.</p>
+				bar chart for more detailed information on the number of empty and occupied spots.</p>
 			<p> We'd also like to credit <a href="https://github.com/johnwalley/d3-simple-slider"> John Walley's Simple Slider sample </a> which helped us a lot. </p>
 			<p>Below, you can see screenshots of our final visualization.</p>
 			<p></p>
@@ -244,9 +245,9 @@
 				levels of complexity.</p>
 			<img src="digitalvissketch.png" alt="Second visualization sketch" style="width:700px;height:600px;">
 			<p>Our final visualization contains our planned map and bar chart, with the slider to update time of day.
-			One aspect of our plan that we were not able to implement due to time constraints was filtering based on regulation.
-			However, we still believe that this visualization gives a good overview of a day of parking in Chester Square. See below for screenshots
-		 of our final visualization.</p>
+				One aspect of our plan that we were not able to implement due to time constraints was filtering based on regulation.
+				However, we still believe that this visualization gives a good overview of a day of parking in Chester Square. See below for screenshots
+				of our final visualization.</p>
 			<img src="final vis map.png" alt="Final visualization sketch" style="width:800px;height:600px;">
 			<img src="final vis bar.png" alt="Final visualization sketch" style="width:700px;height:600px;">
 			<p>Unfortunately, our group was unable to take part in the in-class usability testing.

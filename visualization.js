@@ -29,8 +29,8 @@ let mapLegendLabel = d3.select( "#map" )
 mapLegendLabel.append( "text" ).attr( "x", 50 ).attr( "y", 835 ).text( "Green (All Open Spots) -> White (Half Spots Open) -> Red (No Open Spots)" )
 	.style( "font-size", "10px" ).attr( "alignment-baseline", "middle" )
 
+// select the map svg
 let msvg = d3.select( '#map' );
-
 let mapSvg = msvg.append( 'svg' )
 	.attr( 'id', 'map-svg' )
 	.attr( "width", "50%" )
@@ -40,10 +40,12 @@ let mapSvg = msvg.append( 'svg' )
 /* 0.2. Misc. DataArrays and Global letiables
  *************************************************************/
 
+// routes needing x/y/xy adjustment
 let rXPlus = [ 1, 2.1, 2.3, 2.2, 3.1, 3.2, 12 ];
 let rYPlus = [ 2.1, 9.3, 4, 7, 11, 14 ];
 let rDiag = [ 2.1, 2.3, 9.1, 9.3 ]
 
+// settings for the map's lines
 let areaStrokeWidth = 8;
 let outlineStrokeWidth = 12;
 let pointRadius = 13.5;
@@ -58,6 +60,7 @@ let mapYScale = ( mapXScale * mapYRatio );
 let mapHorizMargin = 100;
 let mapVertMargin = 200;
 
+// instantiate X, Y scales
 function scaleX( rawX ) {
 	return ( rawX * mapXScale ) + mapHorizMargin;
 };
@@ -66,6 +69,7 @@ function scaleY( rawY ) {
 	return ( rawY * mapYScale ) + mapVertMargin;
 };
 
+// text labels for the map's streets
 let streetLabels = [ {
 		name: 'Tremont St.',
 		x: 0.5,
@@ -116,6 +120,7 @@ let streetLabels = [ {
 	}
 ]
 
+// colorscale for occupancy data
 let colorScale = d3.scaleLinear()
 	.domain( [ 0, 0.5, 1 ] )
 	.range( [ 'green', 'white', 'red' ] );
@@ -124,7 +129,7 @@ let colorScale = d3.scaleLinear()
 //Street Occupancy Map
 //*************************************************************/
 
-// SQUARE INTERSECTIONS
+// draws each intersection as a square
 function drawIntersections( intersections, strokeWidth ) {
 	mapSvg.selectAll( '.intersection' )
 		.data( intersections )
@@ -142,6 +147,7 @@ function drawIntersections( intersections, strokeWidth ) {
 		.attr( 'height', strokeWidth * ( 11 / 6 ) );
 };
 
+// draws each segment as a line, filled according to occupancy data
 function drawSegments( segments, strokeWidth, isParkingArea ) {
 	let className = ( isParkingArea ? 'fill' : 'outline' );
 	mapSvg.selectAll( className )
@@ -165,6 +171,7 @@ function drawSegments( segments, strokeWidth, isParkingArea ) {
 		} )
 };
 
+// draws each street label
 function labelStreets() {
 	for ( street of streetLabels ) {
 		mapSvg.append( 'text' )
@@ -179,6 +186,7 @@ function labelStreets() {
 	}
 }
 
+// draws the map's titles
 mapSvg.append( 'text' )
 	.attr( 'x', scaleX( -0.2 ) )
 	.attr( 'y', scaleY( -0.23 ) )
@@ -195,18 +203,23 @@ mapSvg.append( 'text' )
 	.attr( 'font-size', '20px' )
 	.attr( 'fill', 'black' );
 
+// loads the data and draws the map visualization
 var CUR_TIME_OCC = '6:00 AM Occupied'
-
+// loads intersection data
 d3.csv( './data/intersections_data.csv' )
 	.then( function( intersections_data ) {
 		let intersections = intersections_data;
+
+		// loads segment data
 		d3.csv( './data/segments_data.csv' )
 			.then( function( segments_data ) {
 				segments_data.forEach( function( d ) {
 
+					// adjusts the segment's X, Y or both accordingly
 					let mult = ( ( rDiag.includes( +d[ 'Segment Number' ] ) ) ? 0.7 : 1 );
 					let polyPointOffset = polyPointDist * mult;
 
+					// determines adjustment based on the side of the street
 					if ( d[ 'Street Side' ] === 'R' ) {
 						if ( rXPlus.includes( +d[ 'Segment Number' ] ) ) {
 							d.x1 = ( +d.x1 ) + polyPointOffset;
@@ -244,32 +257,42 @@ d3.csv( './data/intersections_data.csv' )
 					}
 				} );
 
+				// overlays the bottom segements
 				let botSegments = segments_data.filter( function( d ) {
 					return !( [ 3.1, 10.1 ].includes( +d[ 'Segment Number' ] ) )
 				} );
 
+				// draws the segments outline
 				drawSegments( botSegments, outlineStrokeWidth, false );
+				// draws the segements parking area
 				drawSegments( botSegments, areaStrokeWidth, true );
 
+				// overlays the top segements
 				let topSegments = segments_data.filter( function( d ) {
 					return [ 3.1, 10.1 ].includes( +d[ 'Segment Number' ] )
 				} );
 
+				// draws the segments outline
 				drawSegments( topSegments, outlineStrokeWidth, false );
+				// draws the segements parking area
 				drawSegments( topSegments, areaStrokeWidth, true );
 
+				// draws the intersections
 				drawIntersections( intersections, outlineStrokeWidth );
 				labelStreets();
 
+				// loads the occupancy data
 				d3.csv( './Aggregated_FINALV2.csv' )
 					.then( function( agg_data ) {
 
+						// instantiates the slider's start date
 						let dataTime = d3.range( 0, 15 ).map( function( d ) {
 							let dt = new Date( 2019, 29, 9, 6, 0, 0, 0 );
 							dt.setMinutes( dt.getMinutes() + d * 60 );
 							return dt
 						} );
 
+						// instantiates the slider
 						let sliderTime = d3.sliderBottom()
 							.min( d3.min( dataTime ) )
 							.max( d3.max( dataTime ) )
@@ -284,6 +307,7 @@ d3.csv( './data/intersections_data.csv' )
 								drawStackedBars( sliderTime );
 							} );
 
+						// appends the slider to the svg
 						let gTime = msvg.append( 'svg' )
 							.attr( 'width', '100%' )
 							.attr( 'height', '100%' )
@@ -295,8 +319,10 @@ d3.csv( './data/intersections_data.csv' )
 						d3.select( 'p#value-time' )
 							.text( d3.timeFormat( '%I' )( sliderTime.value() ) );
 
+						// initializes the slider at the first survey time: 6:00 AM
 						updateDisplayedTime( '6:00 AM Occupied', new Date( 2019, 9, 29, 6, 0, 0, 0 ) );
 
+						// updates the visualizations on slider changes
 						function updateDisplayedTime( time, timeVal ) {
 							mapSvg.selectAll( '.fill' )
 								.attr( 'stroke', function( d ) {
@@ -306,15 +332,19 @@ d3.csv( './data/intersections_data.csv' )
 									let agg_value = agg_data.find( function( a ) {
 										return ( a[ 'Route Number' ] === idVal && ( a[ 'Side of Street' ].charAt( 0 ) === idSide ) );
 									} );
+
+									// calculates the occupancy rate
 									let occupancy_total = agg_value[ 'Total Spots' ];
 									let occupancy_rate = agg_value[ time ] / occupancy_total;
 
+									// adjusts the map to account for BWSC construction closures
 									if ( ( timeVal.getHours() >= 9 && timeVal.getHours() <= 17 ) && ( '1' === idVal || '2' === idVal ) ) {
 										return 'gray'
 									} else {
 										return colorScale( occupancy_rate );
 									}
 								} );
+
 							// draw the bar chart below with time passed to it from slider
 							d3.csv( 'Aggregated_Bar_Chart.csv' ).then(
 								function( agg_bar_data ) {
@@ -439,7 +469,7 @@ d3.csv( './data/intersections_data.csv' )
 			} );
 	} );
 
-
+// instantiates the map viz legends params
 let outlineSize = 2;
 let mapLgndStep = 0.05;
 let adjMapLgndStep = mapLgndStep * 2;
@@ -457,6 +487,7 @@ let yAdj = 2.3;
 let mapOutlineWidth = mapFillWidth + outlineSize;
 let mapOutlineHeight = mapFillHeight + outlineSize;
 
+// draws the maps legend's outline
 mapSvg.selectAll( '.mapLgndOutline' )
 	.data( mapLgndArr )
 	.enter()
@@ -472,7 +503,7 @@ mapSvg.selectAll( '.mapLgndOutline' )
 	.attr( 'height', mapOutlineHeight + 0.5 * ( xPadding - ( outlineSize * 0.5 ) ) )
 	.style( 'fill', outlineColor );
 
-
+// draws the map legends's fill
 mapSvg.selectAll( '.mapLgndFill' )
 	.data( mapLgndArr )
 	.enter()

@@ -305,7 +305,6 @@ d3.csv( './data/intersections_data.csv' )
 							.on( 'onchange', val => {
 								sliderTime = d3.timeFormat( '%-I:%M %p' )( val ) + ' Occupied';
 								updateDisplayedTime( sliderTime, val );
-								drawStackedBars( sliderTime );
 							} );
 
 						// appends the slider to the svg

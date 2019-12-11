@@ -4,7 +4,7 @@ This template will help you get started with your project. Please look through a
 
 ## The Associated GitHub Pages Website
 
-This website is served automatically from the default `gh-pages` branch at https://northeastern-ds-4200-f19-staff.github.io/S-L-Project-Template/
+This website is served automatically from the default `gh-pages` branch at http://northeastern-ds-4200-f19.github.io/project-team-1-parking
 
 ## Setup
 
@@ -55,3 +55,10 @@ Instead of all working directly out of the main `gh-pages` branch, you can try a
 
 ![Image of Git branching model by VIncent Driessen](http://www.ccs.neu.edu/home/cody/courses/shared/git-model.png)
 
+# Outside Sources
+
+For hover tooltip on bar chart: https://medium.com/@kj_schmidt/making-an-animated-donut-chart-with-d3-js-17751fde4679
+
+For bar chart legend: https://www.d3-graph-gallery.com/graph/custom_legend.html
+
+For bar chart template: https://bl.ocks.org/hrecht/f84012ee860cb4da66331f18d588eee3

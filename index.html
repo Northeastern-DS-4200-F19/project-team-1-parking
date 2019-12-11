@@ -7,7 +7,7 @@
 		<meta charset="utf-8">
 
 		<!-- Title -->
-		<title>Project Team #1: Parking, DS 4200 F19</title>
+		<title>Project Team 1: Parking, DS 4200 F19</title>
 
 		<!-- CSS Styling -->
 		<link rel="stylesheet" href="style.css">
@@ -39,7 +39,7 @@
 
 		<div class="content-column">
 
-			<h1>Project Team #1: Parking, DS 4200 F19</h1>
+			<h1>Project Team 1: Parking, DS 4200 F19</h1>
 			<p><strong> Title: A day's worth of parking in Chester Square</strong>
 				<p>
 
@@ -72,7 +72,8 @@
 
 					<h1>Visualization</h1>
 
-					<p><em>Include the interactive visualization as part of this page. Static example follows.</em></p>
+					<p>Here is our final visualization. Use the slider to select the time of day shown.
+					Hover over the bar chart to see more details on empty and occupied spots.</p>
 
 		</div>
 
@@ -81,9 +82,10 @@
 				<!-- Change viewbox to whatever you want, e.g. "0 0 1000 6000" This determines your aspect ratio and coordinate system -->
 				<!-- Delete all the sample SVG code below after the viewbox to before the closing tag. Populate this part of the SVG with D3. -->
 				<svg id="map" preserveAspectRatio="xMidYMid meet" class="marks" viewBox="0 0 1000 900">
-				</svg>/</div>
-		<p> Hover over the red portion to see how many spots are currently occupied.</p>
-				<div><svg id="barchart" preserveAspectRatio="xMidYMid meet" class="marks" viewBox="0 0 1000 1000">
+				</svg>/
+
+				</div>
+				<div><svg id="barchart" preserveAspectRatio="xMidYMid meet" class="marks" viewBox="0 0 1000 700">
 				</svg>
 			</div>
 
@@ -94,10 +96,8 @@
 
 			<h1>Demo Video</h1>
 
-			<p><em>Embedded MP4 demo video using the HTML5 &lt;video&gt; tag. For example, this screen recording Prof. Cody Dunne made of Mike Bostock's flexible transitions in D3 slide:</em></p>
-
 			<video controls width="100%">
-				<source src="demo video.mp4" type="video/mp4">
+				<source src="finalDemoVideo.mp4" type="video/mp4">
 				<source src="http://www.ccs.neu.edu/home/cody/courses/shared/d3-flexible-transitions.mp4" type="video/mp4">
 				<p>Your browser doesn't support HTML5 video. Here is
 					a <a href="http://www.ccs.neu.edu/home/cody/courses/shared/d3-flexible-transitions.mp4">link to the video</a> instead.</p>
@@ -108,7 +108,7 @@
 			<p>Our visualization includes an interactive map showing occupancy rate, as well
 				a bar chart that shows the empty and occupied parking spots on each street.
 				The user is able to use a slider to change the time of day, which is reflected in the
-				visualizations. You can also filter based on regulation type.</p>
+				visualizations.</p>
 			<p>For our map, we used color to represent occupancy rate. We used a color scale of
 				red, white, and green because we believed it was intuitive for red to mean that there
 				are less spots available and green to mean there are more spots available. We designed
@@ -118,9 +118,9 @@
 				spots are left. We used a simple stacked bar chart to show this data, which uses area to
 				show the parking capacity of a certain street, as well as area and color to show the breakdown of
 				empty versus occupied spots.</p>
-			<p> For interactivity, our goal was to have the slider to change the time,
-				checkboxes to filter by interactivity, and brushing and linking that would highlight the street
-				in the bar chart when it is clicked on in the map view (and vice versa).</p>
+			<p> For interactivity, users can use the slider to update both visualizations, as well as hover over the
+			 bar chart for more detailed information on the number of empty and occupied spots.</p>
+			<p> We'd also like to credit <a href="https://github.com/johnwalley/d3-simple-slider"> John Walley's Simple Slider sample </a> which helped us a lot. </p>
 			<p>Below, you can see screenshots of our final visualization.</p>
 			<p></p>
 			<p>Below, you will find links to our presentation slides.</p>
@@ -243,7 +243,12 @@
 				wanted to see. This would help make the visualization customizable, more granular, and show varying
 				levels of complexity.</p>
 			<img src="digitalvissketch.png" alt="Second visualization sketch" style="width:700px;height:600px;">
-
+			<p>Our final visualization contains our planned map and bar chart, with the slider to update time of day.
+			One aspect of our plan that we were not able to implement due to time constraints was filtering based on regulation.
+			However, we still believe that this visualization gives a good overview of a day of parking in Chester Square. See below for screenshots
+		 of our final visualization.</p>
+			<img src="final vis map.png" alt="Final visualization sketch" style="width:800px;height:600px;">
+			<img src="final vis bar.png" alt="Final visualization sketch" style="width:700px;height:600px;">
 			<p>Unfortunately, our group was unable to take part in the in-class usability testing.
 				In fact, we hit quite a few roadblocks to creating our final product. Due to time constraints,
 				we were forced to kill our darlings. In other words, we had to cut some features of the
@@ -282,6 +287,9 @@
 			<ul>
 				<li><a href="https://d3js.org/">D3: Data-Driven Documents</a> by Mike Bostock.</li>
 				<li><a href="https://codepo8.github.io/css-fork-on-github-ribbon/#">Pure CSS responsive "Fork me on GitHub" ribbon</a> by Chris Heilmann</li>
+				<li><a href="https://medium.com/@kj_schmidt/making-an-animated-donut-chart-with-d3-js-17751fde4679">Medium article for tooltip</a>
+				<li><a href="https://www.d3-graph-gallery.com/graph/custom_legend.html">D3 example for legend</a>
+				<li><a href="https://bl.ocks.org/hrecht/f84012ee860cb4da66331f18d588eee3">D3 example for bar chart template</a>
 			</ul>
 
 		</div>
@@ -289,9 +297,6 @@
 		<!-- Scripts at the end avoid need for dealing with async, defer, or onload event handlers -->
 		<script src="lib/d3.v5.12.0/d3.min.js"></script>
 		<script src="visualization.js"></script>
-  	<!-- <script src="barchart.js"></script>
-  	<script src="map.js"></script> -->
-  	<!-- <script src="js/slider.js"></script> -->
 	</body>
 
 </html>
